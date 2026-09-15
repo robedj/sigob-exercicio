@@ -1,0 +1,24 @@
+name: central_servicos
+profile: central_servicos
+version: 1.0.0
+
+model-paths:
+  - models
+
+models:
+  central_servicos:
+    silver:
+      # Silver materializada como Parquet em data/silver/ (medallion visível!).
+      # "external" = grava ARQUIVO no storage, em vez de tabela no banco.
+      +materialized: external
+      +format: parquet
+    gold:
+      # Gold materializada como Parquet em data/gold/.
+      +materialized: external
+      +format: parquet
+
+flags:
+  # Exige a sintaxe nova de testes (argumentos dentro de `arguments:`).
+  # Acrescentado pela extensão do dbt (engine Fusion) — os nossos
+  # schema.yml já seguem esse formato.
+  require_generic_test_arguments_property: true
