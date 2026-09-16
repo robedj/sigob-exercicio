@@ -21,3 +21,10 @@ dbt/dbt_packages/
 dbt/logs/
 dbt/target/
 dbt/.user.yml
+
+# Materiais locais de construção e revisão da apresentação.
+docs/apresentacao-sigob-tjms.pptx
+docs/apresentacao-roteiro-local.md
+docs/prompt-gerador-apresentacao.md
+scripts/gerar_apresentacao.py
+.~lock.*#
