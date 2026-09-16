@@ -60,10 +60,9 @@ Mensagem principal: a ingestão não corrigiu nada; as decisões aparecem nos mo
 ## Checklist de ensaio
 
 - todos falam e sabem executar sua parte;
-- tempo travel leva menos de dois minutos;
+- time travel leva menos de dois minutos;
 - o número final foi conferido por outra pessoa do grupo;
 - zoom e fonte do terminal são legíveis;
 - ambiente foi instalado do zero pelo menos uma vez;
 - não aparecem caminhos locais, credenciais ou `docs-sigob/` na apresentação;
 - perguntas prováveis têm resposta: grão, fonte oficial, nulos, >100%, Delta e fan-out.
-

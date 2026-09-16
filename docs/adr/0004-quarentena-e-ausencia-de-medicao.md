@@ -35,7 +35,6 @@ construção. A quarentena preserva melhor a pendência.
 
 ## Consequências
 
-- a contagem da Gold será menor que a contagem capturada e a diferença será explicada;
+- a contagem da Gold é menor que a contagem capturada e a diferença fica explicada;
 - a consulta de qualidade precisa acompanhar a resposta gerencial;
 - métricas agregadas devem expor quantidade total e quantidade elegível.
-

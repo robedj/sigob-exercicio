@@ -8,7 +8,7 @@ para evitar misturar responsabilidades, mas não são necessários para responde
 pergunta escolhida.
 
 `docs-sigob/` é referência local ignorada pelo Git. As fontes necessárias ao clone limpo
-serão preparadas e versionadas em `data/raw/`, sem dados pessoais.
+estão versionadas em `data/raw/`, sem dados pessoais.
 
 ## Inventário observado
 
@@ -22,7 +22,7 @@ serão preparadas e versionadas em `data/raw/`, sem dados pessoais.
 Entre os 102 imóveis identificados, 23 PIDs (IDs 200–222) não aparecem no levantamento
 patrimonial. Isso é uma limitação de cobertura, não uma licença para preencher zero.
 
-## Defeitos e decisões esperadas
+## Defeitos e tratamentos
 
 | Defeito/ambiguidade | Camada | Tratamento |
 |---|---|---|
@@ -37,22 +37,21 @@ patrimonial. Isso é uma limitação de cobertura, não uma licença para preenc
 | vazio versus zero | Silver/Gold | preservar semânticas diferentes |
 | coleções 1:N | Gold | agregar antes de juntar à fato |
 
-## Perfil preliminar da métrica principal
+## Perfil validado da métrica principal
 
 Dos 79 registros patrimoniais, 60 têm área construída e área de terreno suficientes para
-o índice. A exploração inicial encontrou:
+o índice. A Gold validada produziu:
 
 - média simples dos índices individuais: 37,49%;
 - mediana: 21,78%;
 - razão entre a soma das áreas: 35,85%;
 - imóveis com mais de 100% existem e podem representar vários pavimentos.
 
-Esses números são hipóteses de conferência. O valor da entrega será o produzido pela
-Gold, após os testes.
+Esses números são acompanhados da cobertura e protegidos pelos testes singulares
+`assert_cobertura_snapshot` e `assert_resposta_principal`.
 
 ## Rastreabilidade
 
-Cada registro Bronze terá arquivo, versão, instante, hash e posição de origem. A Silver
-manterá colunas brutas relevantes ao lado das normalizadas quando uma decisão puder ser
-auditada.
-
+Cada registro Bronze possui arquivo, versão, instante, hash e posição de origem. A
+Silver mantém colunas brutas relevantes ao lado das normalizadas quando uma decisão
+precisa ser auditada.

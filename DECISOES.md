@@ -22,7 +22,7 @@ Detalhes: [ADR-0001](docs/adr/0001-medallion-e-delta-no-bronze.md).
 
 ## 2. Grão e formato da camada de consumo
 
-O modelo principal será `fato_imovel_snapshot`.
+O modelo principal é `fato_imovel_snapshot`.
 
 > Uma linha representa um imóvel em uma data de referência do levantamento.
 
@@ -45,8 +45,8 @@ O campo da fonte chamado `Tipo de Imóvel` mistura pelo menos três conceitos:
 - uso/ocupação: ocupado pelo TJMS;
 - classificação funcional: PID ou prédio avulso.
 
-Não copiaremos esse campo para a Gold como se fosse um único domínio confiável. A Silver
-aplicará um mapa explícito e versionado para separar `propriedade`, `categoria_funcional`
+Não copiamos esse campo para a Gold como se fosse um único domínio confiável. A Silver
+aplica um mapa explícito e versionado para separar `propriedade`, `categoria_funcional`
 e `tipo_imovel`.
 
 Quando a fonte não informar o tipo físico com segurança, `tipo_imovel` receberá
@@ -63,14 +63,14 @@ Detalhes: [ADR-0003](docs/adr/0003-precedencia-e-separacao-de-conceitos.md).
 
 O registro do Fórum da Mulher, Criança, Adolescente e Idoso não possui ID oficial. Ele
 não entrará na estrela porque não existe chave confiável para relacioná-lo às medições.
-Também não será descartado e não receberá um ID inventado.
+Também não é descartado e não recebe um ID inventado.
 
-Seu destino será `quarentena_imoveis`, com arquivo, linha, conteúdo original e motivo.
+Seu destino é `quarentena_imoveis`, com arquivo, linha, conteúdo original e motivo.
 Uma consulta de qualidade mostrará a quantidade em quarentena. Assim, o número final não
 é contaminado e o problema não desaparece silenciosamente.
 
 Já os PIDs com ID válido e sem medição permanecem no modelo com medidas nulas e flags de
-completude. Ausência de informação não será convertida em zero.
+completude. Ausência de informação não é convertida em zero.
 
 Detalhes: [ADR-0004](docs/adr/0004-quarentena-e-ausencia-de-medicao.md).
 
@@ -87,16 +87,16 @@ No grão de imóvel:
 índice individual (%) = área construída / área do terreno × 100
 ```
 
-Na visão agregada serão expostos **dois números com nomes distintos**:
+Na visão agregada são expostos **dois números com nomes distintos**:
 
 - `media_indice_individual_pct`: média aritmética do índice de cada imóvel elegível;
 - `indice_global_ponderado_pct`: soma das áreas construídas dividida pela soma das áreas
   de terreno, vezes 100.
 
 Eles respondem perguntas diferentes e não serão apresentados como sinônimos. O
-levantamento inicial encontrou 60 imóveis elegíveis. Os valores preliminares são 37,49%
-para a média individual e 35,85% para o índice global ponderado; eles serão considerados
-oficiais somente depois de produzidos pela Gold e conferidos por teste.
+levantamento possui 60 imóveis elegíveis. A Gold produziu 37,49% para a média individual
+e 35,85% para o índice global ponderado; testes de regressão conferem esses números e a
+cobertura de 102 imóveis cadastrados e 79 com medição patrimonial.
 
 Um valor acima de 100% não é automaticamente inválido, pois a área construída pode
 somar vários pavimentos. Divisão por área nula ou zero gera resultado nulo e flag de
@@ -104,13 +104,13 @@ incompletude.
 
 ## 6. Fontes e formatos
 
-A entrega terá fontes semanticamente distintas em dois formatos:
+A entrega possui fontes semanticamente distintas em dois formatos:
 
 - CSV: cadastro mestre e medições patrimoniais;
 - JSON hierárquico: vistoria de infraestrutura com sanitários e reservatórios.
 
-O JSON não será uma cópia do cadastro. Ele terá outro grão e coleções próprias. O recorte
-será preparado sem dados pessoais, versionado em `data/raw/` e documentado em
+O JSON não é uma cópia do cadastro. Ele tem outro grão e coleções próprias. O recorte
+foi preparado sem dados pessoais, versionado em `data/raw/` e documentado em
 [`docs/fontes-e-qualidade.md`](docs/fontes-e-qualidade.md).
 
 `docs-sigob/` é referência local e não faz parte da entrega nem é dependência do
@@ -121,4 +121,3 @@ pipeline.
 A consulta de resposta lerá somente a Gold. Conversão de decimal, parsing de texto,
 escolha de fonte, tratamento de inválido e fórmulas de negócio pertencem ao dbt. O SQL
 final poderá agrupar e ordenar medidas prontas, mas não corrigirá dados no `WHERE`.
-

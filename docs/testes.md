@@ -1,7 +1,7 @@
 # Plano de testes
 
 Os testes são organizados pelo risco que impedem, não apenas para atingir a quantidade
-mínima. A matriz será atualizada com os nomes reais dos testes durante a implementação.
+mínima. A execução atual possui 54 testes dbt e 6 testes Python.
 
 ## Testes dbt
 
@@ -24,9 +24,8 @@ mínima. A matriz será atualizada com os nomes reais dos testes durante a imple
 | divisão inválida | indicadores derivados | teste singular |
 | inválido desaparecido | `quarentena_imoveis` | teste de contagem/motivo esperado |
 
-Serão usados pelo menos `not_null`, `unique`, `accepted_values` e `relationships`, além
-de testes singulares. Avisos só serão usados para regras de qualidade que não invalidam
-a execução; integridade do grão será erro.
+São usados `not_null`, `unique`, `accepted_values` e `relationships`, além de testes
+singulares. A integridade do grão é tratada como erro.
 
 ## Testes Python
 
@@ -41,14 +40,15 @@ a execução; integridade do grão será erro.
 
 ## Validações manuais de reconciliação
 
-Uma amostra pequena será calculada à mão:
+Uma amostra pequena foi conferida diretamente contra as fontes:
 
-- um imóvel simples com áreas preenchidas;
-- um imóvel com índice superior a 100%;
-- um PID sem medição;
-- o imóvel sem ID enviado à quarentena;
-- um reservatório simples (`2 x 7500`);
-- uma expressão composta de reservatório.
+- ID 3: `815,62 / 6.480,00 × 100 = 12,5867%`;
+- ID 1: `23.364,50 / 7.045,36 × 100 = 331,6296%`, mantido porque múltiplos
+  pavimentos podem superar 100%;
+- ID 200: permanece cadastrado, mas com áreas e índice nulos;
+- o imóvel sem ID aparece uma vez em `quarentena_imoveis`;
+- ID 2: `2 × 10.000 + 30.000 = 50.000` litros;
+- ID 1: `1 × 20.000 + 2 × 10.000 + 3 × 30.000 = 130.000` litros.
 
 ## Comandos de aceite
 
@@ -56,10 +56,11 @@ Uma amostra pequena será calculada à mão:
 python -m src.pipeline
 pytest
 cd dbt
-dbt deps
 dbt build
 dbt docs generate
 ```
 
-Antes da entrega, os mesmos comandos serão executados em clone limpo.
+Os mesmos comandos são executados na validação em clone limpo.
 
+O resultado da última validação está em
+[`evidencias/resultado-validacao.md`](evidencias/resultado-validacao.md).

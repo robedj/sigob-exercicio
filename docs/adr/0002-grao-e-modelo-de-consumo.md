@@ -14,7 +14,7 @@ esses grãos multiplicaria áreas e produziria totais incorretos sem erro de exe
 O grão da fato principal é um imóvel por data de referência. Coleções são normalizadas
 na Silver e agregadas a esse grão antes de chegar à Gold.
 
-A Gold será uma estrela:
+A Gold é uma estrela:
 
 - `dim_imovel`;
 - `dim_localidade`;
@@ -41,4 +41,3 @@ apresentação. O detalhe continua disponível na Silver.
 - dimensões podem ser reutilizadas nos recortes;
 - a consulta final fica pequena;
 - os testes de relacionamento substituem as FKs que os arquivos não possuem.
-
