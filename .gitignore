@@ -1,0 +1,8 @@
+# Material interno usado somente como referência para preparar a PoC.
+# As fontes necessárias para um clone limpo serão recortadas, revisadas e
+# versionadas separadamente em data/raw/.
+docs-sigob/
+
+# Diário local de estratégia e decisões durante a execução do exercício.
+# A entrega formal das decisões será consolidada depois em DECISOES.md.
+estrategia.md
