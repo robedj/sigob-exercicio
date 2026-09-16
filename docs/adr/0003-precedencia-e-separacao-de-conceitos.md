@@ -37,4 +37,3 @@ Falha com abreviações, caixa, acentos e mudanças de nomenclatura.
 - o mapa passa a ser uma decisão governada e testável;
 - a dimensão expõe ausência de tipo em vez de escondê-la;
 - alterações futuras no cadastro mestre não quebram relacionamentos por nome.
-

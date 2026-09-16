@@ -42,4 +42,3 @@ que a atividade quer demonstrar e não resolveria o time travel pedido.
 - a demo pode comparar a mesma tabela Bronze em duas versões;
 - Silver e Gold continuam fáceis de inspecionar como arquivos;
 - o README deve explicar claramente como reconstruir o histórico.
-
