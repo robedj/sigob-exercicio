@@ -1,0 +1,81 @@
+version: 2
+
+models:
+  - name: dim_imovel
+    description: Dimensão conformada dos imóveis identificados.
+    columns:
+      - name: imovel_sk
+        data_tests:
+          - not_null
+          - unique
+      - name: id_predio
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_localidade
+    columns:
+      - name: localidade_sk
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_tempo
+    columns:
+      - name: data_sk
+        data_tests:
+          - not_null
+          - unique
+
+  - name: fato_imovel_snapshot
+    description: Uma linha por imóvel e data, com medidas oficiais e flags de cobertura.
+    columns:
+      - name: imovel_sk
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_imovel')
+                field: imovel_sk
+      - name: localidade_sk
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_localidade')
+                field: localidade_sk
+      - name: data_referencia_sk
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_tempo')
+                field: data_sk
+      - name: situacao_patrimonial
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['PROPRIO', 'CEDIDO', 'ALUGADO', 'NAO_INFORMADO']
+
+  - name: mart_indicadores_imoveis
+    columns:
+      - name: id_predio
+        data_tests:
+          - not_null
+          - unique
+
+  - name: agg_aproveitamento_geral
+    columns:
+      - name: data_referencia
+        data_tests:
+          - not_null
+          - unique
+      - name: imoveis_cadastrados
+        data_tests:
+          - not_null
+      - name: media_indice_individual_pct
+        data_tests:
+          - not_null
+      - name: indice_global_ponderado_pct
+        data_tests:
+          - not_null
