@@ -20,3 +20,4 @@ data/bronze/**/*.crc
 dbt/dbt_packages/
 dbt/logs/
 dbt/target/
+dbt/.user.yml

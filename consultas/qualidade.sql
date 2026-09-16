@@ -11,4 +11,4 @@ from 'data/gold/mart_indicadores_imoveis.parquet';
 
 select *
 from 'data/silver/quarentena_imoveis.parquet'
-order by arquivo_origem, linha_origem;
+order by _arquivo_origem, linha_origem;
