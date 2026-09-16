@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: >
+      Camada de preservação em Delta Lake, escrita exclusivamente pela ingestão Python.
+      Os modelos dbt leem sempre o snapshot atual; versões anteriores permanecem
+      disponíveis no _delta_log para time travel.
+    tables:
+      - name: imoveis
+        description: Snapshots brutos do Cadastro Mestre, incluindo títulos e cabeçalho.
+      - name: patrimonio
+        description: Levantamento patrimonial bruto, incluindo títulos e cabeçalho.
+      - name: infraestrutura_predial
+        description: Documento JSON bruto com vistorias, sanitários e reservatórios.
+    config:
+      meta:
+        external_location: "delta_scan('../data/bronze/{name}')"

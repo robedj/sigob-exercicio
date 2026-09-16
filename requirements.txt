@@ -1,12 +1,9 @@
-pandas>=2.0
-pyarrow>=15.0
-duckdb>=1.0
-# Versões 1.x estáveis do dbt (as séries 2.x ainda estão em beta):
-dbt-core~=1.10.0
-dbt-duckdb~=1.9.0
-python-dotenv>=1.0
-pytest>=8.0
-# para rodar o notebook de exploração no VS Code/Jupyter:
-ipykernel>=6.0
-# para o dashboard de consumo da Gold (app/dashboard.py):
-streamlit>=1.30
+# Versões fixadas para que o clone limpo use a combinação validada pela equipe.
+pandas==2.3.3
+pyarrow==25.0.1
+deltalake==1.6.3
+duckdb==1.5.5
+dbt-core==1.11.15
+dbt-duckdb==1.11.0
+python-dotenv==1.2.3
+pytest==9.1.1

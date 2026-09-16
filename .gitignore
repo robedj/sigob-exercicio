@@ -6,3 +6,17 @@ docs-sigob/
 # Diário local de estratégia e decisões durante a execução do exercício.
 # A entrega formal das decisões será consolidada depois em DECISOES.md.
 estrategia.md
+
+# Ambiente e artefatos gerados.
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+data/silver/
+data/gold/
+data/*.duckdb
+data/bronze/**/*.crc
+dbt/dbt_packages/
+dbt/logs/
+dbt/target/

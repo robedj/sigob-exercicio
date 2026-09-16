@@ -1,0 +1,107 @@
+﻿CADASTRO_MESTRE — cadastro oficial de prédios;;;;;;;;;;;
+Fonte: predios_comarcas_sem_area_Revisada.xlsx (fonte oficial – RN01). Nomes desta aba não podem ser substituídos pelos das demais bases.;;;;;;;;;;;
+;;;;;;;;;;;
+ID Prédio;Nome Oficial;Tipo de Imóvel;Responsável pela Manutenção;Comarca;Logradouro;Número;Cidade;UF;CEP;Telefone;Observação
+1;Fórum de Campo Grande;Próprio / ocupado pelo TJMS;TJMS;Campo Grande;Rua da Paz;14;Campo Grande;MS;79002-919;3317-3300;
+2;Fórum de Dourados;Próprio / ocupado pelo TJMS;TJMS;Dourados;Av. Presidente Vargas;210;Dourados;MS;79804-030;3902-1720/1721;
+3;Fórum de Amambai;Próprio / ocupado pelo TJMS;TJMS;Amambai;Av. Pedro Manvailler;4557;Amambai;MS;79990-000;3481-1763;
+4;Fórum de Nova Andradina;Próprio / ocupado pelo TJMS;TJMS;Nova Andradina;Av. Alcides Menezes de Farias;1137;Nova Andradina;MS;79750-000;3441-1585/1587;
+5;Fórum de Fátima do Sul;Próprio / ocupado pelo TJMS;TJMS;Fátima do Sul;Rua Antônio Barbosa;800;Fátima do Sul;MS;79700-000;3467-1095;
+6;Fórum de Angélica;Próprio / ocupado pelo TJMS;TJMS;Angélica;Av. Basílio de Lima;258;Angélica;MS;79785-000;3446-1523;
+7;Fórum de Sete Quedas;Próprio / ocupado pelo TJMS;TJMS;Sete Quedas;Rua Rui Barbosa;780;Sete Quedas;MS;79935-000;3479-1213;
+8;Fórum de Anaurilândia;Próprio / ocupado pelo TJMS;TJMS;Anaurilândia;Rua Floriano Peixoto;1001;Anaurilândia;MS;79770-000;3445-1121;
+9;Fórum de Rio Negro;Próprio / ocupado pelo TJMS;TJMS;Rio Negro;Av. 9 de Maio;305;Rio Negro;MS;79470-000;3278-1270;
+10;Fórum de Chapadão do Sul;Próprio / ocupado pelo TJMS;TJMS;Chapadão do Sul;Av. Mato Grosso do Sul;311;Chapadão do Sul;MS;79560-000;3562-2616;
+11;Fórum de Batayporã;Próprio / ocupado pelo TJMS;TJMS;Batayporã;Av. Brasil;633;Batayporã;MS;79760-000;3443-1270;
+12;Fórum de Água Clara;Próprio / ocupado pelo TJMS;TJMS;Água Clara;Rua Francisco Vieira;200;Água Clara;MS;79680-000;3239-1241;
+13;Fórum de Terenos;Próprio / ocupado pelo TJMS;TJMS;Terenos;Rua Pedro Celestino;s/n;Terenos;MS;79190-000;3246-7445;
+14;Fórum de Cassilândia;Próprio / ocupado pelo TJMS;TJMS;Cassilândia;Rua Juvenal Rezende e Silva;375;Cassilândia;MS;79542-056;3596-1917;
+15;Fórum de Camapuã;Próprio / ocupado pelo TJMS;TJMS;Camapuã;Rua Ferreira da Cunha;415;Camapuã;MS;79420-000;3286-1204;
+16;Fórum de Rio Verde de Mato Grosso;Próprio / ocupado pelo TJMS;TJMS;Rio Verde de Mato Grosso;Av. Eurico Sebastião Ferreira;640;Rio Verde de Mato Grosso;MS;79480-000;3292-1295;
+17;Fórum de Glória de Dourados;Próprio / ocupado pelo TJMS;TJMS;Glória de Dourados;Av. Antonio Borges de Carvalho - Parque Cead;s/n;Glória de Dourados;MS;79730-738;3466-1473;
+18;Fórum de Jardim;Próprio / ocupado pelo TJMS;TJMS;Jardim;Rua Cel. Stuck;51;Jardim;MS;79240-000;3251-2045/1003;
+19;Fórum de Caarapó;Próprio / ocupado pelo TJMS;TJMS;Caarapó;Rua Dom Pedro II;1700;Caarapó;MS;79940-000;3453-1369;
+20;Fórum de Eldorado;Próprio / ocupado pelo TJMS;TJMS;Eldorado;R. Assis Chateaubriand;1555;Eldorado;MS;79970-000;3473-1121;
+21;Fórum de Iguatemi;Próprio / ocupado pelo TJMS;TJMS;Iguatemi;Rua Lenira Nogueira Lopes;548;Iguatemi;MS;79960-000;3471-1112/1150;
+22;Fórum de Ivinhema;Próprio / ocupado pelo TJMS;TJMS;Ivinhema;Av. Reinaldo Massi;1854;Ivinhema;MS;79740-000;3442-1405;
+23;Fórum de Mundo Novo;Próprio / ocupado pelo TJMS;TJMS;Mundo Novo;Av Campo Grande;375;Mundo Novo;MS;79980-000;3474-1633;
+24;Fórum de Pedro Gomes;Próprio / ocupado pelo TJMS;TJMS;Pedro Gomes;Av. Diva Araújo Azambuja;395;Pedro Gomes;MS;79410-000;3230-1254/2649;
+25;Fórum de Aparecida do Taboado;Próprio / ocupado pelo TJMS;TJMS;Aparecida do Taboado;Av. Orlando Mascarenhas Pereira;2098;Aparecida do Taboado;MS;79570-000;(67) 3565-8900;
+26;Fórum de Bonito;Próprio / ocupado pelo TJMS;TJMS;Bonito;Rua Clóvis Cintra;1035;Bonito;MS;79290-000;3255-1271;
+27;Fórum de Aquidauana;Próprio / ocupado pelo TJMS;TJMS;Aquidauana;Rua Nilza Ferraz Ribeiro;391;Aquidauana;MS;79200-000;(67) 3240-2250;
+28;Fórum de Bela Vista;Próprio / ocupado pelo TJMS;TJMS;Bela Vista;Rua Barão do Ladário;1595;Bela Vista;MS;79260-000;3439-1353;
+29;Fórum de Três Lagoas;Próprio / ocupado pelo TJMS;TJMS;Três Lagoas;Rua Zuleide Perez Tabox;1109;Três Lagoas;MS;79601-100;(67) 3929-1701;
+30;Fórum de Paranaíba;Próprio / ocupado pelo TJMS;TJMS;Paranaíba;Av. Juca Pinhé;270;Paranaíba;MS;79500-000;673558-1801;
+31;Fórum de Corumbá;Próprio / ocupado pelo TJMS;TJMS;Corumbá;Rua 21 de Setembro;1633;Corumbá;MS;79320-110;(67) 3234-4525;
+32;Fórum de Naviraí;Próprio / ocupado pelo TJMS;TJMS;Naviraí;Rua Higino Gomes Duarte;155;Naviraí;MS;79950-000;(67) 3409-6232;
+33;Fórum de Ponta Porã;Próprio / ocupado pelo TJMS;TJMS;Ponta Porã;Rua Baltazar Sadanha;1817;Ponta Porã;MS;79900-000;(67) 3437-0764;
+34;Fórum de Coxim;Próprio / ocupado pelo TJMS;TJMS;Coxim;Avenida General Mendes de Morais;70;Coxim;MS;79400-000;3683-2132;
+35;Fórum de Maracaju;Próprio / ocupado pelo TJMS;TJMS;Maracaju;Av. Senador Filinto Muller;501;Maracaju;MS;79150-017; 3454-8220;
+36;Fórum de Miranda;Próprio / ocupado pelo TJMS;TJMS;Miranda;Rua General Amaro Bitencourt;875;Miranda;MS;79380-000;3242-1346/1347;
+37;Fórum de Porto Murtinho;Próprio / ocupado pelo TJMS;TJMS;Porto Murtinho;Rua Treze de Maio;444;Porto Murtinho;MS;79280-000;3287-1355/1259;
+38;Fórum de Rio Brilhante;Próprio / ocupado pelo TJMS;TJMS;Rio Brilhante;Rua Rio Brilhante;1060;Rio Brilhante;MS;79130-000;3452-7332;
+39;Fórum de Sidrolândia;Próprio / ocupado pelo TJMS;TJMS;Sidrolândia;Rua Targino de Souza Barbosa;855;Sidrolândia;MS;79170-000;3272-1407/6539;
+40;Fórum de Brasilândia;Próprio / ocupado pelo TJMS;TJMS;Brasilândia;Av. Manoel Vicente;1390;Brasilândia;MS;79670-000;3546-1205;
+41;Fórum de Inocência;Próprio / ocupado pelo TJMS;TJMS;Inocência;Av. Albertina Garcia Dias;377;Inocência;MS;79583-026;3574-1280;
+42;Fórum de São Gabriel do Oeste;Próprio / ocupado pelo TJMS;TJMS;São Gabriel do Oeste;Av. São Francisco ;550;São Gabriel do Oeste;MS;79490-000;3295-1110;
+43;Fórum de Nioaque;Próprio / ocupado pelo TJMS;TJMS;Nioaque;Rua Cel. Juvêncio;s/n;Nioaque;MS;79220-000;3236-1200;
+44;Fórum de Bandeirantes;Próprio / ocupado pelo TJMS;TJMS;Bandeirantes;Rua Pedro Celestino;1460;Bandeirantes;MS;79430-000;3261-1144;
+45;Fórum de Ribas do Rio Pardo;Próprio / ocupado pelo TJMS;TJMS;Ribas do Rio Pardo;Rua Waldeliar Francisco da Silva;1017;Ribas do Rio Pardo;MS;79180-000;3238-1242;
+46;Fórum de Itaporã;Próprio / ocupado pelo TJMS;TJMS;Itaporã;Av. São José;02;Itaporã;MS;79890-000;3451-1560/2392;
+47;Fórum de Deodápolis;Próprio / ocupado pelo TJMS;TJMS;Deodápolis;Av. Francisco Alves da Silva;103;Deodápolis;MS;79790-000;3448-1110;
+48;Fórum de Costa Rica;Próprio / ocupado pelo TJMS;TJMS;Costa Rica;Rua José Pereira da Silva;405;Costa Rica;MS;79750-000;3247-1013/1389;
+49;Fórum de Itaquiraí;Próprio / ocupado pelo TJMS;TJMS;Itaquiraí;Av. Mato Grosso;350;Itaquiraí;MS;79965-000;3476-1947;
+50;Fórum de Sonora;Próprio / ocupado pelo TJMS;TJMS;Sonora;Rua Três de Junho;90;Sonora;MS;79415-000;3254-1126;
+51;Fórum de Nova Alvorada do Sul;Próprio / ocupado pelo TJMS;TJMS;Nova Alvorada do Sul;Rua Marcelino Risden;1040;Nova Alvorada do Sul;MS;79140-000;3456-1170;
+52;Fórum de Dois Irmãos do Buriti;Próprio / ocupado pelo TJMS;TJMS;Dois Irmãos do Buriti;Av. Reginaldo Lemes da Silva;634;Dois Irmãos do Buriti;MS;79215-000;3243-1050;
+53;Fórum de Anastacio;Próprio / ocupado pelo TJMS;TJMS;Anastacio;Rua Juscelino Kubitscheck;1445;Anastacio;MS;79210-000;3245-1415;
+54;Tribunal de Justiça;Próprio / ocupado pelo TJMS;TJMS;Campo Grande;Av. Mato Grosso, Bloco 13;S/N;Campo Grande;MS;79031-902;3314-1366;
+55;Fórum de Bataguassu;Próprio / ocupado pelo TJMS;TJMS;Bataguassu;Rua Rio Brilhante;506;Bataguassu;MS;79780-000;(67) 3541-3745;
+56;Fórum de Coronel Sapucaia;Próprio / ocupado pelo TJMS;TJMS;Coronel Sapucaia;Rua Amâncio José da Silva;1866;Coronel Sapucaia;MS;79995-000;67 34833210;
+59;Secretaria de Bens, Serviços e Patrimônios;Próprio / ocupado pelo TJMS;TJMS;Campo Grande;R. Delegado José Alfredo Hardman;s/n;Campo Grande;MS;79037-106;(67) 3314-1337;
+60;Depósitos e Arquivo Geral;Próprio / ocupado pelo TJMS;TJMS;Campo Grande;R. Zilá Corrêa Machado. Bairro Moreninhas;7120;Campo Grande;MS;79065-000;(67) 3314-1385;
+61;Juizado Especial - 8ª Vara Justiça Itinerante e Comunitária e 9ª Vara Juizado de Trânsito;Próprio / ocupado pelo TJMS;TJMS;Campo Grande;R. Antonio Correa;85;Campo Grande;MS;79050-210;(67) 3314-5503;
+62;CIJUS - Centro Integrado de Justiça;Próprio / ocupado pelo TJMS;TJMS;Campo Grande;Rua 7 de Setembro;174;Campo Grande;MS;79002-130;673317-8600;
+63;EJUD;Próprio / ocupado pelo TJMS;TJMS;Campo Grande;Rua Raul Pires Barbosa, Chácara Cachoeira;1519;Campo Grande;MS;79037-100;67 3314-1444;
+64;NUPEMEC;Próprio / ocupado pelo TJMS;TJMS;Campo Grande;Rua Raul Pires Barbosa, Chácara Cachoeira;1503;Campo Grande;MS;79037-100;(67) 3314-1300;
+65;Anexo Tribunal de Justiça;Próprio / ocupado pelo TJMS;TJMS;Campo Grande;Av. Mato Grosso bloco 13, Parque dos Poderes;s/n;Campo Grande;MS;79037-100;(67) 3314-1356;
+66;Gab. dos Desembargadores;Próprio / ocupado pelo TJMS;TJMS;Campo Grande;R. Des. Leão Neto do Carmo, Parque dos Poderes;s/n;Campo Grande;MS;79037-100;(67) 3314-1358;
+67;Biblioteca;Próprio / ocupado pelo TJMS;TJMS;Campo Grande;R. Des. Leão Neto do Carmo, Parque dos Poderes;s/n;Campo Grande;MS;79037-100;(67) 3314-1385;
+68;Bataguassu (previsão outubro/2024);Próprio / ocupado pelo TJMS;TJMS;Bataguassu;;;Bataguassu;MS;;;Edificação funcional confirmada pelo usuário (D-03), vinculada à comarca do Fórum de Bataguassu (ID 55). Sem endereço formalizado na Revisada — dados de área vêm apenas da AreaLimpeza 2026 (linha 128). Confirmar se substitui ou complementa o Fórum atual e formalizar endereço/situação patrimonial.
+69;Guarita TJ;Próprio — Prédio Avulso (centro de custo próprio);TJMS;Campo Grande;Av. Mato Grosso, Bloco 13;S/N;Campo Grande;MS;79031-902;;Mesmo endereço do ID 54 (Tribunal de Justiça), mas com conta de luz/água e centro de custo próprios — confirmado pela Engenharia de Obras (D-04 revisto). Recebeu ID próprio em vez de ficar como dependência.
+70;Anexo-refeitório;Próprio — Prédio Avulso (centro de custo próprio);TJMS;Campo Grande;Av. Mato Grosso, Bloco 13;S/N;Campo Grande;MS;79031-902;;Mesmo endereço do ID 54 (Tribunal de Justiça), mas com conta de luz/água e centro de custo próprios — confirmado pela Engenharia de Obras (D-04 revisto). Recebeu ID próprio em vez de ficar como dependência.
+71;Garagens TJ;Próprio — Prédio Avulso (centro de custo próprio);TJMS;Campo Grande;Av. Mato Grosso, Bloco 13;S/N;Campo Grande;MS;79031-902;;Mesmo endereço do ID 54 (Tribunal de Justiça), mas com conta de luz/água e centro de custo próprios — confirmado pela Engenharia de Obras (D-04 revisto). Recebeu ID próprio em vez de ficar como dependência.
+72;Anexo dos Gabinetes dos Desembargadores;Próprio — Prédio Avulso (centro de custo próprio);TJMS;Campo Grande;R. Des. Leão Neto do Carmo, Parque dos Poderes;s/n;Campo Grande;MS;79037-100;;Mesmo endereço do ID 66 (Gab. dos Desembargadores), mas com conta de luz/água e centro de custo próprios — confirmado pela Engenharia de Obras (D-04 revisto). Recebeu ID próprio em vez de ficar como dependência.
+73;Guarita Gabinetes;Próprio — Prédio Avulso (centro de custo próprio);TJMS;Campo Grande;R. Des. Leão Neto do Carmo, Parque dos Poderes;s/n;Campo Grande;MS;79037-100;;Mesmo endereço do ID 66 (Gab. dos Desembargadores), mas com conta de luz/água e centro de custo próprios — confirmado pela Engenharia de Obras (D-04 revisto). Recebeu ID próprio em vez de ficar como dependência.
+74;Guarita Gabinetes 2 (Restaurante);Próprio — Prédio Avulso (centro de custo próprio);TJMS;Campo Grande;R. Des. Leão Neto do Carmo, Parque dos Poderes;s/n;Campo Grande;MS;79037-100;;Mesmo endereço do ID 66 (Gab. dos Desembargadores), mas com conta de luz/água e centro de custo próprios — confirmado pela Engenharia de Obras (D-04 revisto). Recebeu ID próprio em vez de ficar como dependência.
+75;Guarita Arquivos Novos;Próprio — Prédio Avulso (centro de custo próprio);TJMS;Campo Grande;R. Zilá Corrêa Machado. Bairro Moreninhas;7120;Campo Grande;MS;79065-000;;Mesmo endereço do ID 60 (Depósitos e Arquivo Geral), mas com conta de luz/água e centro de custo próprios — confirmado pela Engenharia de Obras (D-04 revisto). Recebeu ID próprio em vez de ficar como dependência.
+76;Depósito Geral Galpão Novo 02;Próprio — Prédio Avulso (centro de custo próprio);TJMS;Campo Grande;R. Zilá Corrêa Machado. Bairro Moreninhas;7120;Campo Grande;MS;79065-000;;Mesmo endereço do ID 60 (Depósitos e Arquivo Geral), mas com conta de luz/água e centro de custo próprios — confirmado pela Engenharia de Obras (D-04 revisto). Recebeu ID próprio em vez de ficar como dependência.
+77;Arquivo (Fórum de Dourados);Próprio — Prédio Avulso (centro de custo próprio);TJMS;Dourados;Av. Presidente Vargas;210;Dourados;MS;79804-030;;Mesmo endereço do ID 2 (Fórum de Dourados), mas com conta de luz/água e centro de custo próprios — confirmado pela Engenharia de Obras (D-04 revisto). Recebeu ID próprio em vez de ficar como dependência.
+78;Anexo Novo (Fórum de Dourados);Próprio — Prédio Avulso (centro de custo próprio);TJMS;Dourados;Av. Presidente Vargas;210;Dourados;MS;79804-030;;Mesmo endereço do ID 2 (Fórum de Dourados), mas com conta de luz/água e centro de custo próprios — confirmado pela Engenharia de Obras (D-04 revisto). Recebeu ID próprio em vez de ficar como dependência.
+79;Arquivo (Fórum de Corumbá);Próprio — Prédio Avulso (centro de custo próprio);TJMS;Corumbá;Rua 21 de Setembro;1633;Corumbá;MS;79320-110;;Mesmo endereço do ID 31 (Fórum de Corumbá), mas com conta de luz/água e centro de custo próprios — confirmado pela Engenharia de Obras (D-04 revisto). Recebeu ID próprio em vez de ficar como dependência.
+80;Arquivo (Fórum de Três Lagoas);Próprio — Prédio Avulso (centro de custo próprio);TJMS;Três Lagoas;Rua Zuleide Perez Tabox;1109;Três Lagoas;MS;79601-100;;Mesmo endereço do ID 29 (Fórum de Três Lagoas), mas com conta de luz/água e centro de custo próprios — confirmado pela Engenharia de Obras (D-04 revisto). Recebeu ID próprio em vez de ficar como dependência.
+200;PID DE ALCINÓPOLIS;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Coxim;Rua Maria T. Freitas Nery;518;ALCINÓPOLIS;MS;;;
+201;PID DE ANTÔNIO JOÃO;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Ponta Porã;Rua Vitório Penzo;37;ANTÔNIO JOÃO;MS;;;
+202;PID DE ARAL MOREIRA;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Ponta Porã;Rua 15 de Novembro;s/n;ARAL MOREIRA;MS;;;
+203;PID DE BODOQUENA;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Miranda;Rua Irmãs Pastorinhas;90;BODOQUENA;MS;;;
+204;PID DE CARACOL;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Bela Vista;Rua Maurílho Godoy;s/n;CARACOL;MS;;;
+205;PID DE CORGUINHO;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Rio Negro;Rua Duque de Caxias;143;CORGUINHO;MS;;;
+206;PID DE DOURADINA;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Itaporã;Rua Áurea Barbosa Cerqueira;1255;DOURADINA;MS;;;
+207;PID DE FIGUEIRÃO;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Camapuã;Av. Moisés de Araújo Galvão;970;FIGUEIRÃO;MS;;;
+208;PID DE GUIA LOPES DA LAGUNA;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Jardim;Av. Presidente Vargas;937;GUIA LOPES DA LAGUNA;MS;;;
+209;PID DE JAPORÃ;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Mundo Novo;Rua Osvaldo Freire;110;JAPORÃ;MS;;;
+210;PID DE JARAGUARI;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Bandeirantes;R. Orlando Nogueira;461;JARAGUARI;MS;;;
+211;PID DE JATEÍ;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Fátima do Sul;Rua José Cornelio de Souza;s/n;JATEÍ;MS;;;
+212;PID DE JUTI;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Caarapó;Avenida Sérgio Maciel;709;JUTI;MS;;;
+213;PID DE LAGUNA CARAPÃ;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Dourados;Rua Gabriel Cabral;515;LAGUNA CARAPÃ;MS;;;
+214;PID DE NOVO HORIZONTE DO SUL;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Ivinhema;Av. João Camargo Sobrinho;589;NOVO HORIZONTE DO SUL;MS;;;
+215;PID DE PARAÍSO DAS ÁGUAS;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Chapadão do Sul;Rua Valdeci Feltun;793;PARAÍSO DAS ÁGUAS;MS;;;
+216;PID DE PARANHOS;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Sete Quedas;Av. Marechal Dutra;1121;PARANHOS;MS;;;
+217;PID DE ROCHEDO;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Rio Negro;Av. Evangelina Vieira;663;ROCHEDO;MS;79450-000;;
+218;PID DE SANTA RITA DO PARDO;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Bataguassu;Avenida Reni Campo de Araújo;684;SANTA RITA DO PARDO;MS;;;
+219;PID DE SELVÍRIA;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Três Lagoas;Avenida Professora Marilucia Rosa Torres Laluce;647;SELVÍRIA;MS;;;
+220;PID DE TACURU;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Iguatemi;Av. José Carlos de Castro Alexandria;485;TACURU;MS;;;
+221;PID DE TAQUARUSSU;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Batayporã;Presidente Getúlio Vargas;224;TAQUARUSSU;MS;;;
+222;PID DE VICENTINA;PID — Posto cedido pela Prefeitura Municipal;Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Fátima do sul;Rua Carlos Farinha;1294;VICENTINA;MS;;;
+223;Casa da Mulher (salas cedidas — prédio da Prefeitura);PID — Sala/conjunto cedido por terceiro (prédio da Prefeitura);Prefeitura Municipal (cedente) — valor padrão, editável no sistema;Campo Grande;;;Campo Grande;MS;;;Conjunto de salas do TJ dentro do prédio da Prefeitura de Campo Grande (Casa da Mulher). NÃO é o mesmo local do Fórum da Mulher, Criança, Adolescente e Idoso (obra nova ao lado, 100% do TJ) — esclarecido pela Engenharia de Obras. Tratado como PID por analogia (espaço cedido por terceiro), mas com dado de área real medido em 2026 (diferente dos demais PIDs, nunca medidos).
+;Fórum da Mulher, Criança, Adolescente e Idoso;A definir;A definir;Campo Grande;R. dos Caiabis, Bloco 2, Jardim Ima;s/n;Campo Grande;MS;79102-230;;obs: Em construção

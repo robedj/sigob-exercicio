@@ -1,0 +1,83 @@
+﻿PATRIMONIO — situação patrimonial e áreas;;;;;;
+Área Construída (m²) vem EXCLUSIVAMENTE de AreaLimpeza_Atualizado2026.xlsx (fonte mais atual). Situação Patrimonial e Área do Terreno (m²) vêm de 10.2019 - Situação dos prédios com endereço.xlsx, pois a base 2026 não traz esses campos.;;;;;;
+;;;;;;
+ID Prédio;Nome Oficial;Situação Patrimonial;Área Construída (m²);Área do Terreno (m²);Área de Arquivo (m²);Observação
+1;Fórum de Campo Grande;próprio;23.364,50;7.045,36;;"Nome 2019: ""Fórum"""
+2;Fórum de Dourados;próprio;3.470,08;1.243,74;;"Nome 2019: ""Fórum"""
+3;Fórum de Amambai;próprio;815,62;6.480,00;135;"Nome 2019: ""Amambai"""
+4;Fórum de Nova Andradina;próprio;1.322,72;4.800,00;135;"Nome 2019: ""Nova Andradina"""
+5;Fórum de Fátima do Sul;próprio;955,61;4.780,00;135;"Nome 2019: ""Fátima do Sul"""
+6;Fórum de Angélica;cedido;396,37;;0;"Nome 2019: ""Angélica"""
+7;Fórum de Sete Quedas;próprio;868,95;3.360,00;0;"Nome 2019: ""Sete Quedas"""
+8;Fórum de Anaurilândia;próprio;533,45;1.456,95;72;"Nome 2019: ""Anaurilândia"""
+9;Fórum de Rio Negro;próprio;810,96;5.760,00;72;"Nome 2019: ""Rio Negro"""
+10;Fórum de Chapadão do Sul;próprio;944,15;4.800,00;;"Nome 2019: ""Chapadão do Sul"""
+11;Fórum de Batayporã;próprio;530,34;2.616,52;72;"Nome 2019: ""Bataiporã"""
+12;Fórum de Água Clara;próprio;863,86;5.875,26;72;"Nome 2019: ""Água Clara"""
+13;Fórum de Terenos;próprio;868,95;4.800,00;;"Nome 2019: ""Terenos"""
+14;Fórum de Cassilândia;próprio;893,84;5.000,00;72;"Nome 2019: ""Cassilândia"""
+15;Fórum de Camapuã;próprio;955,61;4.000,00;135;"Nome 2019: ""Camapuã"""
+16;Fórum de Rio Verde de Mato Grosso;próprio;577,66;3.550,00;73,5;"Nome 2019: ""Rio Verde do Mato Grosso"""
+17;Fórum de Glória de Dourados;próprio;428,84;4.500,00;72;"Nome 2019: ""Glória de Dourados"""
+18;Fórum de Jardim;próprio;835,69;4.445,00;135;"Nome 2019: ""Jardim"""
+19;Fórum de Caarapó;próprio;795,30;4.125,46;95,47;"Nome 2019: ""Caarapó"""
+20;Fórum de Eldorado;próprio;810,96;4.800,00;72;"Nome 2019: ""Eldorado"""
+21;Fórum de Iguatemi;próprio;642,50;5.000,00;72;"Nome 2019: ""Iguatemí"""
+22;Fórum de Ivinhema;próprio;817,64;3.263,05;;"Nome 2019: ""Ivinhema"""
+23;Fórum de Mundo Novo;próprio;1.011,50;4.270,00;135;"Nome 2019: ""Mundo Novo"""
+24;Fórum de Pedro Gomes;próprio;582,71;3.200,00;72;"Nome 2019: ""Pedro Gomes"""
+25;Fórum de Aparecida do Taboado;próprio;989,00;7.138,23;135;"Nome 2019: ""Aparecida do Taboado"""
+26;Fórum de Bonito;próprio;1.011,50;4.200,00;135;"Nome 2019: ""Bonito"""
+27;Fórum de Aquidauana;próprio;1.123,21;5.312,50;135;"Nome 2019: ""Aquidauana"""
+28;Fórum de Bela Vista;próprio;576,20;3.600,00;72;"Nome 2019: ""Bela Vista"""
+29;Fórum de Três Lagoas;próprio;4.312,48;6.765,82;;"Nome 2019: ""Fórum (com Arquivo)"""
+30;Fórum de Paranaíba;próprio;1.222,86;6.680,00;225;"Nome 2019: ""Paranaíba"""
+31;Fórum de Corumbá;próprio;4.312,48;4.631,88;225;"Nome 2019: ""Fórum"""
+32;Fórum de Naviraí;próprio;1.444,36;5.400,00;135;"Nome 2019: ""Naviraí"""
+33;Fórum de Ponta Porã;próprio;2.121,49;8.024,00;225;"Nome 2019: ""Ponta Porã"""
+34;Fórum de Coxim;próprio;1.544,14;5.000,00;;"Nome 2019: ""Coxim"""
+35;Fórum de Maracaju;próprio;1.545,40;4.200,00;135;"Área 2019 era 853.11 m² (diferença de +692.29 m²) — ver D-02 no LEIA_ME; Nome 2019: ""Maracajú"""
+36;Fórum de Miranda;próprio;1.286,80;4.800,00;;"Nome 2019: ""Miranda"""
+37;Fórum de Porto Murtinho;próprio;651,82;4.019,99;72;"Nome 2019: ""Porto Murtinho"""
+38;Fórum de Rio Brilhante;próprio;1.444,36;5.006,29;135;"Nome 2019: ""Rio Brilhante"""
+39;Fórum de Sidrolândia;próprio;867,31;3.200,00;135;"Nome 2019: ""Sidrolândia"""
+40;Fórum de Brasilândia;próprio;556,38;4.160,74;72;"Nome 2019: ""Brasilândia"""
+41;Fórum de Inocência;próprio;868,95;5.429,22;0;"Nome 2019: ""Inocência"""
+42;Fórum de São Gabriel do Oeste;próprio;1.348,03;3.000,00;0;"Área 2019 era 832.66 m² (diferença de +515.37 m²) — ver D-02 no LEIA_ME; Nome 2019: ""São Gabriel do Oeste"""
+43;Fórum de Nioaque;próprio;530,34;2.352,24;72;"Nome 2019: ""Nioaque"""
+44;Fórum de Bandeirantes;próprio;810,96;4.028,80;72;"Nome 2019: ""Bandeirantes"""
+45;Fórum de Ribas do Rio Pardo;próprio;878,94;4.800,00;72;"Nome 2019: ""Ribas do Rio Pardo"""
+46;Fórum de Itaporã;próprio;642,50;5.943,08;72;"Nome 2019: ""Itaporã"""
+47;Fórum de Deodápolis;próprio;563,69;2.515,29;92,95;"Nome 2019: ""Deodápolis"""
+48;Fórum de Costa Rica;próprio;955,61;4.800,00;135;"Nome 2019: ""Costa Rica"""
+49;Fórum de Itaquiraí;próprio;642,50;4.800,00;72;"Nome 2019: ""Itaquiraí"""
+50;Fórum de Sonora;próprio;810,96;4.624,00;72;"Nome 2019: ""Sonora"""
+51;Fórum de Nova Alvorada do Sul;próprio;863,86;3.188,36;0;"Nome 2019: ""Nova Alvorada"""
+52;Fórum de Dois Irmãos do Buriti;cedido;530,19;;0;"Área 2019 era 307.00 m² (diferença de +223.19 m²) — ver D-02 no LEIA_ME; Nome 2019: ""Dois Irmãos do Buriti"""
+53;Fórum de Anastacio;próprio;1.011,50;5.528,60;;"Nome 2019: ""Anastácio"""
+54;Tribunal de Justiça;próprio;7.675,91;21.097,33;;
+55;Fórum de Bataguassu;próprio;703,38;4.230,00;135;"Nome 2019: ""Bataguassu"""
+56;Fórum de Coronel Sapucaia;cedido;360,04;1.411,86;0;"Nome 2019: ""Coronel Sapucaia"""
+59;Secretaria de Bens, Serviços e Patrimônios;próprio;2.780,44;3.127,27;;"Nome 2019: ""Secretaria de Bens e Serviços"""
+60;Depósitos e Arquivo Geral;;4.000,00;;;Sem registro de situação/terreno em 2019
+61;Juizado Especial - 8ª Vara Justiça Itinerante e Comunitária e 9ª Vara Juizado de Trânsito;alugado;563,22;1.409,22;;
+62;CIJUS - Centro Integrado de Justiça;próprio;13.478,22;;;"Nome 2019: ""Cijus"""
+63;EJUD;cedido;1.149,61;4.373,25;;Área 2019 era 834.90 m² (diferença de +314.71 m²) — ver D-02 no LEIA_ME
+64;NUPEMEC;alugado;1.150,40;895,44;;"Área 2019 era 655.44 m² (diferença de +494.96 m²) — ver D-02 no LEIA_ME; Nome 2019: ""Nupemec - CEJUSC"""
+65;Anexo Tribunal de Justiça;próprio;4.648,65;;;"Área 2019 era 6406.00 m² (diferença de -1757.35 m²) — ver D-02 no LEIA_ME; Nome 2019: ""Tribunal de Justiça  - Anexo"""
+66;Gab. dos Desembargadores;próprio;6.873,40;11.128,88;;"Nome 2019: ""Gabinetes  dos Desembargadores"""
+67;Biblioteca;próprio;1.022,97;1.495,20;;"Nome 2019: ""Biblioteca e Restaurante TJ"""
+68;Bataguassu (previsão outubro/2024);;;;;Sem registro de situação/terreno em 2019
+69;Guarita TJ;;6,60;;;Sem registro de situação/terreno em 2019
+70;Anexo-refeitório;;65,00;;;Sem registro de situação/terreno em 2019
+71;Garagens TJ;;0,00;;;Sem registro de situação/terreno em 2019
+72;Anexo dos Gabinetes dos Desembargadores;;775,81;;;Sem registro de situação/terreno em 2019
+73;Guarita Gabinetes;;6,60;;;Sem registro de situação/terreno em 2019
+74;Guarita Gabinetes 2 (Restaurante);;6,60;;;Sem registro de situação/terreno em 2019
+75;Guarita Arquivos Novos;;17,23;;;Sem registro de situação/terreno em 2019
+76;Depósito Geral Galpão Novo 02;;3.600,00;;;Sem registro de situação/terreno em 2019
+77;Arquivo (Fórum de Dourados);próprio;450,00;;;"Nome 2019: ""Arquivo"""
+78;Anexo Novo (Fórum de Dourados);próprio;2.826,00;;;"Nome 2019: ""Anexo"""
+79;Arquivo (Fórum de Corumbá);próprio;;;;Sem registro de área na AreaLimpeza 2026 — em 2019 a área era 225.00 m² (referência apenas, não usada por RN03)
+80;Arquivo (Fórum de Três Lagoas);próprio;;;;Sem registro de área na AreaLimpeza 2026 — em 2019 a área era 225.00 m² (referência apenas, não usada por RN03)
+223;Casa da Mulher (salas cedidas — prédio da Prefeitura);;348,91;;;Sem registro de situação/terreno em 2019

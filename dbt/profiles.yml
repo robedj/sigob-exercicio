@@ -1,0 +1,9 @@
+sigob_imoveis:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ../data/analytics.duckdb
+      threads: 4
+      extensions:
+        - delta

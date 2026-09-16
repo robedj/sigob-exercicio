@@ -1,0 +1,2534 @@
+{
+  "fonte": "Levantamento de infraestrutura predial TJMS",
+  "data_referencia": "2026-08-17",
+  "vistorias": [
+    {
+      "id_predio": "1",
+      "nome_na_fonte": "Fórum de Campo Grande",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "25"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "68"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "159",
+        "mictorios_declarados": "13",
+        "lavatorios_declarados": "149"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "1 x 20.000             2 x 10.000                3 x 30.000 (inf)",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "2",
+      "nome_na_fonte": "Fórum de Dourados",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "14"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "15"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "44",
+        "mictorios_declarados": "14",
+        "lavatorios_declarados": "32"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 10.000 (inf)    30.000 (sup)",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "3",
+      "nome_na_fonte": "Fórum de Amambai",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "6"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "6"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "14",
+        "mictorios_declarados": "5",
+        "lavatorios_declarados": "16"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "4",
+      "nome_na_fonte": "Fórum de Nova Andradina",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "7"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "12",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "11"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "5",
+      "nome_na_fonte": "Fórum de Fátima do Sul",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "3"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "12",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "9"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "6",
+      "nome_na_fonte": "Fórum de Angélica",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "3"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "3"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "6",
+        "mictorios_declarados": "0",
+        "lavatorios_declarados": "6"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "2 x 1000",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "7",
+      "nome_na_fonte": "Fórum de Sete Quedas",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "5"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "13",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "9"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "1 x 10.000 (chuva)",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "8",
+      "nome_na_fonte": "Fórum de Anaurilândia",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "2"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "7",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "6"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "4 x 1000",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "9",
+      "nome_na_fonte": "Fórum de Rio Negro",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "5"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "13",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "9"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "10",
+      "nome_na_fonte": "Fórum de Chapadão do Sul",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "12",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "8"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "11",
+      "nome_na_fonte": "Fórum de Batayporã",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "1"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "9",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "8"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "12",
+      "nome_na_fonte": "Fórum de Água Clara",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "5"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "13",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "9"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "1 x 10.000 (chuva)",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "13",
+      "nome_na_fonte": "Fórum de Terenos",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "5"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "13",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "9"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "2 x 1000",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "14",
+      "nome_na_fonte": "Fórum de Cassilândia",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "7"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "14",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "13"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "15",
+      "nome_na_fonte": "Fórum de Camapuã",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "12",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "8"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "16",
+      "nome_na_fonte": "Fórum de Rio Verde de Mato Grosso",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "2"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "7",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "6"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "17",
+      "nome_na_fonte": "Fórum de Glória de Dourados",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "2"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "7",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "6"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "4 x 1000",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "18",
+      "nome_na_fonte": "Fórum de Jardim",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "6"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "5"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "17",
+        "mictorios_declarados": "0",
+        "lavatorios_declarados": "15"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "19",
+      "nome_na_fonte": "Fórum de Caarapó",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "7"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "11",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "11"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "5 x 1000",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "20",
+      "nome_na_fonte": "Fórum de Eldorado",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "5"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "13",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "9"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "21",
+      "nome_na_fonte": "Fórum de Iguatemi",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "3"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "9",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "8"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "22",
+      "nome_na_fonte": "Fórum de Ivinhema",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "4"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "15",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "12"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "23",
+      "nome_na_fonte": "Fórum de Mundo Novo",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "6"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "14",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "10"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "1 x 10.000 (chuva)",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "24",
+      "nome_na_fonte": "Fórum de Pedro Gomes",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "2"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "7",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "7"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "25",
+      "nome_na_fonte": "Fórum de Aparecida do Taboado",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "3"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "13",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "9"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "26",
+      "nome_na_fonte": "Fórum de Bonito",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "6"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "14",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "10"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "1 x 10.000 (chuva)",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "27",
+      "nome_na_fonte": "Fórum de Aquidauana",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "6"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "14",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "12"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "28",
+      "nome_na_fonte": "Fórum de Bela Vista",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "3"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "7",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "7"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "29",
+      "nome_na_fonte": "Fórum de Três Lagoas",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "16"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "36"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "68",
+        "mictorios_declarados": "15",
+        "lavatorios_declarados": "65"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "31.000 (sup) 24.000 (inf)",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "30",
+      "nome_na_fonte": "Fórum de Paranaíba",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "13"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "7"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "20",
+        "mictorios_declarados": "0",
+        "lavatorios_declarados": "18"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7000             7000 (inf)",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "31",
+      "nome_na_fonte": "Fórum de Corumbá",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "16"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "36"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "68",
+        "mictorios_declarados": "15",
+        "lavatorios_declarados": "65"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "31.000 (sup) 24.000 (inf)",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "32",
+      "nome_na_fonte": "Fórum de Naviraí",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "4"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "6"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "23",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "14"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "33",
+      "nome_na_fonte": "Fórum de Ponta Porã",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "6"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "18"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "30",
+        "mictorios_declarados": "6",
+        "lavatorios_declarados": "30"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "5000                5000 (inf)",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "34",
+      "nome_na_fonte": "Fórum de Coxim",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "6"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "13"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "25",
+        "mictorios_declarados": "6",
+        "lavatorios_declarados": "25"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "5000   (inf)",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "35",
+      "nome_na_fonte": "Fórum de Maracaju",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "8"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "9"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "23",
+        "mictorios_declarados": "4",
+        "lavatorios_declarados": "21"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "2 x 16000",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "36",
+      "nome_na_fonte": "Fórum de Miranda",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "10"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "18",
+        "mictorios_declarados": "4",
+        "lavatorios_declarados": "18"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 17800 (sup)",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "1 x 10.000 (chuva)",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "37",
+      "nome_na_fonte": "Fórum de Porto Murtinho",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "8",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "8"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "38",
+      "nome_na_fonte": "Fórum de Rio Brilhante",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "4"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "6"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "23",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "14"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "39",
+      "nome_na_fonte": "Fórum de Sidrolândia",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "5"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "3"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "9",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "10"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "40",
+      "nome_na_fonte": "Fórum de Brasilândia",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "3"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "2"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "8",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "7"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "41",
+      "nome_na_fonte": "Fórum de Inocência",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "5"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "12",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "9"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "1 x 10.000 (chuva)",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "42",
+      "nome_na_fonte": "Fórum de São Gabriel do Oeste",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "10"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "19",
+        "mictorios_declarados": "4",
+        "lavatorios_declarados": "19"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "2 x 17800",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "43",
+      "nome_na_fonte": "Fórum de Nioaque",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "2"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "7",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "6"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "44",
+      "nome_na_fonte": "Fórum de Bandeirantes",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "5"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "13",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "9"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "45",
+      "nome_na_fonte": "Fórum de Ribas do Rio Pardo",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "3"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "6"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "14",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "11"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "46",
+      "nome_na_fonte": "Fórum de Itaporã",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "8",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "8"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "47",
+      "nome_na_fonte": "Fórum de Deodápolis",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "2"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "7",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "6"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "48",
+      "nome_na_fonte": "Fórum de Costa Rica",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "5"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "12",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "8"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "49",
+      "nome_na_fonte": "Fórum de Itaquiraí",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "8",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "8"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "50",
+      "nome_na_fonte": "Fórum de Sonora",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "3"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "6"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "14",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "10"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "51",
+      "nome_na_fonte": "Fórum de Nova Alvorada do Sul",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "5"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "13",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "9"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 7500",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "1 x 10.000 (chuva)",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "52",
+      "nome_na_fonte": "Fórum de Dois Irmãos do Buriti",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "0"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "7"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "7",
+        "mictorios_declarados": "0",
+        "lavatorios_declarados": "7"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "2 x 1000",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "53",
+      "nome_na_fonte": "Fórum de Anastacio",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "3"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "5",
+        "mictorios_declarados": "0",
+        "lavatorios_declarados": "5"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "1 x 1000",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "54",
+      "nome_na_fonte": "Tribunal de Justiça",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "21"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "18"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "55",
+        "mictorios_declarados": "17",
+        "lavatorios_declarados": "59"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "53000",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "2 x 23.220",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "55",
+      "nome_na_fonte": "Fórum de Bataguassu",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "2"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "7",
+        "mictorios_declarados": "0",
+        "lavatorios_declarados": "6"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000",
+          "material_declarado": "Fibrocimento"
+        }
+      ]
+    },
+    {
+      "id_predio": "56",
+      "nome_na_fonte": "Fórum de Coronel Sapucaia",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "3"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "1"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "9",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "6"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "0",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "3 x 1000",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "59",
+      "nome_na_fonte": "Secretaria de Bens, Serviços e Patrimônios",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "4"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": ""
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "9",
+        "mictorios_declarados": "3",
+        "lavatorios_declarados": "8"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "4 x 1000 fibrocimento²",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "60",
+      "nome_na_fonte": "Depósitos e Arquivo Geral",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "3"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "6",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "7"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "500 (PVC)",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "61",
+      "nome_na_fonte": "Juizado Especial - 8ª Vara Justiça Itinerante e Comunitária e 9ª Vara Juizado de Trânsito",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "6"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "2"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "12",
+        "mictorios_declarados": "4",
+        "lavatorios_declarados": "12"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "62",
+      "nome_na_fonte": "CIJUS - Centro Integrado de Justiça",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "13"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "20"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "61",
+        "mictorios_declarados": "18",
+        "lavatorios_declarados": "72"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "380000",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "60000",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "63",
+      "nome_na_fonte": "EJUD",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "8"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "4"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "12",
+        "mictorios_declarados": "0",
+        "lavatorios_declarados": "12"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "9800",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "4 x 500 litros",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "64",
+      "nome_na_fonte": "NUPEMEC",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "10"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "7"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "17",
+        "mictorios_declarados": "0",
+        "lavatorios_declarados": "17"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "9800",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "4 x 500 litros",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "65",
+      "nome_na_fonte": "Anexo Tribunal de Justiça",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "5"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "5"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "20",
+        "mictorios_declarados": "5",
+        "lavatorios_declarados": "18"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "16.000 + 11.000 (pvc)",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "19000",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "66",
+      "nome_na_fonte": "Gab. dos Desembargadores",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "11"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "39"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "70",
+        "mictorios_declarados": "5",
+        "lavatorios_declarados": "69"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "2 x 29.000",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "4 x 10.900",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "67",
+      "nome_na_fonte": "Biblioteca",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "7"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": ""
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "10",
+        "mictorios_declarados": "0",
+        "lavatorios_declarados": "10"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "6 x 1000 fibrocimento²",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "68",
+      "nome_na_fonte": "Bataguassu (previsão outubro/2024)",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "3"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "3"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "8",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "8"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "69",
+      "nome_na_fonte": "Guarita TJ",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "0"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "1"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "1",
+        "mictorios_declarados": "0",
+        "lavatorios_declarados": "1"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "70",
+      "nome_na_fonte": "Anexo-refeitório",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": ""
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "2",
+        "mictorios_declarados": "",
+        "lavatorios_declarados": "4"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "71",
+      "nome_na_fonte": "Garagens TJ",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "0"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": ""
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "0",
+        "mictorios_declarados": "",
+        "lavatorios_declarados": ""
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "72",
+      "nome_na_fonte": "Anexo dos Gabinetes dos Desembargadores",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": ""
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "6"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "6",
+        "mictorios_declarados": "0",
+        "lavatorios_declarados": "6"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "3.000 + RTI 12.000",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "73",
+      "nome_na_fonte": "Guarita Gabinetes",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": ""
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "1"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "1",
+        "mictorios_declarados": "",
+        "lavatorios_declarados": "1"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "74",
+      "nome_na_fonte": "Guarita Gabinetes 2 (Restaurante)",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": ""
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "1"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "1",
+        "mictorios_declarados": "",
+        "lavatorios_declarados": "1"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "75",
+      "nome_na_fonte": "Guarita Arquivos Novos",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": ""
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "1"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "1",
+        "mictorios_declarados": "0",
+        "lavatorios_declarados": "1"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "310 (PVC)",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "76",
+      "nome_na_fonte": "Depósito Geral Galpão Novo 02",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "2"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "3"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "6",
+        "mictorios_declarados": "1",
+        "lavatorios_declarados": "7"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "500 (PVC)",
+          "material_declarado": "Concreto"
+        }
+      ]
+    },
+    {
+      "id_predio": "77",
+      "nome_na_fonte": "Arquivo (Fórum de Dourados)",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": ""
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "1"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "1",
+        "mictorios_declarados": "0",
+        "lavatorios_declarados": "1"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "78",
+      "nome_na_fonte": "Anexo Novo (Fórum de Dourados)",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "8"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "17"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "55",
+        "mictorios_declarados": "8",
+        "lavatorios_declarados": "41"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "16.500 (inf) + 31.220 (sup)",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    },
+    {
+      "id_predio": "79",
+      "nome_na_fonte": "Arquivo (Fórum de Corumbá)",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": ""
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": ""
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "",
+        "mictorios_declarados": "",
+        "lavatorios_declarados": ""
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": ""
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": ""
+        }
+      ]
+    },
+    {
+      "id_predio": "80",
+      "nome_na_fonte": "Arquivo (Fórum de Três Lagoas)",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": ""
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": ""
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "",
+        "mictorios_declarados": "",
+        "lavatorios_declarados": ""
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": ""
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": ""
+        }
+      ]
+    },
+    {
+      "id_predio": "223",
+      "nome_na_fonte": "Casa da Mulher (salas cedidas — prédio da Prefeitura)",
+      "data_referencia": "2026-08-17",
+      "sanitarios": [
+        {
+          "tipo": "coletivo",
+          "quantidade_declarada": "1"
+        },
+        {
+          "tipo": "privativo",
+          "quantidade_declarada": "2"
+        }
+      ],
+      "loucas": {
+        "vasos_declarados": "6",
+        "mictorios_declarados": "2",
+        "lavatorios_declarados": "8"
+      },
+      "reservatorios": [
+        {
+          "posicao": "A",
+          "capacidade_declarada": "",
+          "material_declarado": "Concreto"
+        },
+        {
+          "posicao": "B",
+          "capacidade_declarada": "",
+          "material_declarado": "Fibrocimento/PVC"
+        }
+      ]
+    }
+  ]
+}
