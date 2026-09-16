@@ -1,0 +1,107 @@
+version: 2
+
+models:
+  - name: stg_imoveis
+    description: Cadastro atual tipado e reconciliado; somente IDs oficiais.
+    columns:
+      - name: id_predio
+        data_tests:
+          - not_null
+          - unique
+      - name: nome_oficial
+        data_tests:
+          - not_null
+      - name: uf
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['MS']
+      - name: propriedade
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['PROPRIO', 'CEDIDO', 'NAO_INFORMADO']
+      - name: categoria_funcional
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['PID', 'PREDIO_AVULSO', 'IMOVEL_INSTITUCIONAL']
+
+  - name: quarentena_imoveis
+    description: Registros cadastrais sem chave confiável, preservados para correção.
+    columns:
+      - name: motivo_quarentena
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['ID_PREDIO_AUSENTE_OU_INVALIDO']
+
+  - name: stg_patrimonio
+    description: Medições patrimoniais convertidas do formato numérico brasileiro.
+    columns:
+      - name: id_predio
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('stg_imoveis')
+                field: id_predio
+      - name: situacao_patrimonial
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['PROPRIO', 'CEDIDO', 'ALUGADO', 'NAO_INFORMADO']
+
+  - name: stg_vistorias
+    description: Uma vistoria extraída do JSON por imóvel e data.
+    columns:
+      - name: id_predio
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('stg_imoveis')
+                field: id_predio
+      - name: data_referencia
+        data_tests:
+          - not_null
+
+  - name: stg_sanitarios
+    description: Tipos de sanitário declarados nas vistorias.
+    columns:
+      - name: id_predio
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_imoveis')
+                field: id_predio
+      - name: tipo_sanitario
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['COLETIVO', 'PRIVATIVO']
+
+  - name: stg_reservatorios
+    description: Declarações A/B com capacidade interpretada e status explícito.
+    columns:
+      - name: id_predio
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_imoveis')
+                field: id_predio
+      - name: posicao
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['A', 'B']
+      - name: status_interpretacao
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['INTERPRETADO', 'NAO_INTERPRETADO', 'SEM_CAPACIDADE_DECLARADA']
