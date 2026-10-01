@@ -43,17 +43,31 @@ source .venv/bin/activate
 pip install --no-cache-dir -r requirements.txt
 cp .env.example .env
 
-python -m src.pipeline
-cd dbt
-dbt build
-cd ..
+python scripts/executar_tudo.py --zerar --completo --abrir
+```
 
+Um comando faz a jornada inteira e imprime um resumo com status e tempo de cada etapa:
+
+| Opção | Efeito |
+|---|---|
+| *(sem opção)* | ingestão, `dbt build` e dashboard |
+| `--zerar` | apaga Bronze, Silver, Gold, catálogo e artefatos do dbt antes de começar |
+| `--completo` | inclui `pytest`, time travel e as consultas de resposta e cobertura |
+| `--abrir` | abre `data/gold/dashboard.html` no navegador ao final |
+
+Qualquer falha interrompe a sequência e devolve código de saída diferente de zero.
+
+As etapas também podem ser executadas uma a uma:
+
+```bash
+python -m src.pipeline
+cd dbt && dbt build && cd ..
 python scripts/executar_sql.py consultas/resposta.sql
 python scripts/gerar_dashboard.py
 ```
 
 O último comando publica `data/gold/dashboard.html`, que responde à pergunta do início
-com filtros de comarca e situação patrimonial. Abra com `xdg-open data/gold/dashboard.html`.
+com filtros de comarca e situação patrimonial.
 
 Resultado esperado do `dbt build`:
 
@@ -91,14 +105,11 @@ A consulta é idêntica nas duas versões; somente o snapshot muda.
 ## Reprocessar desde o zero
 
 ```bash
-python scripts/zerar.py
-python -m src.pipeline
-cd dbt && dbt build && cd ..
-python scripts/gerar_dashboard.py
+python scripts/executar_tudo.py --zerar --completo
 ```
 
-O `dbt build` depende das pastas criadas por `python -m src.pipeline`; execute os dois na
-ordem acima. `zerar.py` remove exclusivamente Bronze, Silver, Gold, catálogo DuckDB e artefatos do
+O `dbt build` depende das pastas criadas por `python -m src.pipeline`; o comando acima
+garante a ordem correta. `zerar.py` remove exclusivamente Bronze, Silver, Gold, catálogo DuckDB e artefatos do
 dbt. As fontes de `data/raw/`, o código e os documentos são preservados.
 
 ## Linhagem
@@ -206,7 +217,7 @@ Detalhes: [`docs/testes.md`](docs/testes.md) e
 ├── src/                     # ingestão Python
 ├── dbt/                     # transformações, testes e documentação
 ├── consultas/               # resposta e auditoria de cobertura
-├── scripts/                 # time travel, dashboard, reset e preparação
+├── scripts/                 # execução completa, time travel, dashboard e reset
 ├── tests/                   # testes Python
 ├── DECISOES.md              # quatro decisões exigidas
 └── docs/                    # ADRs, arquitetura, testes e apresentação
