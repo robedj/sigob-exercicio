@@ -43,7 +43,7 @@ source .venv/bin/activate
 pip install --no-cache-dir -r requirements.txt
 cp .env.example .env
 
-python scripts/executar_tudo.py --zerar --completo --abrir
+python scripts/executar_tudo.py --zerar --completo
 ```
 
 Um comando faz a jornada inteira e imprime um resumo com status e tempo de cada etapa:
@@ -53,7 +53,7 @@ Um comando faz a jornada inteira e imprime um resumo com status e tempo de cada 
 | *(sem opção)* | ingestão, `dbt build` e dashboard |
 | `--zerar` | apaga Bronze, Silver, Gold, catálogo e artefatos do dbt antes de começar |
 | `--completo` | inclui `pytest`, time travel e as consultas de resposta e cobertura |
-| `--abrir` | abre `data/gold/dashboard.html` no navegador ao final |
+| `--nao-abrir` | não abre o navegador no final; por padrão o dashboard abre sozinho |
 
 Qualquer falha interrompe a sequência e devolve código de saída diferente de zero.
 

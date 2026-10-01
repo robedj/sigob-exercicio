@@ -3,11 +3,11 @@
     python scripts/executar_tudo.py              # pipeline, dbt build e dashboard
     python scripts/executar_tudo.py --zerar      # apaga as camadas geradas antes
     python scripts/executar_tudo.py --completo   # inclui pytest, time travel e consultas
-    python scripts/executar_tudo.py --abrir      # abre o dashboard no navegador
+    python scripts/executar_tudo.py --nao-abrir  # não abre o navegador no final
 
 Cada etapa herda a saída no terminal, para a execução ficar visível. No final imprime
-um resumo com status e tempo de cada etapa. Qualquer falha interrompe a sequência e
-devolve código de saída diferente de zero.
+um resumo com status e tempo de cada etapa e abre o dashboard no navegador. Qualquer
+falha interrompe a sequência e devolve código de saída diferente de zero.
 """
 
 from __future__ import annotations
@@ -17,6 +17,7 @@ import shutil
 import subprocess
 import sys
 import time
+import webbrowser
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -29,6 +30,46 @@ DBT_BIN = Path(PY).parent / "dbt"
 
 class Falha(Exception):
     """Uma etapa terminou com código diferente de zero."""
+
+
+def abrir_no_navegador(caminho: Path) -> bool:
+    """Abre o arquivo no navegador padrão e devolve se algum método funcionou.
+
+    O processo do navegador é destacado da sessão para sobreviver à saída deste
+    script; sem isso ele morre junto e a janela não chega a aparecer.
+    """
+    if not caminho.exists():
+        return False
+
+    uri = caminho.resolve().as_uri()
+
+    comandos = {
+        "linux": ["xdg-open"],
+        "darwin": ["open"],
+    }.get(sys.platform, [])
+    if sys.platform.startswith("win"):
+        comandos = ["cmd", "/c", "start", ""]
+
+    for comando in ([comandos] if comandos else []):
+        executavel = comando[0]
+        if executavel in ("cmd",) or shutil.which(executavel):
+            try:
+                subprocess.Popen(
+                    comando + [str(caminho)],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    start_new_session=True,
+                )
+                # Dá tempo ao navegador de assumir o arquivo antes de sairmos.
+                time.sleep(1.5)
+                return True
+            except OSError:
+                pass
+
+    try:
+        return webbrowser.open(uri)
+    except webbrowser.Error:
+        return False
 
 
 def _executavel_dbt() -> list[str]:
@@ -130,8 +171,18 @@ def main() -> int:
         help="inclui pytest, time travel e as consultas de resposta e cobertura",
     )
     parser.add_argument(
-        "--abrir", action="store_true", help="abre o dashboard no navegador ao final"
+        "--nao-abrir",
+        dest="abrir",
+        action="store_false",
+        help="não abre o dashboard no navegador ao final (padrão: abre)",
     )
+    parser.add_argument(
+        "--abrir",
+        dest="abrir",
+        action="store_true",
+        help=argparse.SUPPRESS,  # mantido por compatibilidade; já é o padrão
+    )
+    parser.set_defaults(abrir=True)
     argumentos = parser.parse_args()
 
     resultados: list[dict] = []
@@ -148,12 +199,14 @@ def main() -> int:
     if erro:
         return 1
 
-    if argumentos.abrir and shutil.which("xdg-open"):
-        subprocess.Popen(
-            ["xdg-open", str(DASHBOARD)],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
+    if argumentos.abrir:
+        if abrir_no_navegador(DASHBOARD):
+            print("  Aberto no navegador padrão.")
+        else:
+            print(
+                "  Não foi possível abrir automaticamente; abra o arquivo acima "
+                "no navegador."
+            )
     return 0
 
 
