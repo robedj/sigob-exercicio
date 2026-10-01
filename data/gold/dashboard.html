@@ -3,268 +3,684 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SIGOB Imóveis — Aproveitamento construtivo</title>
+<title>SIGOB Imóveis — do dado bruto à resposta</title>
 <style>
   :root {
-    --ink: #1b1a17; --ink-2: #4a463f; --ink-3: #7d776c;
-    --surface: #faf8f5; --card: #ffffff; --linha: #e6e1d8;
-    --marca: #8a6a2f; --marca-fraca: #e8dcc4; --alerta: #8c4a2f;
+    --ink:#1b1a17; --ink-2:#4a463f; --ink-3:#7d776c;
+    --surface:#faf8f5; --card:#fff; --linha:#e6e1d8; --sutil:#f1ece3;
+    --marca:#8a6a2f; --marca-fraca:#e8dcc4;
+    --ok:#3f6b45; --ok-fraca:#dfeadf; --atencao:#8c5a2f; --erro:#8c3a2f;
+    --bronze:#9c6f3f; --silver:#7b7f86; --inter:#5f6f7a; --gold:#a8872f;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --ink: #f2efe9; --ink-2: #c4bdb0; --ink-3: #908a7e;
-      --surface: #16150f; --card: #211f18; --linha: #38352b;
-      --marca: #d8ad5c; --marca-fraca: #4a3d22; --alerta: #d98c66;
+      --ink:#f2efe9; --ink-2:#c4bdb0; --ink-3:#908a7e;
+      --surface:#141309; --card:#201e17; --linha:#38352b; --sutil:#2a271f;
+      --marca:#d8ad5c; --marca-fraca:#4a3d22;
+      --ok:#7fb288; --ok-fraca:#2a3a2c; --atencao:#d9a066; --erro:#d98c7a;
+      --bronze:#c9924f; --silver:#a8adb5; --inter:#8fa3b0; --gold:#d8b95c;
     }
   }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; padding: 28px 20px 56px;
-    background: var(--surface); color: var(--ink);
-    font: 14px/1.5 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
-  .wrap { max-width: 1120px; margin: 0 auto; }
-  h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: -.01em; }
-  .sub { color: var(--ink-3); margin: 0 0 24px; font-size: 13px; }
-  .filtros {
-    display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end;
-    padding: 16px; background: var(--card); border: 1px solid var(--linha);
-    border-radius: 10px; margin-bottom: 20px;
-  }
-  .campo { display: flex; flex-direction: column; gap: 5px; }
-  .campo label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); }
-  select {
-    min-width: 210px; padding: 8px 10px; font: inherit; color: var(--ink);
-    background: var(--surface); border: 1px solid var(--linha); border-radius: 7px;
-  }
-  button {
-    padding: 8px 14px; font: inherit; color: var(--ink-2); cursor: pointer;
-    background: var(--surface); border: 1px solid var(--linha); border-radius: 7px;
-  }
-  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 12px; margin-bottom: 22px; }
-  .kpi { padding: 14px 16px; background: var(--card); border: 1px solid var(--linha); border-radius: 10px; }
-  .kpi .rotulo { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); }
-  .kpi .valor { font-size: 27px; font-variant-numeric: tabular-nums; margin-top: 5px; letter-spacing: -.02em; }
-  .kpi .nota { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
-  .painel { padding: 18px; background: var(--card); border: 1px solid var(--linha); border-radius: 10px; margin-bottom: 20px; }
-  .painel h2 { font-size: 14px; margin: 0 0 3px; }
-  .painel .ajuda { font-size: 12px; color: var(--ink-3); margin: 0 0 16px; }
-  .barras { display: flex; flex-direction: column; gap: 9px; }
-  .barra { display: grid; grid-template-columns: 185px 1fr 74px; gap: 11px; align-items: center; }
-  .barra .nome { font-size: 12px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .trilha { height: 13px; background: var(--marca-fraca); border-radius: 3px; position: relative; }
-  .preenche { height: 100%; background: var(--marca); border-radius: 0 4px 4px 0; min-width: 2px; }
-  .barra .num { font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-2); }
-  .barra:hover .nome, .barra:hover .num { color: var(--ink); }
-  .ref100 { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--ink-3); opacity: .55; }
-  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-  th, td { padding: 7px 9px; text-align: left; border-bottom: 1px solid var(--linha); }
-  th { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); font-weight: 600; }
-  td.n { text-align: right; font-variant-numeric: tabular-nums; }
-  .tabela-rolagem { overflow-x: auto; max-height: 430px; overflow-y: auto; }
-  .vazio { color: var(--ink-3); font-size: 13px; padding: 14px 0; }
-  .aviso { font-size: 12px; color: var(--alerta); }
-  footer { color: var(--ink-3); font-size: 11.5px; margin-top: 26px; line-height: 1.7; }
-  @media (max-width: 560px) { .barra { grid-template-columns: 110px 1fr 62px; } }
+  *{box-sizing:border-box}
+  body{margin:0;padding:26px 20px 60px;background:var(--surface);color:var(--ink);
+       font:14px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1180px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 6px;letter-spacing:-.015em}
+  .pergunta{margin:0 0 6px;padding:13px 16px;background:var(--card);
+            border-left:3px solid var(--marca);border-radius:0 8px 8px 0;
+            font-size:14.5px;color:var(--ink)}
+  .meta{color:var(--ink-3);font-size:12px;margin:8px 0 22px}
+  nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px;border-bottom:1px solid var(--linha);padding-bottom:0}
+  nav button{padding:9px 14px;font:inherit;font-size:13px;color:var(--ink-3);cursor:pointer;
+             background:none;border:0;border-bottom:2px solid transparent;border-radius:0}
+  nav button:hover{color:var(--ink)}
+  nav button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--marca);font-weight:600}
+  section[hidden]{display:none!important}
+  h2{font-size:16px;margin:28px 0 4px;letter-spacing:-.01em}
+  h2:first-child{margin-top:0}
+  .ajuda{font-size:12.5px;color:var(--ink-3);margin:0 0 15px;max-width:76ch}
+  .painel{padding:17px;background:var(--card);border:1px solid var(--linha);border-radius:10px;margin-bottom:18px}
+  .filtros{display:flex;flex-wrap:wrap;gap:13px;align-items:flex-end;padding:15px;
+           background:var(--card);border:1px solid var(--linha);border-radius:10px;margin-bottom:18px}
+  .campo{display:flex;flex-direction:column;gap:5px}
+  .campo label{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3)}
+  select,button.acao{padding:8px 11px;font:inherit;color:var(--ink);background:var(--surface);
+                     border:1px solid var(--linha);border-radius:7px}
+  select{min-width:205px}
+  button.acao{cursor:pointer;color:var(--ink-2)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(162px,1fr));gap:11px;margin-bottom:20px}
+  .kpi{padding:13px 15px;background:var(--card);border:1px solid var(--linha);border-radius:10px}
+  .kpi .rotulo{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3)}
+  .kpi .valor{font-size:26px;font-variant-numeric:tabular-nums;margin-top:4px;letter-spacing:-.02em}
+  .kpi .nota{font-size:11px;color:var(--ink-3);margin-top:2px}
+  .kpi.destaque{border-color:var(--marca)}
+  .barras{display:flex;flex-direction:column;gap:8px}
+  .barra{display:grid;grid-template-columns:200px 1fr 78px;gap:11px;align-items:center}
+  .barra .nome{font-size:12px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .trilha{height:13px;background:var(--marca-fraca);border-radius:3px;position:relative}
+  .preenche{height:100%;background:var(--marca);border-radius:0 4px 4px 0;min-width:2px}
+  .preenche.verde{background:var(--ok)}
+  .barra .num{font-size:12px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+  .ref100{position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--ink-3);opacity:.5}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th,td{padding:7px 9px;text-align:left;border-bottom:1px solid var(--linha);vertical-align:top}
+  th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:600;
+     position:sticky;top:0;background:var(--card)}
+  td.n{text-align:right;font-variant-numeric:tabular-nums}
+  .rolagem{overflow:auto;max-height:440px;border-radius:7px}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
+       background:var(--sutil);padding:1px 5px;border-radius:4px}
+  .vazio{color:var(--ink-3);font-size:13px;padding:13px 0;margin:0}
+  .selo{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10.5px;
+        letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--linha);color:var(--ink-2)}
+  .selo.ok{background:var(--ok-fraca);border-color:transparent;color:var(--ok)}
+  .selo.aviso{color:var(--atencao)}
+  .grade2{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px}
+  .etapa{padding:15px;background:var(--card);border:1px solid var(--linha);border-radius:10px;
+         border-top:3px solid var(--marca)}
+  .etapa.bronze{border-top-color:var(--bronze)}
+  .etapa.silver{border-top-color:var(--silver)}
+  .etapa.intermediate{border-top-color:var(--inter)}
+  .etapa.gold{border-top-color:var(--gold)}
+  .etapa h3{font-size:13.5px;margin:0 0 3px}
+  .etapa .sub{font-size:11.5px;color:var(--ink-3);margin:0 0 11px}
+  .lista{list-style:none;padding:0;margin:0;font-size:12.5px}
+  .lista li{padding:6px 0;border-top:1px solid var(--linha)}
+  .lista li:first-child{border-top:0}
+  .lista .quanto{float:right;font-variant-numeric:tabular-nums;color:var(--ink-3);margin-left:10px}
+  .dag-rolagem{overflow-x:auto;padding-bottom:8px}
+  .dag-aresta{fill:none;stroke:var(--ink-3);stroke-width:1.2;opacity:.45}
+  .dag-no rect{fill:var(--sutil);stroke:var(--linha);stroke-width:1}
+  .dag-no text{font-size:11.5px;fill:var(--ink)}
+  .dag-no.camada-bronze rect{stroke:var(--bronze);stroke-width:1.6}
+  .dag-no.camada-silver rect{stroke:var(--silver);stroke-width:1.6}
+  .dag-no.camada-intermediate rect{stroke:var(--inter);stroke-width:1.6}
+  .dag-no.camada-gold rect{stroke:var(--gold);stroke-width:1.6}
+  .dag-nivel{font-size:10.5px;fill:var(--ink-3);letter-spacing:.06em;text-transform:uppercase}
+  .legenda{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:11.5px;color:var(--ink-2)}
+  .legenda i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;
+             vertical-align:-1px;border:1.6px solid var(--linha);background:var(--sutil)}
+  .legenda .lb{border-color:var(--bronze)} .legenda .ls{border-color:var(--silver)}
+  .legenda .li{border-color:var(--inter)} .legenda .lg{border-color:var(--gold)}
+  footer{color:var(--ink-3);font-size:11.5px;margin-top:30px;line-height:1.8;
+         border-top:1px solid var(--linha);padding-top:14px}
+  @media (max-width:620px){.barra{grid-template-columns:116px 1fr 64px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <h1>Aproveitamento construtivo dos imóveis do TJMS</h1>
-  <p class="sub">Camada de consumo (Gold) · data de referência 17/08/2026 · as medidas vêm calculadas e testadas do dbt; este painel apenas filtra e agrega.</p>
+  <h1>SIGOB Imóveis — do dado bruto à resposta</h1>
+  <p class="pergunta"><strong>Pergunta de negócio:</strong> Qual é o índice de aproveitamento construtivo dos imóveis geridos pelo TJMS e como ele varia por comarca e situação patrimonial?</p>
+  <p class="meta">Data de referência do levantamento: 17/08/2026 · dashboard gerado em 01/10/2026 19:26 ·
+     as medidas vêm calculadas e testadas da Gold; este painel apenas filtra, agrega e exibe.</p>
 
-  <div class="filtros">
-    <div class="campo">
-      <label for="f-comarca">Comarca</label>
-      <select id="f-comarca"></select>
+  <nav role="tablist">
+    <button role="tab" data-aba="resposta" aria-selected="true">Resposta</button>
+    <button role="tab" data-aba="etapas" aria-selected="false">Etapas do pipeline</button>
+    <button role="tab" data-aba="linhagem" aria-selected="false">Linhagem (DAG)</button>
+    <button role="tab" data-aba="incompletos" aria-selected="false">Registros incompletos</button>
+    <button role="tab" data-aba="qualidade" aria-selected="false">Qualidade</button>
+    <button role="tab" data-aba="execucao" aria-selected="false">Execução</button>
+  </nav>
+
+  <!-- ---------------------------------------------------------------- -->
+  <section id="aba-resposta">
+    <div class="filtros">
+      <div class="campo"><label for="f-comarca">Comarca</label><select id="f-comarca"></select></div>
+      <div class="campo"><label for="f-situacao">Situação patrimonial</label><select id="f-situacao"></select></div>
+      <button class="acao" id="limpar" type="button">Limpar filtros</button>
     </div>
-    <div class="campo">
-      <label for="f-situacao">Situação patrimonial</label>
-      <select id="f-situacao"></select>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="painel">
+      <h2>Índice de aproveitamento por comarca</h2>
+      <p class="ajuda">Razão global da comarca: soma das áreas construídas ÷ soma das áreas de terreno.
+         A linha vertical marca 100%; acima dela a área construída soma mais de um pavimento, o que não é erro.</p>
+      <div class="barras" id="barras-comarca"></div>
     </div>
-    <button id="limpar" type="button">Limpar filtros</button>
-  </div>
 
-  <div class="kpis" id="kpis"></div>
-
-  <div class="painel">
-    <h2>Índice de aproveitamento por comarca</h2>
-    <p class="ajuda">Razão global da comarca: soma das áreas construídas ÷ soma das áreas de terreno. A linha vertical marca 100%; acima disso a área construída soma mais de um pavimento.</p>
-    <div class="barras" id="barras"></div>
-  </div>
-
-  <div class="painel">
-    <h2>Imóveis no recorte</h2>
-    <p class="ajuda">Medida ausente aparece como “—”, nunca como zero.</p>
-    <div class="tabela-rolagem">
-      <table>
-        <thead><tr>
-          <th>ID</th><th>Nome oficial</th><th>Comarca</th><th>Situação</th>
-          <th class="n">Constr. (m²)</th><th class="n">Terreno (m²)</th><th class="n">Índice</th>
-        </tr></thead>
-        <tbody id="corpo"></tbody>
-      </table>
+    <div class="painel">
+      <h2>Cobertura da resposta</h2>
+      <p class="ajuda">Quantos imóveis cada etapa da métrica alcança. Cobertura também é resultado.</p>
+      <div class="barras" id="barras-cobertura"></div>
     </div>
-  </div>
 
-  <div class="painel">
-    <h2>Quarentena</h2>
-    <p class="ajuda">Registro de negócio sem ID oficial. Não entra na estrela e não é descartado: fica isolado com origem, linha e motivo.</p>
-    <div class="tabela-rolagem">
-      <table>
-        <thead><tr><th>Arquivo</th><th class="n">Linha</th><th>Nome original</th><th>Comarca</th><th>Motivo</th></tr></thead>
-        <tbody id="corpo-quarentena"></tbody>
-      </table>
+    <div class="painel">
+      <h2>Imóveis no recorte</h2>
+      <p class="ajuda">Medida ausente aparece como “—”, nunca como zero.</p>
+      <div class="rolagem">
+        <table>
+          <thead><tr><th>ID</th><th>Nome oficial</th><th>Comarca</th><th>Situação</th>
+            <th class="n">Constr. m²</th><th class="n">Terreno m²</th><th class="n">Índice</th>
+            <th class="n">Sanit.</th><th class="n">Reserva L/m²</th></tr></thead>
+          <tbody id="corpo-imoveis"></tbody>
+        </table>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- -->
+  <section id="aba-etapas" hidden>
+    <h2>Raw — os arquivos como foram recebidos</h2>
+    <p class="ajuda">Ponto de reprocessamento. O pipeline nunca escreve aqui.</p>
+    <div class="painel"><div class="rolagem"><table>
+      <thead><tr><th>Arquivo</th><th>Formato</th><th class="n">Bytes</th><th class="n">Linhas físicas</th></tr></thead>
+      <tbody id="corpo-raw"></tbody></table></div></div>
+
+    <h2>Defeitos e ambiguidades preservados</h2>
+    <p class="ajuda">Nada disso foi corrigido na ingestão. A interpretação começa na Silver.</p>
+    <div class="painel"><ul class="lista" id="lista-defeitos"></ul></div>
+
+    <h2>Bronze — preservação em Delta Lake</h2>
+    <p class="ajuda">Cópia fiel e consultável, com metadados técnicos de origem, linha, versão, instante e hash.
+       Cada gravação é uma transação registrada no <code>_delta_log</code>.</p>
+    <div class="painel"><div class="rolagem"><table>
+      <thead><tr><th>Tabela</th><th class="n">Versão</th><th>Operação</th><th>Modo</th>
+        <th class="n">Linhas</th><th class="n">Arq. +</th><th class="n">Arq. −</th></tr></thead>
+      <tbody id="corpo-bronze"></tbody></table></div></div>
+
+    <h2>Time travel — a mesma consulta em duas versões</h2>
+    <p class="ajuda">O código da consulta é idêntico; o que muda é a versão da tabela que o Delta reconstrói.</p>
+    <div class="painel"><div class="rolagem"><table>
+      <thead><tr><th class="n">Versão</th><th>Estado</th><th class="n">Linhas físicas</th>
+        <th class="n">Imóveis com ID</th><th class="n">Registro sem ID</th></tr></thead>
+      <tbody id="corpo-tt"></tbody></table></div></div>
+
+    <h2>Silver, Intermediate e Gold — modelos dbt</h2>
+    <p class="ajuda">Toda regra de negócio está aqui, em modelo versionado. Não há script manual entre camadas.</p>
+    <div class="grade2" id="grade-modelos"></div>
+
+    <h2>Por que a camada Intermediate existe</h2>
+    <p class="ajuda">Sanitários e reservatórios têm vários registros por vistoria. Juntar as duas coleções
+       direto na fato multiplicaria o imóvel e distorceria áreas e médias — sem gerar erro técnico.</p>
+    <div class="painel" id="painel-fanout"></div>
+
+    <h2>Onde cada coisa é calculada</h2>
+    <p class="ajuda">A regra de negócio começa na Silver e termina na Gold. A ingestão não calcula e a
+       camada de resposta não recalcula.</p>
+    <div class="painel"><div class="rolagem"><table>
+      <thead><tr><th>Etapa</th><th>Calcula métrica?</th><th>O que faz</th><th>Onde no código</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Ingestão Python</strong></td>
+          <td><span class="selo">não</span></td>
+          <td>Lê Raw e grava Bronze. Acrescenta só metadados técnicos: arquivo, linha, versão, instante e hash.</td>
+          <td><code>src/ingest.py</code><br><code>src/pipeline.py</code></td>
+        </tr>
+        <tr>
+          <td><strong>Silver</strong></td>
+          <td><span class="selo">converte, não calcula métrica</span></td>
+          <td>Descarta linhas estruturais, tipa ID e data, converte decimal brasileiro
+              (<code>23.364,50</code> → <code>23364.50</code>), interpreta capacidade de reservatório,
+              separa propriedade/categoria/tipo e isola o registro sem ID.</td>
+          <td><code>stg_patrimonio.sql:34-38</code><br><code>stg_imoveis.sql:11,23,27</code></td>
+        </tr>
+        <tr>
+          <td><strong>Intermediate</strong></td>
+          <td><span class="selo">agrega coleções</span></td>
+          <td>Soma e conta sanitários e reservatórios no grão imóvel/data, antes da junção com a fato.</td>
+          <td><code>int_reservatorios_por_imovel.sql:20</code><br><code>int_sanitarios_por_imovel.sql</code></td>
+        </tr>
+        <tr>
+          <td><strong>Gold — fato</strong></td>
+          <td><span class="selo ok">sim: indicadores por imóvel</span></td>
+          <td>Índice de aproveitamento, densidade sanitária e reserva por m². Também marca a
+              elegibilidade: sem área de terreno maior que zero, o resultado é nulo, nunca zero.</td>
+          <td><code>fato_imovel_snapshot.sql:59</code> índice<br>
+              <code>:64</code> densidade · <code>:69</code> reserva</td>
+        </tr>
+        <tr>
+          <td><strong>Gold — agregados</strong></td>
+          <td><span class="selo ok">sim: métricas agregadas</span></td>
+          <td>Média dos índices individuais e índice global ponderado, no total e por
+              comarca × situação patrimonial.</td>
+          <td><code>agg_aproveitamento_geral.sql:10,16</code><br>
+              <code>agg_aproveitamento_comarca.sql:12,18</code></td>
+        </tr>
+        <tr>
+          <td><strong>Consulta final e este dashboard</strong></td>
+          <td><span class="selo">não</span></td>
+          <td>Leem medidas prontas da Gold e apenas filtram, agrupam, ordenam e exibem.
+              A consulta principal não tem <code>WHERE</code>.</td>
+          <td><code>consultas/resposta.sql</code><br><code>scripts/gerar_dashboard.py</code></td>
+        </tr>
+      </tbody>
+    </table></div></div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- -->
+  <section id="aba-linhagem" hidden>
+    <h2>Grafo de dependências</h2>
+    <p class="ajuda">Gerado a partir do <code>manifest.json</code> real do dbt, pelos <code>source()</code> e
+       <code>ref()</code> usados nos modelos. <strong>Não é linha do tempo:</strong> cada seta significa
+       “preciso deste modelo construído antes”. O nível é a distância máxima até uma fonte.</p>
+    <div class="painel">
+      <div class="dag-rolagem"><svg viewBox="0 0 1680 348" width="1680" height="348" role="img" aria-label="Grafo de dependências entre fontes e modelos dbt"><text x="22" y="32" class="dag-nivel">nível 0 · 3</text><text x="266" y="32" class="dag-nivel">nível 1 · 4</text><text x="510" y="32" class="dag-nivel">nível 2 · 5</text><text x="754" y="32" class="dag-nivel">nível 3 · 2</text><text x="998" y="32" class="dag-nivel">nível 4 · 1</text><text x="1242" y="32" class="dag-nivel">nível 5 · 1</text><text x="1486" y="32" class="dag-nivel">nível 6 · 2</text><path d="M 682 290.0 C 718.0 290.0, 718.0 128.0, 754 128.0" class="dag-aresta"/><path d="M 438 236.0 C 596.0 236.0, 596.0 128.0, 754 128.0" class="dag-aresta"/><path d="M 682 236.0 C 718.0 236.0, 718.0 74.0, 754 74.0" class="dag-aresta"/><path d="M 682 74.0 C 962.0 74.0, 962.0 74.0, 1242 74.0" class="dag-aresta"/><path d="M 682 128.0 C 962.0 128.0, 962.0 74.0, 1242 74.0" class="dag-aresta"/><path d="M 682 182.0 C 962.0 182.0, 962.0 74.0, 1242 74.0" class="dag-aresta"/><path d="M 1170 74.0 C 1206.0 74.0, 1206.0 74.0, 1242 74.0" class="dag-aresta"/><path d="M 438 128.0 C 474.0 128.0, 474.0 128.0, 510 128.0" class="dag-aresta"/><path d="M 438 128.0 C 474.0 128.0, 474.0 182.0, 510 182.0" class="dag-aresta"/><path d="M 1414 74.0 C 1450.0 74.0, 1450.0 74.0, 1486 74.0" class="dag-aresta"/><path d="M 682 74.0 C 840.0 74.0, 840.0 74.0, 998 74.0" class="dag-aresta"/><path d="M 682 128.0 C 840.0 128.0, 840.0 74.0, 998 74.0" class="dag-aresta"/><path d="M 682 182.0 C 840.0 182.0, 840.0 74.0, 998 74.0" class="dag-aresta"/><path d="M 926 74.0 C 962.0 74.0, 962.0 74.0, 998 74.0" class="dag-aresta"/><path d="M 926 128.0 C 962.0 128.0, 962.0 74.0, 998 74.0" class="dag-aresta"/><path d="M 438 128.0 C 718.0 128.0, 718.0 74.0, 998 74.0" class="dag-aresta"/><path d="M 438 182.0 C 718.0 182.0, 718.0 74.0, 998 74.0" class="dag-aresta"/><path d="M 1414 74.0 C 1450.0 74.0, 1450.0 128.0, 1486 128.0" class="dag-aresta"/><path d="M 438 128.0 C 474.0 128.0, 474.0 74.0, 510 74.0" class="dag-aresta"/><path d="M 438 236.0 C 474.0 236.0, 474.0 236.0, 510 236.0" class="dag-aresta"/><path d="M 194 182.0 C 230.0 182.0, 230.0 182.0, 266 182.0" class="dag-aresta"/><path d="M 438 236.0 C 474.0 236.0, 474.0 290.0, 510 290.0" class="dag-aresta"/><path d="M 194 128.0 C 230.0 128.0, 230.0 236.0, 266 236.0" class="dag-aresta"/><path d="M 194 74.0 C 230.0 74.0, 230.0 74.0, 266 74.0" class="dag-aresta"/><path d="M 194 74.0 C 230.0 74.0, 230.0 128.0, 266 128.0" class="dag-aresta"/><g class="dag-no camada-bronze"><title>imoveis — camada Bronze (nível 0)</title><rect x="22" y="56" width="172" height="36" rx="7"/><text x="33" y="79">imoveis</text></g><g class="dag-no camada-bronze"><title>infraestrutura_predial — camada Bronze (nível 0)</title><rect x="22" y="110" width="172" height="36" rx="7"/><text x="33" y="133">infraestrutura_predial</text></g><g class="dag-no camada-bronze"><title>patrimonio — camada Bronze (nível 0)</title><rect x="22" y="164" width="172" height="36" rx="7"/><text x="33" y="187">patrimonio</text></g><g class="dag-no camada-silver"><title>quarentena_imoveis — camada Silver (nível 1)</title><rect x="266" y="56" width="172" height="36" rx="7"/><text x="277" y="79">quarentena_imoveis</text></g><g class="dag-no camada-silver"><title>stg_imoveis — camada Silver (nível 1)</title><rect x="266" y="110" width="172" height="36" rx="7"/><text x="277" y="133">stg_imoveis</text></g><g class="dag-no camada-silver"><title>stg_patrimonio — camada Silver (nível 1)</title><rect x="266" y="164" width="172" height="36" rx="7"/><text x="277" y="187">stg_patrimonio</text></g><g class="dag-no camada-silver"><title>stg_vistorias — camada Silver (nível 1)</title><rect x="266" y="218" width="172" height="36" rx="7"/><text x="277" y="241">stg_vistorias</text></g><g class="dag-no camada-gold"><title>dim_imovel — camada Gold (nível 2)</title><rect x="510" y="56" width="172" height="36" rx="7"/><text x="521" y="79">dim_imovel</text></g><g class="dag-no camada-gold"><title>dim_localidade — camada Gold (nível 2)</title><rect x="510" y="110" width="172" height="36" rx="7"/><text x="521" y="133">dim_localidade</text></g><g class="dag-no camada-gold"><title>dim_tempo — camada Gold (nível 2)</title><rect x="510" y="164" width="172" height="36" rx="7"/><text x="521" y="187">dim_tempo</text></g><g class="dag-no camada-silver"><title>stg_reservatorios — camada Silver (nível 2)</title><rect x="510" y="218" width="172" height="36" rx="7"/><text x="521" y="241">stg_reservatorios</text></g><g class="dag-no camada-silver"><title>stg_sanitarios — camada Silver (nível 2)</title><rect x="510" y="272" width="172" height="36" rx="7"/><text x="521" y="295">stg_sanitarios</text></g><g class="dag-no camada-intermediate"><title>int_reservatorios_por_imovel — camada Intermediate (nível 3)</title><rect x="754" y="56" width="172" height="36" rx="7"/><text x="765" y="79">int_reservatorios_por_i…</text></g><g class="dag-no camada-intermediate"><title>int_sanitarios_por_imovel — camada Intermediate (nível 3)</title><rect x="754" y="110" width="172" height="36" rx="7"/><text x="765" y="133">int_sanitarios_por_imov…</text></g><g class="dag-no camada-gold"><title>fato_imovel_snapshot — camada Gold (nível 4)</title><rect x="998" y="56" width="172" height="36" rx="7"/><text x="1009" y="79">fato_imovel_snapshot</text></g><g class="dag-no camada-gold"><title>mart_indicadores_imoveis — camada Gold (nível 5)</title><rect x="1242" y="56" width="172" height="36" rx="7"/><text x="1253" y="79">mart_indicadores_imoveis</text></g><g class="dag-no camada-gold"><title>agg_aproveitamento_comarca — camada Gold (nível 6)</title><rect x="1486" y="56" width="172" height="36" rx="7"/><text x="1497" y="79">agg_aproveitamento_coma…</text></g><g class="dag-no camada-gold"><title>agg_aproveitamento_geral — camada Gold (nível 6)</title><rect x="1486" y="110" width="172" height="36" rx="7"/><text x="1497" y="133">agg_aproveitamento_geral</text></g></svg></div>
+      <div class="legenda">
+        <span><i class="lb"></i>Bronze (fonte Delta)</span>
+        <span><i class="ls"></i>Silver</span>
+        <span><i class="li"></i>Intermediate</span>
+        <span><i class="lg"></i>Gold</span>
+      </div>
+    </div>
+    <h2>O que é usado e o que não é usado</h2>
+    <p class="ajuda">Calculado percorrendo os ancestrais reais dos agregados que respondem à pergunta.
+       Um nó terminal não é desperdício: a quarentena existe justamente para <em>não</em> alimentar a Gold.</p>
+    <div class="grade2">
+      <div class="etapa gold">
+        <h3>Alimentam a resposta final</h3>
+        <p class="sub" id="sub-usados"></p>
+        <ul class="lista" id="lista-usados"></ul>
+      </div>
+      <div class="etapa silver">
+        <h3>Não alimentam a resposta (terminais)</h3>
+        <p class="sub" id="sub-terminais"></p>
+        <ul class="lista" id="lista-terminais"></ul>
+      </div>
+    </div>
+
+    <div class="painel">
+      <h2>No nível dos dados</h2>
+      <p class="ajuda">O que foi ingerido e preservado, mas não participa da métrica principal.</p>
+      <div class="rolagem"><table>
+        <thead><tr><th>Item</th><th>Situação</th><th>Por quê</th></tr></thead>
+        <tbody id="corpo-uso-dados"></tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- -->
+  <section id="aba-incompletos" hidden>
+    <h2>Por que 42 dos 102 imóveis ficam fora do índice</h2>
+    <p class="ajuda">Ausência de medição não vira zero. Zero afirmaria que a medição foi feita e deu zero;
+       nulo afirma que não há informação suficiente.</p>
+    <div class="kpis" id="kpis-lacunas"></div>
+    <div class="painel">
+      <h2>Onde está a lacuna</h2>
+      <div class="barras" id="barras-lacunas"></div>
+    </div>
+
+    <h2>Registros incompletos, imóvel por imóvel</h2>
+    <p class="ajuda">Cada linha diz exatamente qual informação falta para o imóvel entrar no cálculo.</p>
+    <div class="painel"><div class="rolagem"><table>
+      <thead><tr><th>ID</th><th>Nome oficial</th><th>Comarca</th><th>Situação</th>
+        <th>O que falta</th><th class="n">Constr. m²</th><th class="n">Terreno m²</th></tr></thead>
+      <tbody id="corpo-incompletos"></tbody></table></div></div>
+
+    <h2>Quarentena — isolado, não descartado</h2>
+    <p class="ajuda">Registro de negócio sem ID oficial. Não entra na estrela porque não há chave confiável,
+       e não é apagado: fica preservado com arquivo, linha, conteúdo original e motivo. A ação esperada é
+       obter o ID oficial e reprocessar o pipeline.</p>
+    <div class="painel"><div class="rolagem"><table>
+      <thead><tr><th>Arquivo</th><th class="n">Linha</th><th>Nome original</th>
+        <th>Classificação</th><th>Comarca</th><th>Motivo</th></tr></thead>
+      <tbody id="corpo-quarentena"></tbody></table></div></div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- -->
+  <section id="aba-qualidade" hidden>
+    <h2>Testes de dados (dbt)</h2>
+    <p class="ajuda">Contratos observáveis. Executados no mesmo <code>dbt build</code>: se um teste da Silver
+       falha, a Gold não é construída e o dado ruim não propaga.</p>
+    <div class="kpis" id="kpis-testes"></div>
+    <div class="painel">
+      <h2>Testes por tipo</h2>
+      <div class="barras" id="barras-testes"></div>
+    </div>
+    <div class="painel">
+      <h2>Testes singulares (SQL próprio)</h2>
+      <div class="rolagem"><table>
+        <thead><tr><th>Teste</th><th>Status</th></tr></thead>
+        <tbody id="corpo-singulares"></tbody></table></div>
+    </div>
+    <div class="painel">
+      <h2>Testes do código de ingestão (pytest)</h2>
+      <div class="rolagem"><table>
+        <thead><tr><th>Arquivo</th><th>Caso</th></tr></thead>
+        <tbody id="corpo-pytest"></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- -->
+  <section id="aba-execucao" hidden>
+    <h2>Última execução do pipeline</h2>
+    <p class="ajuda">Lido de <code>dbt/target/run_results.json</code> — é o registro real da execução,
+       não um número digitado à mão.</p>
+    <div class="kpis" id="kpis-execucao"></div>
+    <div class="painel">
+      <h2>Recursos mais lentos</h2>
+      <div class="barras" id="barras-tempo"></div>
+    </div>
+    <div class="painel">
+      <h2>Ambiente</h2>
+      <ul class="lista" id="lista-ambiente"></ul>
+    </div>
+    <div class="painel">
+      <h2>Reprodução em clone limpo</h2>
+      <p class="ajuda">As dependências estão fixadas em <code>requirements.txt</code>. Nenhuma camada
+         intermediária precisa de edição manual.</p>
+      <ul class="lista">
+        <li><code>python3 -m venv .venv &amp;&amp; source .venv/bin/activate</code></li>
+        <li><code>pip install -r requirements.txt</code></li>
+        <li><code>python scripts/zerar.py</code><span class="quanto">remove só o que é gerado</span></li>
+        <li><code>python -m src.pipeline</code><span class="quanto">Raw → Bronze Delta</span></li>
+        <li><code>cd dbt &amp;&amp; dbt build &amp;&amp; cd ..</code><span class="quanto">Silver → Gold + testes</span></li>
+        <li><code>python scripts/gerar_dashboard.py</code><span class="quanto">este dashboard</span></li>
+      </ul>
+    </div>
+  </section>
 
   <footer>
-    Fonte: <code>data/gold/mart_indicadores_imoveis.parquet</code> e <code>data/silver/quarentena_imoveis.parquet</code>.<br>
-    Gerado por <code>scripts/gerar_dashboard.py</code> ao final do ciclo, depois de <code>dbt build</code>.
+    Fontes do painel: <code>data/gold/*.parquet</code>, <code>data/silver/quarentena_imoveis.parquet</code>,
+    <code>data/bronze/*/_delta_log/</code>, <code>dbt/target/manifest.json</code> e
+    <code>dbt/target/run_results.json</code>.<br>
+    Gerado por <code>scripts/gerar_dashboard.py</code>, último passo do ciclo, depois de <code>dbt build</code>.
   </footer>
 
 </div>
 
 <script>
-const IMOVEIS = [{"id": 1, "nome": "Fórum de Campo Grande", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 23364.5, "area_terreno": 7045.36, "indice": 331.6296, "elegivel": true, "tem_medicao": true}, {"id": 2, "nome": "Fórum de Dourados", "comarca": "DOURADOS", "situacao_patrimonial": "PROPRIO", "area_construida": 3470.08, "area_terreno": 1243.74, "indice": 279.0037, "elegivel": true, "tem_medicao": true}, {"id": 3, "nome": "Fórum de Amambai", "comarca": "AMAMBAI", "situacao_patrimonial": "PROPRIO", "area_construida": 815.62, "area_terreno": 6480.0, "indice": 12.5867, "elegivel": true, "tem_medicao": true}, {"id": 4, "nome": "Fórum de Nova Andradina", "comarca": "NOVA ANDRADINA", "situacao_patrimonial": "PROPRIO", "area_construida": 1322.72, "area_terreno": 4800.0, "indice": 27.5567, "elegivel": true, "tem_medicao": true}, {"id": 5, "nome": "Fórum de Fátima do Sul", "comarca": "FÁTIMA DO SUL", "situacao_patrimonial": "PROPRIO", "area_construida": 955.61, "area_terreno": 4780.0, "indice": 19.9918, "elegivel": true, "tem_medicao": true}, {"id": 6, "nome": "Fórum de Angélica", "comarca": "ANGÉLICA", "situacao_patrimonial": "CEDIDO", "area_construida": 396.37, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 7, "nome": "Fórum de Sete Quedas", "comarca": "SETE QUEDAS", "situacao_patrimonial": "PROPRIO", "area_construida": 868.95, "area_terreno": 3360.0, "indice": 25.8616, "elegivel": true, "tem_medicao": true}, {"id": 8, "nome": "Fórum de Anaurilândia", "comarca": "ANAURILÂNDIA", "situacao_patrimonial": "PROPRIO", "area_construida": 533.45, "area_terreno": 1456.95, "indice": 36.6142, "elegivel": true, "tem_medicao": true}, {"id": 9, "nome": "Fórum de Rio Negro", "comarca": "RIO NEGRO", "situacao_patrimonial": "PROPRIO", "area_construida": 810.96, "area_terreno": 5760.0, "indice": 14.0792, "elegivel": true, "tem_medicao": true}, {"id": 10, "nome": "Fórum de Chapadão do Sul", "comarca": "CHAPADÃO DO SUL", "situacao_patrimonial": "PROPRIO", "area_construida": 944.15, "area_terreno": 4800.0, "indice": 19.6698, "elegivel": true, "tem_medicao": true}, {"id": 11, "nome": "Fórum de Batayporã", "comarca": "BATAYPORÃ", "situacao_patrimonial": "PROPRIO", "area_construida": 530.34, "area_terreno": 2616.52, "indice": 20.2689, "elegivel": true, "tem_medicao": true}, {"id": 12, "nome": "Fórum de Água Clara", "comarca": "ÁGUA CLARA", "situacao_patrimonial": "PROPRIO", "area_construida": 863.86, "area_terreno": 5875.26, "indice": 14.7033, "elegivel": true, "tem_medicao": true}, {"id": 13, "nome": "Fórum de Terenos", "comarca": "TERENOS", "situacao_patrimonial": "PROPRIO", "area_construida": 868.95, "area_terreno": 4800.0, "indice": 18.1031, "elegivel": true, "tem_medicao": true}, {"id": 14, "nome": "Fórum de Cassilândia", "comarca": "CASSILÂNDIA", "situacao_patrimonial": "PROPRIO", "area_construida": 893.84, "area_terreno": 5000.0, "indice": 17.8768, "elegivel": true, "tem_medicao": true}, {"id": 15, "nome": "Fórum de Camapuã", "comarca": "CAMAPUÃ", "situacao_patrimonial": "PROPRIO", "area_construida": 955.61, "area_terreno": 4000.0, "indice": 23.8903, "elegivel": true, "tem_medicao": true}, {"id": 16, "nome": "Fórum de Rio Verde de Mato Grosso", "comarca": "RIO VERDE DE MATO GROSSO", "situacao_patrimonial": "PROPRIO", "area_construida": 577.66, "area_terreno": 3550.0, "indice": 16.2721, "elegivel": true, "tem_medicao": true}, {"id": 17, "nome": "Fórum de Glória de Dourados", "comarca": "GLÓRIA DE DOURADOS", "situacao_patrimonial": "PROPRIO", "area_construida": 428.84, "area_terreno": 4500.0, "indice": 9.5298, "elegivel": true, "tem_medicao": true}, {"id": 18, "nome": "Fórum de Jardim", "comarca": "JARDIM", "situacao_patrimonial": "PROPRIO", "area_construida": 835.69, "area_terreno": 4445.0, "indice": 18.8007, "elegivel": true, "tem_medicao": true}, {"id": 19, "nome": "Fórum de Caarapó", "comarca": "CAARAPÓ", "situacao_patrimonial": "PROPRIO", "area_construida": 795.3, "area_terreno": 4125.46, "indice": 19.2779, "elegivel": true, "tem_medicao": true}, {"id": 20, "nome": "Fórum de Eldorado", "comarca": "ELDORADO", "situacao_patrimonial": "PROPRIO", "area_construida": 810.96, "area_terreno": 4800.0, "indice": 16.895, "elegivel": true, "tem_medicao": true}, {"id": 21, "nome": "Fórum de Iguatemi", "comarca": "IGUATEMI", "situacao_patrimonial": "PROPRIO", "area_construida": 642.5, "area_terreno": 5000.0, "indice": 12.85, "elegivel": true, "tem_medicao": true}, {"id": 22, "nome": "Fórum de Ivinhema", "comarca": "IVINHEMA", "situacao_patrimonial": "PROPRIO", "area_construida": 817.64, "area_terreno": 3263.05, "indice": 25.0575, "elegivel": true, "tem_medicao": true}, {"id": 23, "nome": "Fórum de Mundo Novo", "comarca": "MUNDO NOVO", "situacao_patrimonial": "PROPRIO", "area_construida": 1011.5, "area_terreno": 4270.0, "indice": 23.6885, "elegivel": true, "tem_medicao": true}, {"id": 24, "nome": "Fórum de Pedro Gomes", "comarca": "PEDRO GOMES", "situacao_patrimonial": "PROPRIO", "area_construida": 582.71, "area_terreno": 3200.0, "indice": 18.2097, "elegivel": true, "tem_medicao": true}, {"id": 25, "nome": "Fórum de Aparecida do Taboado", "comarca": "APARECIDA DO TABOADO", "situacao_patrimonial": "PROPRIO", "area_construida": 989.0, "area_terreno": 7138.23, "indice": 13.855, "elegivel": true, "tem_medicao": true}, {"id": 26, "nome": "Fórum de Bonito", "comarca": "BONITO", "situacao_patrimonial": "PROPRIO", "area_construida": 1011.5, "area_terreno": 4200.0, "indice": 24.0833, "elegivel": true, "tem_medicao": true}, {"id": 27, "nome": "Fórum de Aquidauana", "comarca": "AQUIDAUANA", "situacao_patrimonial": "PROPRIO", "area_construida": 1123.21, "area_terreno": 5312.5, "indice": 21.1428, "elegivel": true, "tem_medicao": true}, {"id": 28, "nome": "Fórum de Bela Vista", "comarca": "BELA VISTA", "situacao_patrimonial": "PROPRIO", "area_construida": 576.2, "area_terreno": 3600.0, "indice": 16.0056, "elegivel": true, "tem_medicao": true}, {"id": 29, "nome": "Fórum de Três Lagoas", "comarca": "TRÊS LAGOAS", "situacao_patrimonial": "PROPRIO", "area_construida": 4312.48, "area_terreno": 6765.82, "indice": 63.7392, "elegivel": true, "tem_medicao": true}, {"id": 30, "nome": "Fórum de Paranaíba", "comarca": "PARANAÍBA", "situacao_patrimonial": "PROPRIO", "area_construida": 1222.86, "area_terreno": 6680.0, "indice": 18.3063, "elegivel": true, "tem_medicao": true}, {"id": 31, "nome": "Fórum de Corumbá", "comarca": "CORUMBÁ", "situacao_patrimonial": "PROPRIO", "area_construida": 4312.48, "area_terreno": 4631.88, "indice": 93.1043, "elegivel": true, "tem_medicao": true}, {"id": 32, "nome": "Fórum de Naviraí", "comarca": "NAVIRAÍ", "situacao_patrimonial": "PROPRIO", "area_construida": 1444.36, "area_terreno": 5400.0, "indice": 26.7474, "elegivel": true, "tem_medicao": true}, {"id": 33, "nome": "Fórum de Ponta Porã", "comarca": "PONTA PORÃ", "situacao_patrimonial": "PROPRIO", "area_construida": 2121.49, "area_terreno": 8024.0, "indice": 26.4393, "elegivel": true, "tem_medicao": true}, {"id": 34, "nome": "Fórum de Coxim", "comarca": "COXIM", "situacao_patrimonial": "PROPRIO", "area_construida": 1544.14, "area_terreno": 5000.0, "indice": 30.8828, "elegivel": true, "tem_medicao": true}, {"id": 35, "nome": "Fórum de Maracaju", "comarca": "MARACAJU", "situacao_patrimonial": "PROPRIO", "area_construida": 1545.4, "area_terreno": 4200.0, "indice": 36.7952, "elegivel": true, "tem_medicao": true}, {"id": 36, "nome": "Fórum de Miranda", "comarca": "MIRANDA", "situacao_patrimonial": "PROPRIO", "area_construida": 1286.8, "area_terreno": 4800.0, "indice": 26.8083, "elegivel": true, "tem_medicao": true}, {"id": 37, "nome": "Fórum de Porto Murtinho", "comarca": "PORTO MURTINHO", "situacao_patrimonial": "PROPRIO", "area_construida": 651.82, "area_terreno": 4019.99, "indice": 16.2145, "elegivel": true, "tem_medicao": true}, {"id": 38, "nome": "Fórum de Rio Brilhante", "comarca": "RIO BRILHANTE", "situacao_patrimonial": "PROPRIO", "area_construida": 1444.36, "area_terreno": 5006.29, "indice": 28.8509, "elegivel": true, "tem_medicao": true}, {"id": 39, "nome": "Fórum de Sidrolândia", "comarca": "SIDROLÂNDIA", "situacao_patrimonial": "PROPRIO", "area_construida": 867.31, "area_terreno": 3200.0, "indice": 27.1034, "elegivel": true, "tem_medicao": true}, {"id": 40, "nome": "Fórum de Brasilândia", "comarca": "BRASILÂNDIA", "situacao_patrimonial": "PROPRIO", "area_construida": 556.38, "area_terreno": 4160.74, "indice": 13.3721, "elegivel": true, "tem_medicao": true}, {"id": 41, "nome": "Fórum de Inocência", "comarca": "INOCÊNCIA", "situacao_patrimonial": "PROPRIO", "area_construida": 868.95, "area_terreno": 5429.22, "indice": 16.0051, "elegivel": true, "tem_medicao": true}, {"id": 42, "nome": "Fórum de São Gabriel do Oeste", "comarca": "SÃO GABRIEL DO OESTE", "situacao_patrimonial": "PROPRIO", "area_construida": 1348.03, "area_terreno": 3000.0, "indice": 44.9343, "elegivel": true, "tem_medicao": true}, {"id": 43, "nome": "Fórum de Nioaque", "comarca": "NIOAQUE", "situacao_patrimonial": "PROPRIO", "area_construida": 530.34, "area_terreno": 2352.24, "indice": 22.5462, "elegivel": true, "tem_medicao": true}, {"id": 44, "nome": "Fórum de Bandeirantes", "comarca": "BANDEIRANTES", "situacao_patrimonial": "PROPRIO", "area_construida": 810.96, "area_terreno": 4028.8, "indice": 20.1291, "elegivel": true, "tem_medicao": true}, {"id": 45, "nome": "Fórum de Ribas do Rio Pardo", "comarca": "RIBAS DO RIO PARDO", "situacao_patrimonial": "PROPRIO", "area_construida": 878.94, "area_terreno": 4800.0, "indice": 18.3113, "elegivel": true, "tem_medicao": true}, {"id": 46, "nome": "Fórum de Itaporã", "comarca": "ITAPORÃ", "situacao_patrimonial": "PROPRIO", "area_construida": 642.5, "area_terreno": 5943.08, "indice": 10.8109, "elegivel": true, "tem_medicao": true}, {"id": 47, "nome": "Fórum de Deodápolis", "comarca": "DEODÁPOLIS", "situacao_patrimonial": "PROPRIO", "area_construida": 563.69, "area_terreno": 2515.29, "indice": 22.4105, "elegivel": true, "tem_medicao": true}, {"id": 48, "nome": "Fórum de Costa Rica", "comarca": "COSTA RICA", "situacao_patrimonial": "PROPRIO", "area_construida": 955.61, "area_terreno": 4800.0, "indice": 19.9085, "elegivel": true, "tem_medicao": true}, {"id": 49, "nome": "Fórum de Itaquiraí", "comarca": "ITAQUIRAÍ", "situacao_patrimonial": "PROPRIO", "area_construida": 642.5, "area_terreno": 4800.0, "indice": 13.3854, "elegivel": true, "tem_medicao": true}, {"id": 50, "nome": "Fórum de Sonora", "comarca": "SONORA", "situacao_patrimonial": "PROPRIO", "area_construida": 810.96, "area_terreno": 4624.0, "indice": 17.5381, "elegivel": true, "tem_medicao": true}, {"id": 51, "nome": "Fórum de Nova Alvorada do Sul", "comarca": "NOVA ALVORADA DO SUL", "situacao_patrimonial": "PROPRIO", "area_construida": 863.86, "area_terreno": 3188.36, "indice": 27.0942, "elegivel": true, "tem_medicao": true}, {"id": 52, "nome": "Fórum de Dois Irmãos do Buriti", "comarca": "DOIS IRMÃOS DO BURITI", "situacao_patrimonial": "CEDIDO", "area_construida": 530.19, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 53, "nome": "Fórum de Anastacio", "comarca": "ANASTACIO", "situacao_patrimonial": "PROPRIO", "area_construida": 1011.5, "area_terreno": 5528.6, "indice": 18.2958, "elegivel": true, "tem_medicao": true}, {"id": 54, "nome": "Tribunal de Justiça", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 7675.91, "area_terreno": 21097.33, "indice": 36.3833, "elegivel": true, "tem_medicao": true}, {"id": 55, "nome": "Fórum de Bataguassu", "comarca": "BATAGUASSU", "situacao_patrimonial": "PROPRIO", "area_construida": 703.38, "area_terreno": 4230.0, "indice": 16.6284, "elegivel": true, "tem_medicao": true}, {"id": 56, "nome": "Fórum de Coronel Sapucaia", "comarca": "CORONEL SAPUCAIA", "situacao_patrimonial": "CEDIDO", "area_construida": 360.04, "area_terreno": 1411.86, "indice": 25.5011, "elegivel": true, "tem_medicao": true}, {"id": 59, "nome": "Secretaria de Bens, Serviços e Patrimônios", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 2780.44, "area_terreno": 3127.27, "indice": 88.9095, "elegivel": true, "tem_medicao": true}, {"id": 60, "nome": "Depósitos e Arquivo Geral", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 4000.0, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 61, "nome": "Juizado Especial - 8ª Vara Justiça Itinerante e Comunitária e 9ª Vara Juizado de Trânsito", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "ALUGADO", "area_construida": 563.22, "area_terreno": 1409.22, "indice": 39.9668, "elegivel": true, "tem_medicao": true}, {"id": 62, "nome": "CIJUS - Centro Integrado de Justiça", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 13478.22, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 63, "nome": "EJUD", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "CEDIDO", "area_construida": 1149.61, "area_terreno": 4373.25, "indice": 26.2873, "elegivel": true, "tem_medicao": true}, {"id": 64, "nome": "NUPEMEC", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "ALUGADO", "area_construida": 1150.4, "area_terreno": 895.44, "indice": 128.4732, "elegivel": true, "tem_medicao": true}, {"id": 65, "nome": "Anexo Tribunal de Justiça", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 4648.65, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 66, "nome": "Gab. dos Desembargadores", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 6873.4, "area_terreno": 11128.88, "indice": 61.7618, "elegivel": true, "tem_medicao": true}, {"id": 67, "nome": "Biblioteca", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 1022.97, "area_terreno": 1495.2, "indice": 68.4169, "elegivel": true, "tem_medicao": true}, {"id": 68, "nome": "Bataguassu (previsão outubro/2024)", "comarca": "BATAGUASSU", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 69, "nome": "Guarita TJ", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 6.6, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 70, "nome": "Anexo-refeitório", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 65.0, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 71, "nome": "Garagens TJ", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 0.0, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 72, "nome": "Anexo dos Gabinetes dos Desembargadores", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 775.81, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 73, "nome": "Guarita Gabinetes", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 6.6, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 74, "nome": "Guarita Gabinetes 2 (Restaurante)", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 6.6, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 75, "nome": "Guarita Arquivos Novos", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 17.23, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 76, "nome": "Depósito Geral Galpão Novo 02", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 3600.0, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 77, "nome": "Arquivo (Fórum de Dourados)", "comarca": "DOURADOS", "situacao_patrimonial": "PROPRIO", "area_construida": 450.0, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 78, "nome": "Anexo Novo (Fórum de Dourados)", "comarca": "DOURADOS", "situacao_patrimonial": "PROPRIO", "area_construida": 2826.0, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 79, "nome": "Arquivo (Fórum de Corumbá)", "comarca": "CORUMBÁ", "situacao_patrimonial": "PROPRIO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 80, "nome": "Arquivo (Fórum de Três Lagoas)", "comarca": "TRÊS LAGOAS", "situacao_patrimonial": "PROPRIO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 200, "nome": "PID DE ALCINÓPOLIS", "comarca": "COXIM", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 201, "nome": "PID DE ANTÔNIO JOÃO", "comarca": "PONTA PORÃ", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 202, "nome": "PID DE ARAL MOREIRA", "comarca": "PONTA PORÃ", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 203, "nome": "PID DE BODOQUENA", "comarca": "MIRANDA", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 204, "nome": "PID DE CARACOL", "comarca": "BELA VISTA", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 205, "nome": "PID DE CORGUINHO", "comarca": "RIO NEGRO", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 206, "nome": "PID DE DOURADINA", "comarca": "ITAPORÃ", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 207, "nome": "PID DE FIGUEIRÃO", "comarca": "CAMAPUÃ", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 208, "nome": "PID DE GUIA LOPES DA LAGUNA", "comarca": "JARDIM", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 209, "nome": "PID DE JAPORÃ", "comarca": "MUNDO NOVO", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 210, "nome": "PID DE JARAGUARI", "comarca": "BANDEIRANTES", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 211, "nome": "PID DE JATEÍ", "comarca": "FÁTIMA DO SUL", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 212, "nome": "PID DE JUTI", "comarca": "CAARAPÓ", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 213, "nome": "PID DE LAGUNA CARAPÃ", "comarca": "DOURADOS", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 214, "nome": "PID DE NOVO HORIZONTE DO SUL", "comarca": "IVINHEMA", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 215, "nome": "PID DE PARAÍSO DAS ÁGUAS", "comarca": "CHAPADÃO DO SUL", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 216, "nome": "PID DE PARANHOS", "comarca": "SETE QUEDAS", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 217, "nome": "PID DE ROCHEDO", "comarca": "RIO NEGRO", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 218, "nome": "PID DE SANTA RITA DO PARDO", "comarca": "BATAGUASSU", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 219, "nome": "PID DE SELVÍRIA", "comarca": "TRÊS LAGOAS", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 220, "nome": "PID DE TACURU", "comarca": "IGUATEMI", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 221, "nome": "PID DE TAQUARUSSU", "comarca": "BATAYPORÃ", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 222, "nome": "PID DE VICENTINA", "comarca": "FÁTIMA DO SUL", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 223, "nome": "Casa da Mulher (salas cedidas — prédio da Prefeitura)", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 348.91, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}];
-const QUARENTENA = [{"arquivo": "imoveis/2026-08-17.csv", "linha": 107, "nome": "Fórum da Mulher, Criança, Adolescente e Idoso", "comarca": "Campo Grande", "motivo": "ID_PREDIO_AUSENTE_OU_INVALIDO"}];
+const CTX = {"pergunta": "Qual é o índice de aproveitamento construtivo dos imóveis geridos pelo TJMS e como ele varia por comarca e situação patrimonial?", "data_referencia": "17/08/2026", "gerado_em": "01/10/2026 19:26", "imoveis": [{"id": 1, "nome": "Fórum de Campo Grande", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "23364.50", "area_terreno": "7045.36", "area_arquivo": null, "indice": 331.6296, "sanitarios_total": 93, "densidade": 3.9804, "litros": 130000.0, "reserva": 5.564, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 2, "nome": "Fórum de Dourados", "comarca": "DOURADOS", "cidade": "DOURADOS", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "3470.08", "area_terreno": "1243.74", "area_arquivo": null, "indice": 279.0037, "sanitarios_total": 29, "densidade": 8.3572, "litros": 50000.0, "reserva": 14.4089, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 3, "nome": "Fórum de Amambai", "comarca": "AMAMBAI", "cidade": "AMAMBAI", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "815.62", "area_terreno": "6480.00", "area_arquivo": "135.00", "indice": 12.5867, "sanitarios_total": 12, "densidade": 14.7127, "litros": 6000.0, "reserva": 7.3564, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 4, "nome": "Fórum de Nova Andradina", "comarca": "NOVA ANDRADINA", "cidade": "NOVA ANDRADINA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1322.72", "area_terreno": "4800.00", "area_arquivo": "135.00", "indice": 27.5567, "sanitarios_total": 9, "densidade": 6.8042, "litros": 15000.0, "reserva": 11.3403, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 5, "nome": "Fórum de Fátima do Sul", "comarca": "FÁTIMA DO SUL", "cidade": "FÁTIMA DO SUL", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "955.61", "area_terreno": "4780.00", "area_arquivo": "135.00", "indice": 19.9918, "sanitarios_total": 7, "densidade": 7.3252, "litros": 15000.0, "reserva": 15.6968, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 6, "nome": "Fórum de Angélica", "comarca": "ANGÉLICA", "cidade": "ANGÉLICA", "uf": "MS", "situacao_patrimonial": "CEDIDO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "396.37", "area_terreno": null, "area_arquivo": "0.00", "indice": null, "sanitarios_total": 6, "densidade": 15.1374, "litros": 2000.0, "reserva": 5.0458, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 7, "nome": "Fórum de Sete Quedas", "comarca": "SETE QUEDAS", "cidade": "SETE QUEDAS", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "868.95", "area_terreno": "3360.00", "area_arquivo": "0.00", "indice": 25.8616, "sanitarios_total": 7, "densidade": 8.0557, "litros": 25000.0, "reserva": 28.7704, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 8, "nome": "Fórum de Anaurilândia", "comarca": "ANAURILÂNDIA", "cidade": "ANAURILÂNDIA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "533.45", "area_terreno": "1456.95", "area_arquivo": "72.00", "indice": 36.6142, "sanitarios_total": 4, "densidade": 7.4984, "litros": 4000.0, "reserva": 7.4984, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 9, "nome": "Fórum de Rio Negro", "comarca": "RIO NEGRO", "cidade": "RIO NEGRO", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "810.96", "area_terreno": "5760.00", "area_arquivo": "72.00", "indice": 14.0792, "sanitarios_total": 7, "densidade": 8.6317, "litros": 15000.0, "reserva": 18.4966, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 10, "nome": "Fórum de Chapadão do Sul", "comarca": "CHAPADÃO DO SUL", "cidade": "CHAPADÃO DO SUL", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "944.15", "area_terreno": "4800.00", "area_arquivo": null, "indice": 19.6698, "sanitarios_total": 6, "densidade": 6.3549, "litros": 15000.0, "reserva": 15.8873, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 11, "nome": "Fórum de Batayporã", "comarca": "BATAYPORÃ", "cidade": "BATAYPORÃ", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "530.34", "area_terreno": "2616.52", "area_arquivo": "72.00", "indice": 20.2689, "sanitarios_total": 5, "densidade": 9.4279, "litros": 6000.0, "reserva": 11.3135, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 12, "nome": "Fórum de Água Clara", "comarca": "ÁGUA CLARA", "cidade": "ÁGUA CLARA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "863.86", "area_terreno": "5875.26", "area_arquivo": "72.00", "indice": 14.7033, "sanitarios_total": 7, "densidade": 8.1032, "litros": 25000.0, "reserva": 28.9399, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 13, "nome": "Fórum de Terenos", "comarca": "TERENOS", "cidade": "TERENOS", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "868.95", "area_terreno": "4800.00", "area_arquivo": null, "indice": 18.1031, "sanitarios_total": 7, "densidade": 8.0557, "litros": 2000.0, "reserva": 2.3016, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 14, "nome": "Fórum de Cassilândia", "comarca": "CASSILÂNDIA", "cidade": "CASSILÂNDIA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "893.84", "area_terreno": "5000.00", "area_arquivo": "72.00", "indice": 17.8768, "sanitarios_total": 11, "densidade": 12.3065, "litros": 6000.0, "reserva": 6.7126, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 15, "nome": "Fórum de Camapuã", "comarca": "CAMAPUÃ", "cidade": "CAMAPUÃ", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "955.61", "area_terreno": "4000.00", "area_arquivo": "135.00", "indice": 23.8903, "sanitarios_total": 6, "densidade": 6.2787, "litros": 15000.0, "reserva": 15.6968, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 16, "nome": "Fórum de Rio Verde de Mato Grosso", "comarca": "RIO VERDE DE MATO GROSSO", "cidade": "RIO VERDE DE MATO GROSSO", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "577.66", "area_terreno": "3550.00", "area_arquivo": "73.50", "indice": 16.2721, "sanitarios_total": 4, "densidade": 6.9245, "litros": 6000.0, "reserva": 10.3867, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 17, "nome": "Fórum de Glória de Dourados", "comarca": "GLÓRIA DE DOURADOS", "cidade": "GLÓRIA DE DOURADOS", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "428.84", "area_terreno": "4500.00", "area_arquivo": "72.00", "indice": 9.5298, "sanitarios_total": 4, "densidade": 9.3275, "litros": 4000.0, "reserva": 9.3275, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 18, "nome": "Fórum de Jardim", "comarca": "JARDIM", "cidade": "JARDIM", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "835.69", "area_terreno": "4445.00", "area_arquivo": "135.00", "indice": 18.8007, "sanitarios_total": 11, "densidade": 13.1628, "litros": 6000.0, "reserva": 7.1797, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 19, "nome": "Fórum de Caarapó", "comarca": "CAARAPÓ", "cidade": "CAARAPÓ", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "795.30", "area_terreno": "4125.46", "area_arquivo": "95.47", "indice": 19.2779, "sanitarios_total": 9, "densidade": 11.3165, "litros": 5000.0, "reserva": 6.2869, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 20, "nome": "Fórum de Eldorado", "comarca": "ELDORADO", "cidade": "ELDORADO", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "810.96", "area_terreno": "4800.00", "area_arquivo": "72.00", "indice": 16.895, "sanitarios_total": 7, "densidade": 8.6317, "litros": 15000.0, "reserva": 18.4966, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 21, "nome": "Fórum de Iguatemi", "comarca": "IGUATEMI", "cidade": "IGUATEMI", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "642.50", "area_terreno": "5000.00", "area_arquivo": "72.00", "indice": 12.85, "sanitarios_total": 7, "densidade": 10.8949, "litros": 15000.0, "reserva": 23.3463, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 22, "nome": "Fórum de Ivinhema", "comarca": "IVINHEMA", "cidade": "IVINHEMA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "817.64", "area_terreno": "3263.05", "area_arquivo": null, "indice": 25.0575, "sanitarios_total": 8, "densidade": 9.7843, "litros": 6000.0, "reserva": 7.3382, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 23, "nome": "Fórum de Mundo Novo", "comarca": "MUNDO NOVO", "cidade": "MUNDO NOVO", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1011.50", "area_terreno": "4270.00", "area_arquivo": "135.00", "indice": 23.6885, "sanitarios_total": 8, "densidade": 7.909, "litros": 25000.0, "reserva": 24.7158, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 24, "nome": "Fórum de Pedro Gomes", "comarca": "PEDRO GOMES", "cidade": "PEDRO GOMES", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "582.71", "area_terreno": "3200.00", "area_arquivo": "72.00", "indice": 18.2097, "sanitarios_total": 4, "densidade": 6.8645, "litros": 6000.0, "reserva": 10.2967, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 25, "nome": "Fórum de Aparecida do Taboado", "comarca": "APARECIDA DO TABOADO", "cidade": "APARECIDA DO TABOADO", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "989.00", "area_terreno": "7138.23", "area_arquivo": "135.00", "indice": 13.855, "sanitarios_total": 7, "densidade": 7.0779, "litros": 15000.0, "reserva": 15.1668, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 26, "nome": "Fórum de Bonito", "comarca": "BONITO", "cidade": "BONITO", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1011.50", "area_terreno": "4200.00", "area_arquivo": "135.00", "indice": 24.0833, "sanitarios_total": 8, "densidade": 7.909, "litros": 25000.0, "reserva": 24.7158, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 27, "nome": "Fórum de Aquidauana", "comarca": "AQUIDAUANA", "cidade": "AQUIDAUANA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1123.21", "area_terreno": "5312.50", "area_arquivo": "135.00", "indice": 21.1428, "sanitarios_total": 8, "densidade": 7.1224, "litros": 15000.0, "reserva": 13.3546, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 28, "nome": "Fórum de Bela Vista", "comarca": "BELA VISTA", "cidade": "BELA VISTA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "576.20", "area_terreno": "3600.00", "area_arquivo": "72.00", "indice": 16.0056, "sanitarios_total": 5, "densidade": 8.6775, "litros": 6000.0, "reserva": 10.4131, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 29, "nome": "Fórum de Três Lagoas", "comarca": "TRÊS LAGOAS", "cidade": "TRÊS LAGOAS", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "4312.48", "area_terreno": "6765.82", "area_arquivo": null, "indice": 63.7392, "sanitarios_total": 52, "densidade": 12.058, "litros": 55000.0, "reserva": 12.7537, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 30, "nome": "Fórum de Paranaíba", "comarca": "PARANAÍBA", "cidade": "PARANAÍBA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1222.86", "area_terreno": "6680.00", "area_arquivo": "225.00", "indice": 18.3063, "sanitarios_total": 20, "densidade": 16.3551, "litros": 21000.0, "reserva": 17.1729, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 31, "nome": "Fórum de Corumbá", "comarca": "CORUMBÁ", "cidade": "CORUMBÁ", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "4312.48", "area_terreno": "4631.88", "area_arquivo": "225.00", "indice": 93.1043, "sanitarios_total": 52, "densidade": 12.058, "litros": 55000.0, "reserva": 12.7537, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 32, "nome": "Fórum de Naviraí", "comarca": "NAVIRAÍ", "cidade": "NAVIRAÍ", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1444.36", "area_terreno": "5400.00", "area_arquivo": "135.00", "indice": 26.7474, "sanitarios_total": 10, "densidade": 6.9235, "litros": 15000.0, "reserva": 10.3852, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 33, "nome": "Fórum de Ponta Porã", "comarca": "PONTA PORÃ", "cidade": "PONTA PORÃ", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "2121.49", "area_terreno": "8024.00", "area_arquivo": "225.00", "indice": 26.4393, "sanitarios_total": 24, "densidade": 11.3128, "litros": 10000.0, "reserva": 4.7137, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 34, "nome": "Fórum de Coxim", "comarca": "COXIM", "cidade": "COXIM", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1544.14", "area_terreno": "5000.00", "area_arquivo": null, "indice": 30.8828, "sanitarios_total": 19, "densidade": 12.3046, "litros": 5000.0, "reserva": 3.238, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 35, "nome": "Fórum de Maracaju", "comarca": "MARACAJU", "cidade": "MARACAJU", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1545.40", "area_terreno": "4200.00", "area_arquivo": "135.00", "indice": 36.7952, "sanitarios_total": 17, "densidade": 11.0004, "litros": 32000.0, "reserva": 20.7066, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 36, "nome": "Fórum de Miranda", "comarca": "MIRANDA", "cidade": "MIRANDA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1286.80", "area_terreno": "4800.00", "area_arquivo": null, "indice": 26.8083, "sanitarios_total": 14, "densidade": 10.8797, "litros": 45600.0, "reserva": 35.4367, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 37, "nome": "Fórum de Porto Murtinho", "comarca": "PORTO MURTINHO", "cidade": "PORTO MURTINHO", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "651.82", "area_terreno": "4019.99", "area_arquivo": "72.00", "indice": 16.2145, "sanitarios_total": 6, "densidade": 9.205, "litros": 15000.0, "reserva": 23.0125, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 38, "nome": "Fórum de Rio Brilhante", "comarca": "RIO BRILHANTE", "cidade": "RIO BRILHANTE", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1444.36", "area_terreno": "5006.29", "area_arquivo": "135.00", "indice": 28.8509, "sanitarios_total": 10, "densidade": 6.9235, "litros": 15000.0, "reserva": 10.3852, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 39, "nome": "Fórum de Sidrolândia", "comarca": "SIDROLÂNDIA", "cidade": "SIDROLÂNDIA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "867.31", "area_terreno": "3200.00", "area_arquivo": "135.00", "indice": 27.1034, "sanitarios_total": 8, "densidade": 9.2239, "litros": 6000.0, "reserva": 6.9179, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 40, "nome": "Fórum de Brasilândia", "comarca": "BRASILÂNDIA", "cidade": "BRASILÂNDIA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "556.38", "area_terreno": "4160.74", "area_arquivo": "72.00", "indice": 13.3721, "sanitarios_total": 5, "densidade": 8.9867, "litros": 6000.0, "reserva": 10.784, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 41, "nome": "Fórum de Inocência", "comarca": "INOCÊNCIA", "cidade": "INOCÊNCIA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "868.95", "area_terreno": "5429.22", "area_arquivo": "0.00", "indice": 16.0051, "sanitarios_total": 7, "densidade": 8.0557, "litros": 25000.0, "reserva": 28.7704, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 42, "nome": "Fórum de São Gabriel do Oeste", "comarca": "SÃO GABRIEL DO OESTE", "cidade": "SÃO GABRIEL DO OESTE", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1348.03", "area_terreno": "3000.00", "area_arquivo": "0.00", "indice": 44.9343, "sanitarios_total": 14, "densidade": 10.3855, "litros": 35600.0, "reserva": 26.4089, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 43, "nome": "Fórum de Nioaque", "comarca": "NIOAQUE", "cidade": "NIOAQUE", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "530.34", "area_terreno": "2352.24", "area_arquivo": "72.00", "indice": 22.5462, "sanitarios_total": 4, "densidade": 7.5423, "litros": 6000.0, "reserva": 11.3135, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 44, "nome": "Fórum de Bandeirantes", "comarca": "BANDEIRANTES", "cidade": "BANDEIRANTES", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "810.96", "area_terreno": "4028.80", "area_arquivo": "72.00", "indice": 20.1291, "sanitarios_total": 7, "densidade": 8.6317, "litros": 15000.0, "reserva": 18.4966, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 45, "nome": "Fórum de Ribas do Rio Pardo", "comarca": "RIBAS DO RIO PARDO", "cidade": "RIBAS DO RIO PARDO", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "878.94", "area_terreno": "4800.00", "area_arquivo": "72.00", "indice": 18.3113, "sanitarios_total": 9, "densidade": 10.2396, "litros": 15000.0, "reserva": 17.066, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 46, "nome": "Fórum de Itaporã", "comarca": "ITAPORÃ", "cidade": "ITAPORÃ", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "642.50", "area_terreno": "5943.08", "area_arquivo": "72.00", "indice": 10.8109, "sanitarios_total": 6, "densidade": 9.3385, "litros": 15000.0, "reserva": 23.3463, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 47, "nome": "Fórum de Deodápolis", "comarca": "DEODÁPOLIS", "cidade": "DEODÁPOLIS", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "563.69", "area_terreno": "2515.29", "area_arquivo": "92.95", "indice": 22.4105, "sanitarios_total": 4, "densidade": 7.0961, "litros": 6000.0, "reserva": 10.6441, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 48, "nome": "Fórum de Costa Rica", "comarca": "COSTA RICA", "cidade": "COSTA RICA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "955.61", "area_terreno": "4800.00", "area_arquivo": "135.00", "indice": 19.9085, "sanitarios_total": 7, "densidade": 7.3252, "litros": 15000.0, "reserva": 15.6968, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 49, "nome": "Fórum de Itaquiraí", "comarca": "ITAQUIRAÍ", "cidade": "ITAQUIRAÍ", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "642.50", "area_terreno": "4800.00", "area_arquivo": "72.00", "indice": 13.3854, "sanitarios_total": 6, "densidade": 9.3385, "litros": 15000.0, "reserva": 23.3463, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 50, "nome": "Fórum de Sonora", "comarca": "SONORA", "cidade": "SONORA", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "810.96", "area_terreno": "4624.00", "area_arquivo": "72.00", "indice": 17.5381, "sanitarios_total": 9, "densidade": 11.098, "litros": 15000.0, "reserva": 18.4966, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 51, "nome": "Fórum de Nova Alvorada do Sul", "comarca": "NOVA ALVORADA DO SUL", "cidade": "NOVA ALVORADA DO SUL", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "863.86", "area_terreno": "3188.36", "area_arquivo": "0.00", "indice": 27.0942, "sanitarios_total": 7, "densidade": 8.1032, "litros": 25000.0, "reserva": 28.9399, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 52, "nome": "Fórum de Dois Irmãos do Buriti", "comarca": "DOIS IRMÃOS DO BURITI", "cidade": "DOIS IRMÃOS DO BURITI", "uf": "MS", "situacao_patrimonial": "CEDIDO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "530.19", "area_terreno": null, "area_arquivo": "0.00", "indice": null, "sanitarios_total": 7, "densidade": 13.2028, "litros": 2000.0, "reserva": 3.7722, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 53, "nome": "Fórum de Anastacio", "comarca": "ANASTACIO", "cidade": "ANASTACIO", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1011.50", "area_terreno": "5528.60", "area_arquivo": null, "indice": 18.2958, "sanitarios_total": 5, "densidade": 4.9432, "litros": 1000.0, "reserva": 0.9886, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 54, "nome": "Tribunal de Justiça", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "7675.91", "area_terreno": "21097.33", "area_arquivo": null, "indice": 36.3833, "sanitarios_total": 39, "densidade": 5.0808, "litros": 99440.0, "reserva": 12.9548, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 55, "nome": "Fórum de Bataguassu", "comarca": "BATAGUASSU", "cidade": "BATAGUASSU", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "703.38", "area_terreno": "4230.00", "area_arquivo": "135.00", "indice": 16.6284, "sanitarios_total": 4, "densidade": 5.6868, "litros": 6000.0, "reserva": 8.5302, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 56, "nome": "Fórum de Coronel Sapucaia", "comarca": "CORONEL SAPUCAIA", "cidade": "CORONEL SAPUCAIA", "uf": "MS", "situacao_patrimonial": "CEDIDO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "360.04", "area_terreno": "1411.86", "area_arquivo": "0.00", "indice": 25.5011, "sanitarios_total": 4, "densidade": 11.1099, "litros": 3000.0, "reserva": 8.3324, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 59, "nome": "Secretaria de Bens, Serviços e Patrimônios", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "2780.44", "area_terreno": "3127.27", "area_arquivo": null, "indice": 88.9095, "sanitarios_total": null, "densidade": null, "litros": 4000.0, "reserva": 1.4386, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 60, "nome": "Depósitos e Arquivo Geral", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "4000.00", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": 5, "densidade": 1.25, "litros": 500.0, "reserva": 0.125, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 61, "nome": "Juizado Especial - 8ª Vara Justiça Itinerante e Comunitária e 9ª Vara Juizado de Trânsito", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "ALUGADO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "563.22", "area_terreno": "1409.22", "area_arquivo": null, "indice": 39.9668, "sanitarios_total": 8, "densidade": 14.204, "litros": null, "reserva": null, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 62, "nome": "CIJUS - Centro Integrado de Justiça", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "13478.22", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": 33, "densidade": 2.4484, "litros": 440000.0, "reserva": 32.6453, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 63, "nome": "EJUD", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "CEDIDO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1149.61", "area_terreno": "4373.25", "area_arquivo": null, "indice": 26.2873, "sanitarios_total": 12, "densidade": 10.4383, "litros": 11800.0, "reserva": 10.2644, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 64, "nome": "NUPEMEC", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "ALUGADO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1150.40", "area_terreno": "895.44", "area_arquivo": null, "indice": 128.4732, "sanitarios_total": 17, "densidade": 14.7775, "litros": 11800.0, "reserva": 10.2573, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 65, "nome": "Anexo Tribunal de Justiça", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "4648.65", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": 10, "densidade": 2.1512, "litros": 46000.0, "reserva": 9.8953, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 66, "nome": "Gab. dos Desembargadores", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "6873.40", "area_terreno": "11128.88", "area_arquivo": null, "indice": 61.7618, "sanitarios_total": 50, "densidade": 7.2744, "litros": 101600.0, "reserva": 14.7816, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 67, "nome": "Biblioteca", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": "1022.97", "area_terreno": "1495.20", "area_arquivo": null, "indice": 68.4169, "sanitarios_total": null, "densidade": null, "litros": 6000.0, "reserva": 5.8653, "elegivel": true, "tem_medicao": true, "tem_vistoria": true}, {"id": 68, "nome": "Bataguassu (previsão outubro/2024)", "comarca": "BATAGUASSU", "cidade": "BATAGUASSU", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "PROPRIO", "categoria_funcional": "IMOVEL_INSTITUCIONAL", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": 6, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 69, "nome": "Guarita TJ", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "PROPRIO", "categoria_funcional": "PREDIO_AVULSO", "tipo_imovel": "NAO_INFORMADO", "area_construida": "6.60", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": 1, "densidade": 151.5152, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 70, "nome": "Anexo-refeitório", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "PROPRIO", "categoria_funcional": "PREDIO_AVULSO", "tipo_imovel": "NAO_INFORMADO", "area_construida": "65.00", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 71, "nome": "Garagens TJ", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "PROPRIO", "categoria_funcional": "PREDIO_AVULSO", "tipo_imovel": "NAO_INFORMADO", "area_construida": "0.00", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 72, "nome": "Anexo dos Gabinetes dos Desembargadores", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "PROPRIO", "categoria_funcional": "PREDIO_AVULSO", "tipo_imovel": "NAO_INFORMADO", "area_construida": "775.81", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": 15000.0, "reserva": 19.3346, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 73, "nome": "Guarita Gabinetes", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "PROPRIO", "categoria_funcional": "PREDIO_AVULSO", "tipo_imovel": "NAO_INFORMADO", "area_construida": "6.60", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 74, "nome": "Guarita Gabinetes 2 (Restaurante)", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "PROPRIO", "categoria_funcional": "PREDIO_AVULSO", "tipo_imovel": "NAO_INFORMADO", "area_construida": "6.60", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 75, "nome": "Guarita Arquivos Novos", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "PROPRIO", "categoria_funcional": "PREDIO_AVULSO", "tipo_imovel": "NAO_INFORMADO", "area_construida": "17.23", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": 310.0, "reserva": 17.9919, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 76, "nome": "Depósito Geral Galpão Novo 02", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "PROPRIO", "categoria_funcional": "PREDIO_AVULSO", "tipo_imovel": "NAO_INFORMADO", "area_construida": "3600.00", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": 5, "densidade": 1.3889, "litros": 500.0, "reserva": 0.1389, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 77, "nome": "Arquivo (Fórum de Dourados)", "comarca": "DOURADOS", "cidade": "DOURADOS", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "PREDIO_AVULSO", "tipo_imovel": "NAO_INFORMADO", "area_construida": "450.00", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 78, "nome": "Anexo Novo (Fórum de Dourados)", "comarca": "DOURADOS", "cidade": "DOURADOS", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "PREDIO_AVULSO", "tipo_imovel": "NAO_INFORMADO", "area_construida": "2826.00", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": 25, "densidade": 8.8464, "litros": 47720.0, "reserva": 16.8861, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 79, "nome": "Arquivo (Fórum de Corumbá)", "comarca": "CORUMBÁ", "cidade": "CORUMBÁ", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "PREDIO_AVULSO", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 80, "nome": "Arquivo (Fórum de Três Lagoas)", "comarca": "TRÊS LAGOAS", "cidade": "TRÊS LAGOAS", "uf": "MS", "situacao_patrimonial": "PROPRIO", "propriedade": "PROPRIO", "categoria_funcional": "PREDIO_AVULSO", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}, {"id": 200, "nome": "PID DE ALCINÓPOLIS", "comarca": "COXIM", "cidade": "ALCINÓPOLIS", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 201, "nome": "PID DE ANTÔNIO JOÃO", "comarca": "PONTA PORÃ", "cidade": "ANTÔNIO JOÃO", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 202, "nome": "PID DE ARAL MOREIRA", "comarca": "PONTA PORÃ", "cidade": "ARAL MOREIRA", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 203, "nome": "PID DE BODOQUENA", "comarca": "MIRANDA", "cidade": "BODOQUENA", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 204, "nome": "PID DE CARACOL", "comarca": "BELA VISTA", "cidade": "CARACOL", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 205, "nome": "PID DE CORGUINHO", "comarca": "RIO NEGRO", "cidade": "CORGUINHO", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 206, "nome": "PID DE DOURADINA", "comarca": "ITAPORÃ", "cidade": "DOURADINA", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 207, "nome": "PID DE FIGUEIRÃO", "comarca": "CAMAPUÃ", "cidade": "FIGUEIRÃO", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 208, "nome": "PID DE GUIA LOPES DA LAGUNA", "comarca": "JARDIM", "cidade": "GUIA LOPES DA LAGUNA", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 209, "nome": "PID DE JAPORÃ", "comarca": "MUNDO NOVO", "cidade": "JAPORÃ", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 210, "nome": "PID DE JARAGUARI", "comarca": "BANDEIRANTES", "cidade": "JARAGUARI", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 211, "nome": "PID DE JATEÍ", "comarca": "FÁTIMA DO SUL", "cidade": "JATEÍ", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 212, "nome": "PID DE JUTI", "comarca": "CAARAPÓ", "cidade": "JUTI", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 213, "nome": "PID DE LAGUNA CARAPÃ", "comarca": "DOURADOS", "cidade": "LAGUNA CARAPÃ", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 214, "nome": "PID DE NOVO HORIZONTE DO SUL", "comarca": "IVINHEMA", "cidade": "NOVO HORIZONTE DO SUL", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 215, "nome": "PID DE PARAÍSO DAS ÁGUAS", "comarca": "CHAPADÃO DO SUL", "cidade": "PARAÍSO DAS ÁGUAS", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 216, "nome": "PID DE PARANHOS", "comarca": "SETE QUEDAS", "cidade": "PARANHOS", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 217, "nome": "PID DE ROCHEDO", "comarca": "RIO NEGRO", "cidade": "ROCHEDO", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 218, "nome": "PID DE SANTA RITA DO PARDO", "comarca": "BATAGUASSU", "cidade": "SANTA RITA DO PARDO", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 219, "nome": "PID DE SELVÍRIA", "comarca": "TRÊS LAGOAS", "cidade": "SELVÍRIA", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 220, "nome": "PID DE TACURU", "comarca": "IGUATEMI", "cidade": "TACURU", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 221, "nome": "PID DE TAQUARUSSU", "comarca": "BATAYPORÃ", "cidade": "TAQUARUSSU", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 222, "nome": "PID DE VICENTINA", "comarca": "FÁTIMA DO SUL", "cidade": "VICENTINA", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": null, "densidade": null, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": false, "tem_vistoria": false}, {"id": 223, "nome": "Casa da Mulher (salas cedidas — prédio da Prefeitura)", "comarca": "CAMPO GRANDE", "cidade": "CAMPO GRANDE", "uf": "MS", "situacao_patrimonial": "NAO_INFORMADO", "propriedade": "CEDIDO", "categoria_funcional": "PID", "tipo_imovel": "NAO_INFORMADO", "area_construida": "348.91", "area_terreno": null, "area_arquivo": null, "indice": null, "sanitarios_total": 3, "densidade": 8.5982, "litros": null, "reserva": null, "elegivel": false, "tem_medicao": true, "tem_vistoria": true}], "geral": {"data_referencia": "2026-08-17", "imoveis_cadastrados": 102, "imoveis_com_medicao_patrimonial": 79, "imoveis_elegiveis": 60, "media_indice_individual_pct": 37.49, "indice_global_ponderado_pct": 35.85}, "comarca": [{"data_referencia": "2026-08-17", "comarca": "AMAMBAI", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 12.59, "indice_global_ponderado_pct": 12.59}, {"data_referencia": "2026-08-17", "comarca": "ANASTACIO", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 18.3, "indice_global_ponderado_pct": 18.3}, {"data_referencia": "2026-08-17", "comarca": "ANAURILÂNDIA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 36.61, "indice_global_ponderado_pct": 36.61}, {"data_referencia": "2026-08-17", "comarca": "ANGÉLICA", "situacao_patrimonial": "CEDIDO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "APARECIDA DO TABOADO", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 13.86, "indice_global_ponderado_pct": 13.85}, {"data_referencia": "2026-08-17", "comarca": "AQUIDAUANA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 21.14, "indice_global_ponderado_pct": 21.14}, {"data_referencia": "2026-08-17", "comarca": "BANDEIRANTES", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "BANDEIRANTES", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 20.13, "indice_global_ponderado_pct": 20.13}, {"data_referencia": "2026-08-17", "comarca": "BATAGUASSU", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 2, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "BATAGUASSU", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 16.63, "indice_global_ponderado_pct": 16.63}, {"data_referencia": "2026-08-17", "comarca": "BATAYPORÃ", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "BATAYPORÃ", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 20.27, "indice_global_ponderado_pct": 20.27}, {"data_referencia": "2026-08-17", "comarca": "BELA VISTA", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "BELA VISTA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 16.01, "indice_global_ponderado_pct": 16.01}, {"data_referencia": "2026-08-17", "comarca": "BONITO", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 24.08, "indice_global_ponderado_pct": 24.08}, {"data_referencia": "2026-08-17", "comarca": "BRASILÂNDIA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 13.37, "indice_global_ponderado_pct": 13.37}, {"data_referencia": "2026-08-17", "comarca": "CAARAPÓ", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "CAARAPÓ", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 19.28, "indice_global_ponderado_pct": 19.28}, {"data_referencia": "2026-08-17", "comarca": "CAMAPUÃ", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "CAMAPUÃ", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 23.89, "indice_global_ponderado_pct": 23.89}, {"data_referencia": "2026-08-17", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "ALUGADO", "imoveis_cadastrados": 2, "imoveis_elegiveis": 2, "media_indice_individual_pct": 84.22, "indice_global_ponderado_pct": 74.35}, {"data_referencia": "2026-08-17", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "CEDIDO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 26.29, "indice_global_ponderado_pct": 26.29}, {"data_referencia": "2026-08-17", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 10, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 7, "imoveis_elegiveis": 5, "media_indice_individual_pct": 117.42, "indice_global_ponderado_pct": 95.04}, {"data_referencia": "2026-08-17", "comarca": "CASSILÂNDIA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 17.88, "indice_global_ponderado_pct": 17.88}, {"data_referencia": "2026-08-17", "comarca": "CHAPADÃO DO SUL", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "CHAPADÃO DO SUL", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 19.67, "indice_global_ponderado_pct": 19.67}, {"data_referencia": "2026-08-17", "comarca": "CORONEL SAPUCAIA", "situacao_patrimonial": "CEDIDO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 25.5, "indice_global_ponderado_pct": 25.5}, {"data_referencia": "2026-08-17", "comarca": "CORUMBÁ", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 2, "imoveis_elegiveis": 1, "media_indice_individual_pct": 93.1, "indice_global_ponderado_pct": 93.1}, {"data_referencia": "2026-08-17", "comarca": "COSTA RICA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 19.91, "indice_global_ponderado_pct": 19.91}, {"data_referencia": "2026-08-17", "comarca": "COXIM", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "COXIM", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 30.88, "indice_global_ponderado_pct": 30.88}, {"data_referencia": "2026-08-17", "comarca": "DEODÁPOLIS", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 22.41, "indice_global_ponderado_pct": 22.41}, {"data_referencia": "2026-08-17", "comarca": "DOIS IRMÃOS DO BURITI", "situacao_patrimonial": "CEDIDO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "DOURADOS", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "DOURADOS", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 3, "imoveis_elegiveis": 1, "media_indice_individual_pct": 279.0, "indice_global_ponderado_pct": 279.0}, {"data_referencia": "2026-08-17", "comarca": "ELDORADO", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 16.9, "indice_global_ponderado_pct": 16.9}, {"data_referencia": "2026-08-17", "comarca": "FÁTIMA DO SUL", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 2, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "FÁTIMA DO SUL", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 19.99, "indice_global_ponderado_pct": 19.99}, {"data_referencia": "2026-08-17", "comarca": "GLÓRIA DE DOURADOS", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 9.53, "indice_global_ponderado_pct": 9.53}, {"data_referencia": "2026-08-17", "comarca": "IGUATEMI", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "IGUATEMI", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 12.85, "indice_global_ponderado_pct": 12.85}, {"data_referencia": "2026-08-17", "comarca": "INOCÊNCIA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 16.01, "indice_global_ponderado_pct": 16.01}, {"data_referencia": "2026-08-17", "comarca": "ITAPORÃ", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "ITAPORÃ", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 10.81, "indice_global_ponderado_pct": 10.81}, {"data_referencia": "2026-08-17", "comarca": "ITAQUIRAÍ", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 13.39, "indice_global_ponderado_pct": 13.39}, {"data_referencia": "2026-08-17", "comarca": "IVINHEMA", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "IVINHEMA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 25.06, "indice_global_ponderado_pct": 25.06}, {"data_referencia": "2026-08-17", "comarca": "JARDIM", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "JARDIM", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 18.8, "indice_global_ponderado_pct": 18.8}, {"data_referencia": "2026-08-17", "comarca": "MARACAJU", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 36.8, "indice_global_ponderado_pct": 36.8}, {"data_referencia": "2026-08-17", "comarca": "MIRANDA", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "MIRANDA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 26.81, "indice_global_ponderado_pct": 26.81}, {"data_referencia": "2026-08-17", "comarca": "MUNDO NOVO", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "MUNDO NOVO", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 23.69, "indice_global_ponderado_pct": 23.69}, {"data_referencia": "2026-08-17", "comarca": "NAVIRAÍ", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 26.75, "indice_global_ponderado_pct": 26.75}, {"data_referencia": "2026-08-17", "comarca": "NIOAQUE", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 22.55, "indice_global_ponderado_pct": 22.55}, {"data_referencia": "2026-08-17", "comarca": "NOVA ALVORADA DO SUL", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 27.09, "indice_global_ponderado_pct": 27.09}, {"data_referencia": "2026-08-17", "comarca": "NOVA ANDRADINA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 27.56, "indice_global_ponderado_pct": 27.56}, {"data_referencia": "2026-08-17", "comarca": "PARANAÍBA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 18.31, "indice_global_ponderado_pct": 18.31}, {"data_referencia": "2026-08-17", "comarca": "PEDRO GOMES", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 18.21, "indice_global_ponderado_pct": 18.21}, {"data_referencia": "2026-08-17", "comarca": "PONTA PORÃ", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 2, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "PONTA PORÃ", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 26.44, "indice_global_ponderado_pct": 26.44}, {"data_referencia": "2026-08-17", "comarca": "PORTO MURTINHO", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 16.21, "indice_global_ponderado_pct": 16.21}, {"data_referencia": "2026-08-17", "comarca": "RIBAS DO RIO PARDO", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 18.31, "indice_global_ponderado_pct": 18.31}, {"data_referencia": "2026-08-17", "comarca": "RIO BRILHANTE", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 28.85, "indice_global_ponderado_pct": 28.85}, {"data_referencia": "2026-08-17", "comarca": "RIO NEGRO", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 2, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "RIO NEGRO", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 14.08, "indice_global_ponderado_pct": 14.08}, {"data_referencia": "2026-08-17", "comarca": "RIO VERDE DE MATO GROSSO", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 16.27, "indice_global_ponderado_pct": 16.27}, {"data_referencia": "2026-08-17", "comarca": "SETE QUEDAS", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "SETE QUEDAS", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 25.86, "indice_global_ponderado_pct": 25.86}, {"data_referencia": "2026-08-17", "comarca": "SIDROLÂNDIA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 27.1, "indice_global_ponderado_pct": 27.1}, {"data_referencia": "2026-08-17", "comarca": "SONORA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 17.54, "indice_global_ponderado_pct": 17.54}, {"data_referencia": "2026-08-17", "comarca": "SÃO GABRIEL DO OESTE", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 44.93, "indice_global_ponderado_pct": 44.93}, {"data_referencia": "2026-08-17", "comarca": "TERENOS", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 18.1, "indice_global_ponderado_pct": 18.1}, {"data_referencia": "2026-08-17", "comarca": "TRÊS LAGOAS", "situacao_patrimonial": "NAO_INFORMADO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 0, "media_indice_individual_pct": null, "indice_global_ponderado_pct": null}, {"data_referencia": "2026-08-17", "comarca": "TRÊS LAGOAS", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 2, "imoveis_elegiveis": 1, "media_indice_individual_pct": 63.74, "indice_global_ponderado_pct": 63.74}, {"data_referencia": "2026-08-17", "comarca": "ÁGUA CLARA", "situacao_patrimonial": "PROPRIO", "imoveis_cadastrados": 1, "imoveis_elegiveis": 1, "media_indice_individual_pct": 14.7, "indice_global_ponderado_pct": 14.7}], "quarentena": [{"arquivo": "imoveis/2026-08-17.csv", "linha": 107, "nome": "Fórum da Mulher, Criança, Adolescente e Idoso", "classificacao": "A definir", "comarca": "Campo Grande", "motivo": "ID_PREDIO_AUSENTE_OU_INVALIDO"}], "raw": [{"arquivo": "imoveis/2026-08-01.csv", "formato": "CSV", "bytes": 19188, "linhas_fisicas": 106}, {"arquivo": "imoveis/2026-08-17.csv", "formato": "CSV", "bytes": 19803, "linhas_fisicas": 107}, {"arquivo": "infraestrutura_predial.json", "formato": "JSON", "bytes": 61425, "linhas_fisicas": null}, {"arquivo": "patrimonio.csv", "formato": "CSV", "bytes": 7635, "linhas_fisicas": 83}], "defeitos": [{"titulo": "Título e descrição antes do cabeçalho", "detalhe": "4 linhas estruturais em cada CSV; o cabeçalho real está na linha 4"}, {"titulo": "BOM e separador ';'", "detalhe": "arquivos exportados de planilha, não CSV canônico"}, {"titulo": "Decimal brasileiro", "detalhe": "23.364,50 chega como texto e só é convertido na Silver"}, {"titulo": "Registro sem ID oficial", "detalhe": "Fórum da Mulher, Criança, Adolescente e Idoso — vai para quarentena"}, {"titulo": "Campo que mistura conceitos", "detalhe": "'Tipo de Imóvel' junta propriedade, ocupação e categoria funcional"}, {"titulo": "Capacidade semiestruturada", "detalhe": "expressões como '2 x 10.000 + 30.000' interpretadas na Silver"}, {"titulo": "Safras diferentes na mesma linha", "detalhe": "área construída de 2026 e área de terreno de 2019, conforme o cabeçalho da fonte"}], "bronze": [{"tabela": "imoveis", "versao_atual": 1, "commits": [{"versao": 0, "operacao": "WRITE", "modo": "Overwrite", "linhas": 106, "arquivos_add": 1, "arquivos_rem": 0}, {"versao": 1, "operacao": "WRITE", "modo": "Overwrite", "linhas": 107, "arquivos_add": 1, "arquivos_rem": 1}]}, {"tabela": "infraestrutura_predial", "versao_atual": 0, "commits": [{"versao": 0, "operacao": "WRITE", "modo": "Overwrite", "linhas": 1, "arquivos_add": 1, "arquivos_rem": 0}]}, {"tabela": "patrimonio", "versao_atual": 0, "commits": [{"versao": 0, "operacao": "WRITE", "modo": "Overwrite", "linhas": 83, "arquivos_add": 1, "arquivos_rem": 0}]}], "time_travel": [{"versao": 0, "rotulo": "anterior", "com_id": 101, "sem_id": 1, "linhas_fisicas": 106}, {"versao": 1, "rotulo": "atual", "com_id": 102, "sem_id": 1, "linhas_fisicas": 107}], "modelos": {"silver": [{"modelo": "quarentena_imoveis", "linhas": 1, "materializacao": "parquet externo", "descricao": "Registro de negócio sem ID oficial, isolado com origem, linha e motivo"}, {"modelo": "stg_imoveis", "linhas": 102, "materializacao": "parquet externo", "descricao": "Cadastro Mestre interpretado: descarta linhas estruturais, tipa ID e data, separa propriedade/categoria/tipo"}, {"modelo": "stg_patrimonio", "linhas": 79, "materializacao": "parquet externo", "descricao": "Medições patrimoniais com decimal brasileiro convertido e situação padronizada"}, {"modelo": "stg_reservatorios", "linhas": 158, "materializacao": "parquet externo", "descricao": "Coleção de reservatórios aberta em linhas, com capacidade interpretada"}, {"modelo": "stg_sanitarios", "linhas": 158, "materializacao": "parquet externo", "descricao": "Coleção de sanitários aberta em linhas (grão: sanitário)"}, {"modelo": "stg_vistorias", "linhas": 79, "materializacao": "parquet externo", "descricao": "Cabeçalho da vistoria extraído do documento JSON"}], "intermediate": [{"modelo": "int_sanitarios_por_imovel", "linhas": 79, "materializacao": "view", "descricao": "Reduz os sanitários ao grão imóvel/data antes da fato", "fanout": {"detalhe": 158, "reduzido": 79, "rotulo": "sanitários"}}, {"modelo": "int_reservatorios_por_imovel", "linhas": 79, "materializacao": "view", "descricao": "Reduz os reservatórios ao grão imóvel/data antes da fato", "fanout": {"detalhe": 158, "reduzido": 79, "rotulo": "reservatórios"}}], "gold": [{"modelo": "agg_aproveitamento_comarca", "linhas": 78, "materializacao": "parquet externo", "descricao": "Resposta por comarca e situação patrimonial"}, {"modelo": "agg_aproveitamento_geral", "linhas": 1, "materializacao": "parquet externo", "descricao": "Resposta geral da pergunta, com cobertura"}, {"modelo": "dim_imovel", "linhas": 102, "materializacao": "parquet externo", "descricao": "Dimensão de imóvel: nome oficial, tipo, propriedade, categoria funcional"}, {"modelo": "dim_localidade", "linhas": 78, "materializacao": "parquet externo", "descricao": "Dimensão de localidade: comarca, cidade, UF"}, {"modelo": "dim_tempo", "linhas": 1, "materializacao": "parquet externo", "descricao": "Dimensão de tempo: data de referência do levantamento"}, {"modelo": "fato_imovel_snapshot", "linhas": 102, "materializacao": "parquet externo", "descricao": "Fato no grão imóvel/data, com medidas e indicadores derivados"}, {"modelo": "mart_indicadores_imoveis", "linhas": 102, "materializacao": "parquet externo", "descricao": "Fato achatada com as dimensões, para consumo direto"}]}, "fanout": {"imoveis_com_vistoria": 79, "linhas_sanitarios": 158, "linhas_reservatorios": 158, "linhas_se_juntasse_direto": 316, "pior_caso_por_imovel": 4}, "testes": {"por_tipo": [{"tipo": "not_null", "qtd": 20}, {"tipo": "singular (SQL próprio)", "qtd": 9}, {"tipo": "unique", "qtd": 9}, {"tipo": "accepted_values", "qtd": 9}, {"tipo": "relationships", "qtd": 7}], "singulares": [{"nome": "assert_cobertura_snapshot", "status": "pass", "descricao": ""}, {"nome": "assert_fato_no_grao_declarado", "status": "pass", "descricao": ""}, {"nome": "assert_formula_indice_aproveitamento", "status": "pass", "descricao": ""}, {"nome": "assert_medidas_nao_negativas", "status": "pass", "descricao": ""}, {"nome": "assert_quarentena_esperada", "status": "pass", "descricao": ""}, {"nome": "assert_reservatorios_preenchidos_interpretados", "status": "pass", "descricao": ""}, {"nome": "assert_reservatorios_sem_duplicidade", "status": "pass", "descricao": ""}, {"nome": "assert_resposta_principal", "status": "pass", "descricao": ""}, {"nome": "assert_sanitarios_sem_duplicidade", "status": "pass", "descricao": ""}], "total": 54}, "testes_python": {"total": 6, "casos": [{"arquivo": "test_ingestion.py", "nome": "test_csv_bruto_preserva_todas_as_linhas"}, {"arquivo": "test_ingestion.py", "nome": "test_csv_bruto_nao_promove_cabecalho"}, {"arquivo": "test_ingestion.py", "nome": "test_json_bruto_preserva_documento_completo"}, {"arquivo": "test_ingestion.py", "nome": "test_metadados_tecnicos_estao_presentes"}, {"arquivo": "test_ingestion.py", "nome": "test_imoveis_registra_duas_versoes_e_time_travel"}, {"arquivo": "test_ingestion.py", "nome": "test_rerun_de_imoveis_nao_cria_versoes_artificiais"}]}, "execucao": {"gerado_em": "2026-10-01T23:26:46.306142Z", "dbt_version": "1.11.15", "elapsed": 5.98, "total": 69, "modelos": 15, "testes": 54, "sucesso": 69, "falha": 0, "mais_lentos": [{"nome": "stg_vistorias", "tipo": "modelo", "status": "success", "segundos": 1.198}, {"nome": "stg_imoveis", "tipo": "modelo", "status": "success", "segundos": 1.132}, {"nome": "stg_patrimonio", "tipo": "modelo", "status": "success", "segundos": 1.112}, {"nome": "quarentena_imoveis", "tipo": "modelo", "status": "success", "segundos": 1.049}, {"nome": "dim_tempo", "tipo": "modelo", "status": "success", "segundos": 0.501}, {"nome": "stg_reservatorios", "tipo": "modelo", "status": "success", "segundos": 0.477}, {"nome": "dim_imovel", "tipo": "modelo", "status": "success", "segundos": 0.436}, {"nome": "dim_localidade", "tipo": "modelo", "status": "success", "segundos": 0.435}, {"nome": "stg_sanitarios", "tipo": "modelo", "status": "success", "segundos": 0.316}, {"nome": "e08be6bf7a", "tipo": "teste", "status": "pass", "segundos": 0.293}]}, "ambiente": {"python": "3.10.12", "duckdb": "1.5.5", "plataforma": "Linux"}, "uso": {"usados": [{"nome": "imoveis", "camada": "bronze"}, {"nome": "infraestrutura_predial", "camada": "bronze"}, {"nome": "patrimonio", "camada": "bronze"}, {"nome": "agg_aproveitamento_comarca", "camada": "gold"}, {"nome": "agg_aproveitamento_geral", "camada": "gold"}, {"nome": "dim_imovel", "camada": "gold"}, {"nome": "dim_localidade", "camada": "gold"}, {"nome": "dim_tempo", "camada": "gold"}, {"nome": "fato_imovel_snapshot", "camada": "gold"}, {"nome": "mart_indicadores_imoveis", "camada": "gold"}, {"nome": "int_reservatorios_por_imovel", "camada": "intermediate"}, {"nome": "int_sanitarios_por_imovel", "camada": "intermediate"}, {"nome": "stg_imoveis", "camada": "silver"}, {"nome": "stg_patrimonio", "camada": "silver"}, {"nome": "stg_reservatorios", "camada": "silver"}, {"nome": "stg_sanitarios", "camada": "silver"}, {"nome": "stg_vistorias", "camada": "silver"}], "terminais": [{"nome": "quarentena_imoveis", "camada": "silver"}]}, "area_arquivo_preenchida": 46};
 
-const fmt = (v, d = 2) => v === null || v === undefined
-  ? "—"
-  : v.toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d });
-const inteiro = (v) => v.toLocaleString("pt-BR");
+const num = (v, d = 2) => v === null || v === undefined
+  ? "—" : Number(v).toLocaleString("pt-BR", {minimumFractionDigits:d, maximumFractionDigits:d});
+const int = (v) => v === null || v === undefined ? "—" : Number(v).toLocaleString("pt-BR");
+const pct = (v, d = 2) => v === null || v === undefined ? "—" : num(v, d) + "%";
+const esc = (s) => String(s ?? "").replace(/[&<>]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 
-const selComarca = document.getElementById("f-comarca");
-const selSituacao = document.getElementById("f-situacao");
-
-function popular(sel, valores, rotuloTodos) {
-  sel.innerHTML = "";
-  const todos = document.createElement("option");
-  todos.value = "__TODOS__";
-  todos.textContent = rotuloTodos;
-  sel.appendChild(todos);
-  valores.forEach((v) => {
-    const o = document.createElement("option");
-    o.value = v;
-    o.textContent = v;
-    sel.appendChild(o);
+/* ---------------- abas ---------------- */
+const abas = [...document.querySelectorAll("nav button")];
+abas.forEach((b) => b.addEventListener("click", () => {
+  abas.forEach((o) => {
+    o.setAttribute("aria-selected", String(o === b));
+    document.getElementById("aba-" + o.dataset.aba).hidden = o !== b;
   });
-}
+}));
 
-const unicos = (campo) => [...new Set(IMOVEIS.map((i) => i[campo]))].sort((a, b) => a.localeCompare(b, "pt-BR"));
-
-popular(selComarca, unicos("comarca"), "Todas as comarcas (" + unicos("comarca").length + ")");
-popular(selSituacao, unicos("situacao_patrimonial"), "Todas as situações");
-
-function filtrar() {
-  const c = selComarca.value;
-  const s = selSituacao.value;
-  return IMOVEIS.filter((i) =>
-    (c === "__TODOS__" || i.comarca === c) &&
-    (s === "__TODOS__" || i.situacao_patrimonial === s));
-}
-
-function kpis(linhas) {
-  const elegiveis = linhas.filter((i) => i.elegivel);
-  const comMedicao = linhas.filter((i) => i.tem_medicao);
-  const somaC = elegiveis.reduce((a, i) => a + i.area_construida, 0);
-  const somaT = elegiveis.reduce((a, i) => a + i.area_terreno, 0);
-  const media = elegiveis.length
-    ? elegiveis.reduce((a, i) => a + i.indice, 0) / elegiveis.length
-    : null;
-  const global = somaT > 0 ? (100 * somaC) / somaT : null;
-  const cobertura = linhas.length ? (100 * elegiveis.length) / linhas.length : null;
-
-  const cartoes = [
-    ["Imóveis no recorte", inteiro(linhas.length), "identificados no cadastro"],
-    ["Com medição patrimonial", inteiro(comMedicao.length), "possuem registro no patrimônio"],
-    ["Elegíveis ao índice", inteiro(elegiveis.length), "têm as duas áreas necessárias"],
-    ["Média dos índices", media === null ? "—" : fmt(media) + "%", "cada imóvel pesa igual"],
-    ["Índice global", global === null ? "—" : fmt(global) + "%", "ponderado pelo tamanho do terreno"],
-    ["Cobertura elegível", cobertura === null ? "—" : fmt(cobertura, 1) + "%", "elegíveis ÷ imóveis do recorte"],
-  ];
-
-  document.getElementById("kpis").innerHTML = cartoes.map(([r, v, n]) => `
-    <div class="kpi">
-      <div class="rotulo">${r}</div>
-      <div class="valor">${v}</div>
-      <div class="nota">${n}</div>
-    </div>`).join("");
-}
-
-function barras(linhas) {
-  const porComarca = new Map();
-  linhas.filter((i) => i.elegivel).forEach((i) => {
-    const atual = porComarca.get(i.comarca) || { c: 0, t: 0, n: 0 };
-    atual.c += i.area_construida;
-    atual.t += i.area_terreno;
-    atual.n += 1;
-    porComarca.set(i.comarca, atual);
-  });
-
-  const dados = [...porComarca.entries()]
-    .map(([comarca, v]) => ({ comarca, pct: (100 * v.c) / v.t, n: v.n }))
-    .sort((a, b) => b.pct - a.pct);
-
-  const alvo = document.getElementById("barras");
+/* ---------------- barras genéricas ---------------- */
+function barras(alvo, dados, opcoes = {}) {
+  const el = document.getElementById(alvo);
   if (!dados.length) {
-    alvo.innerHTML = '<p class="vazio">Nenhum imóvel elegível neste recorte: faltam área construída ou área de terreno. Por isso não exibimos valor zero.</p>';
+    el.innerHTML = '<p class="vazio">' + (opcoes.vazio || "Sem dados neste recorte.") + "</p>";
     return;
   }
-
-  const maximo = Math.max(...dados.map((d) => d.pct), 100);
-  alvo.innerHTML = dados.map((d) => `
-    <div class="barra" title="${d.comarca}: ${fmt(d.pct)}% — ${d.n} imóvel(is) elegível(is)">
-      <div class="nome">${d.comarca}</div>
-      <div class="trilha">
-        <div class="preenche" style="width:${(100 * d.pct) / maximo}%"></div>
-        <div class="ref100" style="left:${(100 * 100) / maximo}%"></div>
-      </div>
-      <div class="num">${fmt(d.pct, 1)}%</div>
-    </div>`).join("");
+  const maximo = Math.max(...dados.map((d) => d.valor), opcoes.minimoEscala || 0) || 1;
+  el.innerHTML = dados.map((d) => {
+    const ref = opcoes.ref100 && maximo >= 100
+      ? '<div class="ref100" style="left:' + (100 * 100 / maximo) + '%"></div>' : "";
+    return '<div class="barra" title="' + esc(d.dica || d.nome) + '">'
+      + '<div class="nome">' + esc(d.nome) + "</div>"
+      + '<div class="trilha"><div class="preenche' + (opcoes.verde ? " verde" : "")
+      + '" style="width:' + (100 * d.valor / maximo) + '%"></div>' + ref + "</div>"
+      + '<div class="num">' + d.rotulo + "</div></div>";
+  }).join("");
 }
 
-function tabela(linhas) {
-  const ordenadas = [...linhas].sort((a, b) =>
-    (b.indice ?? -1) - (a.indice ?? -1) || a.id - b.id);
-  document.getElementById("corpo").innerHTML = ordenadas.map((i) => `
-    <tr>
-      <td class="n">${i.id}</td>
-      <td>${i.nome}</td>
-      <td>${i.comarca}</td>
-      <td>${i.situacao_patrimonial}</td>
-      <td class="n">${fmt(i.area_construida)}</td>
-      <td class="n">${fmt(i.area_terreno)}</td>
-      <td class="n">${i.indice === null ? "—" : fmt(i.indice) + "%"}</td>
-    </tr>`).join("");
+/* ---------------- aba resposta ---------------- */
+const selComarca = document.getElementById("f-comarca");
+const selSituacao = document.getElementById("f-situacao");
+const unicos = (c) => [...new Set(CTX.imoveis.map((i) => i[c]))].sort((a,b) => String(a).localeCompare(String(b), "pt-BR"));
+
+function popular(sel, valores, rotulo) {
+  sel.innerHTML = '<option value="__TODOS__">' + rotulo + "</option>"
+    + valores.map((v) => '<option value="' + esc(v) + '">' + esc(v) + "</option>").join("");
+}
+popular(selComarca, unicos("comarca"), "Todas as comarcas (" + unicos("comarca").length + ")");
+popular(selSituacao, unicos("situacao_patrimonial"), "Todas as situações (" + unicos("situacao_patrimonial").length + ")");
+
+const filtrar = () => CTX.imoveis.filter((i) =>
+  (selComarca.value === "__TODOS__" || i.comarca === selComarca.value) &&
+  (selSituacao.value === "__TODOS__" || i.situacao_patrimonial === selSituacao.value));
+
+function kpis(linhas) {
+  const el = linhas.filter((i) => i.elegivel);
+  const medicao = linhas.filter((i) => i.tem_medicao);
+  const somaC = el.reduce((a, i) => a + Number(i.area_construida), 0);
+  const somaT = el.reduce((a, i) => a + Number(i.area_terreno), 0);
+  const media = el.length ? el.reduce((a, i) => a + i.indice, 0) / el.length : null;
+  const global = somaT > 0 ? 100 * somaC / somaT : null;
+  const cobertura = linhas.length ? 100 * el.length / linhas.length : null;
+
+  document.getElementById("kpis").innerHTML = [
+    ["Imóveis no recorte", int(linhas.length), "identificados no cadastro", ""],
+    ["Com medição patrimonial", int(medicao.length), "possuem registro no patrimônio", ""],
+    ["Elegíveis ao índice", int(el.length), "têm as duas áreas necessárias", ""],
+    ["Média dos índices", media === null ? "—" : pct(media), "cada imóvel pesa igual", "destaque"],
+    ["Índice global", global === null ? "—" : pct(global), "ponderado pelo tamanho do terreno", "destaque"],
+    ["Cobertura elegível", cobertura === null ? "—" : pct(cobertura, 1), "elegíveis ÷ imóveis do recorte", ""],
+  ].map(([r, v, n, c]) => '<div class="kpi ' + c + '"><div class="rotulo">' + r
+    + '</div><div class="valor">' + v + '</div><div class="nota">' + n + "</div></div>").join("");
+
+  barras("barras-cobertura", [
+    {nome:"Identificados no cadastro", valor:linhas.length, rotulo:int(linhas.length)},
+    {nome:"Com medição patrimonial", valor:medicao.length, rotulo:int(medicao.length)},
+    {nome:"Elegíveis ao índice", valor:el.length, rotulo:int(el.length)},
+  ], {verde:true});
 }
 
-document.getElementById("corpo-quarentena").innerHTML = QUARENTENA.length
-  ? QUARENTENA.map((q) => `
-      <tr>
-        <td>${q.arquivo}</td>
-        <td class="n">${q.linha}</td>
-        <td>${q.nome}</td>
-        <td>${q.comarca}</td>
-        <td class="aviso">${q.motivo}</td>
-      </tr>`).join("")
-  : '<tr><td colspan="5" class="vazio">Nenhum registro em quarentena.</td></tr>';
+function barrasComarca(linhas) {
+  const mapa = new Map();
+  linhas.filter((i) => i.elegivel).forEach((i) => {
+    const a = mapa.get(i.comarca) || {c:0, t:0, n:0};
+    a.c += Number(i.area_construida); a.t += Number(i.area_terreno); a.n += 1;
+    mapa.set(i.comarca, a);
+  });
+  const dados = [...mapa.entries()]
+    .map(([nome, v]) => ({nome, valor:100*v.c/v.t, rotulo:num(100*v.c/v.t,1)+"%",
+                          dica:nome+": "+num(100*v.c/v.t)+"% — "+v.n+" imóvel(is) elegível(is)"}))
+    .sort((a,b) => b.valor - a.valor);
+  barras("barras-comarca", dados, {ref100:true,
+    vazio:"Nenhum imóvel elegível neste recorte: faltam área construída ou área de terreno. Por isso não exibimos valor zero."});
+}
+
+function tabelaImoveis(linhas) {
+  const ord = [...linhas].sort((a,b) => (b.indice ?? -1) - (a.indice ?? -1) || a.id - b.id);
+  document.getElementById("corpo-imoveis").innerHTML = ord.map((i) => "<tr>"
+    + '<td class="n">' + i.id + "</td><td>" + esc(i.nome) + "</td><td>" + esc(i.comarca) + "</td>"
+    + "<td>" + esc(i.situacao_patrimonial) + "</td>"
+    + '<td class="n">' + num(i.area_construida) + '</td><td class="n">' + num(i.area_terreno) + "</td>"
+    + '<td class="n">' + (i.indice === null ? "—" : pct(i.indice)) + "</td>"
+    + '<td class="n">' + int(i.sanitarios_total) + '</td><td class="n">' + num(i.reserva) + "</td></tr>").join("");
+}
 
 function render() {
   const linhas = filtrar();
-  kpis(linhas);
-  barras(linhas);
-  tabela(linhas);
+  kpis(linhas); barrasComarca(linhas); tabelaImoveis(linhas);
 }
-
 selComarca.addEventListener("change", render);
 selSituacao.addEventListener("change", render);
 document.getElementById("limpar").addEventListener("click", () => {
-  selComarca.value = "__TODOS__";
-  selSituacao.value = "__TODOS__";
-  render();
+  selComarca.value = "__TODOS__"; selSituacao.value = "__TODOS__"; render();
 });
+
+/* ---------------- aba etapas ---------------- */
+document.getElementById("corpo-raw").innerHTML = CTX.raw.map((r) => "<tr><td><code>"
+  + esc(r.arquivo) + "</code></td><td>" + esc(r.formato) + '</td><td class="n">' + int(r.bytes)
+  + '</td><td class="n">' + (r.linhas_fisicas === null ? "—" : int(r.linhas_fisicas))
+  + "</td></tr>").join("");
+
+document.getElementById("lista-defeitos").innerHTML = CTX.defeitos.map((d) =>
+  "<li><strong>" + esc(d.titulo) + "</strong><br><span style='color:var(--ink-3)'>"
+  + esc(d.detalhe) + "</span></li>").join("");
+
+document.getElementById("corpo-bronze").innerHTML = CTX.bronze.flatMap((t) =>
+  t.commits.map((c, idx) => "<tr>"
+    + "<td>" + (idx === 0 ? "<code>" + esc(t.tabela) + "</code>" : "") + "</td>"
+    + '<td class="n">v' + c.versao + "</td><td>" + esc(c.operacao) + "</td><td>" + esc(c.modo) + "</td>"
+    + '<td class="n">' + int(c.linhas) + '</td><td class="n">' + int(c.arquivos_add)
+    + '</td><td class="n">' + int(c.arquivos_rem) + "</td></tr>")).join("");
+
+document.getElementById("corpo-tt").innerHTML = CTX.time_travel.length
+  ? CTX.time_travel.map((v) => '<tr><td class="n">v' + v.versao + "</td><td>" + esc(v.rotulo)
+      + '</td><td class="n">' + int(v.linhas_fisicas) + '</td><td class="n">' + int(v.com_id)
+      + '</td><td class="n">' + int(v.sem_id) + "</td></tr>").join("")
+  : '<tr><td colspan="5" class="vazio">Execute python -m src.pipeline para gerar as duas versões.</td></tr>';
+
+const ROTULO_CAMADA = {silver:"Silver — interpreta e limpa", intermediate:"Intermediate — corrige o grão", gold:"Gold — métricas e consumo"};
+document.getElementById("grade-modelos").innerHTML = ["silver","intermediate","gold"].map((camada) => {
+  const itens = CTX.modelos[camada] || [];
+  if (!itens.length) return "";
+  const corpo = itens.map((m) => {
+    const fan = m.fanout
+      ? "<br><span style='color:var(--atencao)'>" + int(m.fanout.detalhe) + " linhas de "
+        + esc(m.fanout.rotulo) + " → " + int(m.fanout.reduzido)
+        + " combinações imóvel/data (evita fan-out)</span>" : "";
+    return "<li><code>" + esc(m.modelo) + '</code><span class="quanto">'
+      + int(m.linhas) + " linhas</span><br><span style='color:var(--ink-3)'>" + esc(m.descricao)
+      + "</span>" + fan + "</li>";
+  }).join("");
+  return '<div class="etapa ' + camada + '"><h3>' + ROTULO_CAMADA[camada] + "</h3>"
+    + '<p class="sub">' + itens.length + " modelo(s) · " + esc(itens[0].materializacao)
+    + '</p><ul class="lista">' + corpo + "</ul></div>";
+}).join("");
+
+/* ---------------- fan-out ---------------- */
+const fo = CTX.fanout || {};
+document.getElementById("painel-fanout").innerHTML = Object.keys(fo).length
+  ? '<ul class="lista">'
+    + "<li>Imóveis com vistoria<span class='quanto'>" + int(fo.imoveis_com_vistoria) + "</span></li>"
+    + "<li>Linhas detalhadas de sanitários<span class='quanto'>" + int(fo.linhas_sanitarios) + "</span></li>"
+    + "<li>Linhas detalhadas de reservatórios<span class='quanto'>" + int(fo.linhas_reservatorios) + "</span></li>"
+    + "<li><strong>Se as duas coleções fossem juntadas direto na fato</strong>"
+    + "<span class='quanto' style='color:var(--erro)'>" + int(fo.linhas_se_juntasse_direto)
+    + " linhas</span><br><span style='color:var(--ink-3)'>em vez de uma linha por imóvel; "
+    + "no pior caso, " + int(fo.pior_caso_por_imovel)
+    + " linhas para o mesmo imóvel — as áreas seriam contadas várias vezes</span></li>"
+    + "<li><strong>Com a Intermediate, a fato fica no grão declarado</strong>"
+    + "<span class='quanto' style='color:var(--ok)'>" + int(CTX.imoveis.length)
+    + " linhas</span><br><span style='color:var(--ink-3)'>uma linha por imóvel e data de referência, "
+    + "protegido pelo teste <code>assert_fato_no_grao_declarado</code></span></li>"
+    + "</ul>"
+  : '<p class="vazio">Execute dbt build para medir o fan-out.</p>';
+
+/* ---------------- o que é usado ---------------- */
+const uso = CTX.uso || {usados:[], terminais:[]};
+const itemUso = (n) => "<li><code>" + esc(n.nome) + '</code><span class="quanto selo">'
+  + esc(n.camada) + "</span></li>";
+document.getElementById("sub-usados").textContent =
+  uso.usados.length + " de " + (uso.usados.length + uso.terminais.length) + " nós do grafo";
+document.getElementById("lista-usados").innerHTML = uso.usados.map(itemUso).join("");
+document.getElementById("sub-terminais").textContent =
+  uso.terminais.length + " nó(s) — isolado é esperado, não é erro";
+document.getElementById("lista-terminais").innerHTML = uso.terminais.length
+  ? uso.terminais.map(itemUso).join("")
+  : '<li class="vazio">Nenhum nó terminal.</li>';
+
+const semVistoria = CTX.imoveis.filter((i) => !i.tem_vistoria).length;
+const semMedicao = CTX.imoveis.filter((i) => !i.tem_medicao).length;
+const foraIndice = CTX.imoveis.filter((i) => !i.elegivel).length;
+document.getElementById("corpo-uso-dados").innerHTML = [
+  ["Cadastro Mestre (CSV) + Patrimônio (CSV)",
+   '<span class="selo ok">usado na fórmula principal</span>',
+   "Fornecem área construída e área de terreno, as duas medidas do índice."],
+  ["Infraestrutura predial (JSON)",
+   '<span class="selo">usado em indicadores secundários</span>',
+   "Produz densidade sanitária e reserva por m². Não participa da fórmula de área construída ÷ terreno."],
+  ["Delta v0 do Cadastro Mestre",
+   '<span class="selo">não usado no cálculo</span>',
+   "A Gold lê a versão corrente. A v0 existe para auditoria e time travel, e não é somada à Gold atual."],
+  [int(foraIndice) + " imóveis sem base completa",
+   '<span class="selo aviso">fora do índice</span>',
+   "Faltam área de terreno ou registro patrimonial. Ficam no modelo com medida nula, nunca zero."],
+  [int(CTX.quarentena.length) + " registro em quarentena",
+   '<span class="selo aviso">isolado, não descartado</span>',
+   "Sem ID oficial não há chave confiável. Preservado com arquivo, linha, conteúdo e motivo."],
+  ["Coluna <code>area_arquivo_m2</code> (" + int(CTX.area_arquivo_preenchida) + " preenchidas)",
+   '<span class="selo">preservada, não usada</span>',
+   "Convertida e disponível na Gold, mas não entra em nenhum indicador desta entrega."],
+  [int(semVistoria) + " imóveis sem vistoria e " + int(semMedicao) + " sem medição patrimonial",
+   '<span class="selo aviso">cobertura declarada</span>',
+   "Permanecem no cadastro e aparecem na contagem; apenas não têm indicador calculável."],
+].map(([item, selo, porque]) => "<tr><td>" + item + "</td><td>" + selo + "</td><td>"
+  + porque + "</td></tr>").join("");
+
+/* ---------------- aba incompletos ---------------- */
+function classificar(i) {
+  if (i.elegivel) return null;
+  if (!i.tem_medicao) return "Sem registro patrimonial";
+  const faltas = [];
+  if (i.area_construida === null) faltas.push("área construída");
+  if (i.area_terreno === null) faltas.push("área de terreno");
+  return faltas.length ? "Falta " + faltas.join(" e ") : "Área de terreno igual a zero";
+}
+
+const incompletos = CTX.imoveis.filter((i) => !i.elegivel).map((i) => ({...i, falta: classificar(i)}));
+const porMotivo = new Map();
+incompletos.forEach((i) => porMotivo.set(i.falta, (porMotivo.get(i.falta) || 0) + 1));
+
+document.getElementById("kpis-lacunas").innerHTML = [
+  ["Imóveis identificados", int(CTX.imoveis.length), "no snapshot atual"],
+  ["Fora do índice", int(incompletos.length), "não têm base completa"],
+  ["Em quarentena", int(CTX.quarentena.length), "sem ID oficial, isolado"],
+  ["Cobertura elegível", pct(100 * (CTX.imoveis.length - incompletos.length) / CTX.imoveis.length, 1), "do portfólio identificado"],
+].map(([r,v,n]) => '<div class="kpi"><div class="rotulo">' + r + '</div><div class="valor">' + v
+  + '</div><div class="nota">' + n + "</div></div>").join("");
+
+barras("barras-lacunas", [...porMotivo.entries()]
+  .map(([nome, valor]) => ({nome, valor, rotulo: int(valor)}))
+  .sort((a,b) => b.valor - a.valor));
+
+document.getElementById("corpo-incompletos").innerHTML = incompletos
+  .sort((a,b) => a.falta.localeCompare(b.falta, "pt-BR") || a.id - b.id)
+  .map((i) => "<tr>"
+    + '<td class="n">' + i.id + "</td><td>" + esc(i.nome) + "</td><td>" + esc(i.comarca) + "</td>"
+    + "<td>" + esc(i.situacao_patrimonial) + '</td><td><span class="selo aviso">' + esc(i.falta) + "</span></td>"
+    + '<td class="n">' + num(i.area_construida) + '</td><td class="n">' + num(i.area_terreno)
+    + "</td></tr>").join("");
+
+document.getElementById("corpo-quarentena").innerHTML = CTX.quarentena.length
+  ? CTX.quarentena.map((q) => "<tr><td><code>" + esc(q.arquivo) + '</code></td><td class="n">'
+      + int(q.linha) + "</td><td>" + esc(q.nome) + "</td><td>" + esc(q.classificacao)
+      + "</td><td>" + esc(q.comarca) + '</td><td><span class="selo aviso">' + esc(q.motivo)
+      + "</span></td></tr>").join("")
+  : '<tr><td colspan="6" class="vazio">Nenhum registro em quarentena.</td></tr>';
+
+/* ---------------- aba qualidade ---------------- */
+document.getElementById("kpis-testes").innerHTML = [
+  ["Testes de dados", int(CTX.testes.total), "executados pelo dbt build"],
+  ["Tipos de teste", int(CTX.testes.por_tipo.length), "genéricos e singulares"],
+  ["Singulares", int(CTX.testes.singulares.length), "SQL escrito para esta PoC"],
+  ["Testes de ingestão", int(CTX.testes_python.total), "pytest sobre src/"],
+].map(([r,v,n]) => '<div class="kpi"><div class="rotulo">' + r + '</div><div class="valor">' + v
+  + '</div><div class="nota">' + n + "</div></div>").join("");
+
+barras("barras-testes", CTX.testes.por_tipo.map((t) =>
+  ({nome:t.tipo, valor:t.qtd, rotulo:int(t.qtd)})), {verde:true});
+
+document.getElementById("corpo-singulares").innerHTML = CTX.testes.singulares.map((t) =>
+  "<tr><td><code>" + esc(t.nome) + "</code>"
+  + (t.descricao ? "<br><span style='color:var(--ink-3)'>" + esc(t.descricao) + "</span>" : "")
+  + '</td><td><span class="selo ' + (t.status === "pass" ? "ok" : "") + '">'
+  + esc(t.status) + "</span></td></tr>").join("");
+
+document.getElementById("corpo-pytest").innerHTML = CTX.testes_python.casos.map((c) =>
+  "<tr><td><code>" + esc(c.arquivo) + "</code></td><td><code>" + esc(c.nome)
+  + "</code></td></tr>").join("");
+
+/* ---------------- aba execução ---------------- */
+const ex = CTX.execucao || {};
+document.getElementById("kpis-execucao").innerHTML = Object.keys(ex).length ? [
+  ["Recursos executados", int(ex.total), ex.modelos + " modelos + " + ex.testes + " testes"],
+  ["Sucesso", int(ex.sucesso), "status success/pass"],
+  ["Falhas", int(ex.falha), ex.falha === 0 ? "nenhuma" : "verificar run_results"],
+  ["Tempo total", num(ex.elapsed, 2) + " s", "do dbt build"],
+].map(([r,v,n]) => '<div class="kpi"><div class="rotulo">' + r + '</div><div class="valor">' + v
+  + '</div><div class="nota">' + n + "</div></div>").join("")
+  : '<p class="vazio">Execute dbt build para registrar uma execução.</p>';
+
+barras("barras-tempo", (ex.mais_lentos || []).map((n) =>
+  ({nome:n.nome, valor:n.segundos, rotulo:num(n.segundos,3)+" s", dica:n.nome+" ("+n.tipo+") — "+n.status})));
+
+document.getElementById("lista-ambiente").innerHTML = [
+  ["Python", CTX.ambiente.python],
+  ["DuckDB", CTX.ambiente.duckdb],
+  ["dbt", ex.dbt_version || "—"],
+  ["Plataforma", CTX.ambiente.plataforma],
+  ["Execução registrada em", ex.gerado_em || "—"],
+  ["Data de referência dos dados", CTX.data_referencia],
+].map(([r,v]) => "<li>" + r + '<span class="quanto"><code>' + esc(v) + "</code></span></li>").join("");
 
 render();
 </script>

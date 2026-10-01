@@ -26,6 +26,12 @@ O pipeline também distingue dois números que parecem iguais, mas não são:
 Cobertura da resposta: 102 imóveis identificados, 79 com medição patrimonial e 60 com as
 duas áreas necessárias. Registros sem medição continuam visíveis; não viram zero.
 
+A resposta é materializada em dois lugares, ambos gerados pelo pipeline:
+
+- `consultas/resposta.sql` — SQL sobre a Gold, sem regra de negócio no `WHERE`;
+- `data/gold/dashboard.html` — painel com filtros de comarca e situação patrimonial,
+  gerado por `python scripts/gerar_dashboard.py` ao final do ciclo.
+
 ## Execução em clone limpo
 
 Requisitos: Python 3.10 ou superior, Git e acesso à internet na primeira execução para
@@ -43,7 +49,11 @@ dbt build
 cd ..
 
 python scripts/executar_sql.py consultas/resposta.sql
+python scripts/gerar_dashboard.py
 ```
+
+O último comando publica `data/gold/dashboard.html`, que responde à pergunta do início
+com filtros de comarca e situação patrimonial. Abra com `xdg-open data/gold/dashboard.html`.
 
 Resultado esperado do `dbt build`:
 
@@ -83,10 +93,12 @@ A consulta é idêntica nas duas versões; somente o snapshot muda.
 ```bash
 python scripts/zerar.py
 python -m src.pipeline
-cd dbt && dbt build
+cd dbt && dbt build && cd ..
+python scripts/gerar_dashboard.py
 ```
 
-`zerar.py` remove exclusivamente Bronze, Silver, Gold, catálogo DuckDB e artefatos do
+O `dbt build` depende das pastas criadas por `python -m src.pipeline`; execute os dois na
+ordem acima. `zerar.py` remove exclusivamente Bronze, Silver, Gold, catálogo DuckDB e artefatos do
 dbt. As fontes de `data/raw/`, o código e os documentos são preservados.
 
 ## Linhagem
@@ -143,6 +155,28 @@ As dimensões são:
 Para consumo direto, `mart_indicadores_imoveis` reúne fato e dimensões, enquanto
 `agg_aproveitamento_geral` e `agg_aproveitamento_comarca` armazenam as respostas prontas.
 
+## Dashboard
+
+```bash
+python scripts/gerar_dashboard.py
+xdg-open data/gold/dashboard.html
+```
+
+Arquivo único, sem servidor e sem dependência além das já declaradas. Ele cobre a jornada
+inteira, em seis abas:
+
+| Aba | Conteúdo |
+|---|---|
+| Resposta | KPIs, filtros de comarca e situação, índice por comarca e detalhe por imóvel |
+| Etapas do pipeline | Raw, defeitos preservados, versões Delta, time travel, modelos por camada, fan-out evitado e onde cada coisa é calculada |
+| Linhagem | DAG desenhada a partir do `manifest.json` real, e o que alimenta ou não a resposta |
+| Registros incompletos | por que 42 dos 102 ficam fora do índice, imóvel por imóvel, e a quarentena |
+| Qualidade | 54 testes dbt por tipo, os 9 singulares com status e os 6 testes de ingestão |
+| Execução | `run_results.json` real: recursos, status, tempos e ambiente |
+
+O painel não recalcula a fórmula e não corrige dado: lê as medidas já calculadas e testadas
+na Gold e apenas filtra, agrega e exibe.
+
 ## Qualidade e exceções
 
 Algumas decisões protegidas por testes:
@@ -168,11 +202,11 @@ Detalhes: [`docs/testes.md`](docs/testes.md) e
 │   ├── raw/                 # CSV e JSON versionados
 │   ├── bronze/              # Delta Lake, incluindo _delta_log
 │   ├── silver/              # Parquet gerado pelo dbt
-│   └── gold/                # Parquet gerado pelo dbt
+│   └── gold/                # Parquet gerado pelo dbt + dashboard.html
 ├── src/                     # ingestão Python
 ├── dbt/                     # transformações, testes e documentação
 ├── consultas/               # resposta e auditoria de cobertura
-├── scripts/                 # time travel, reset e preparação
+├── scripts/                 # time travel, dashboard, reset e preparação
 ├── tests/                   # testes Python
 ├── DECISOES.md              # quatro decisões exigidas
 └── docs/                    # ADRs, arquitetura, testes e apresentação
