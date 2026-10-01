@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGOB Imóveis — Aproveitamento construtivo</title>
+<style>
+  :root {
+    --ink: #1b1a17; --ink-2: #4a463f; --ink-3: #7d776c;
+    --surface: #faf8f5; --card: #ffffff; --linha: #e6e1d8;
+    --marca: #8a6a2f; --marca-fraca: #e8dcc4; --alerta: #8c4a2f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #f2efe9; --ink-2: #c4bdb0; --ink-3: #908a7e;
+      --surface: #16150f; --card: #211f18; --linha: #38352b;
+      --marca: #d8ad5c; --marca-fraca: #4a3d22; --alerta: #d98c66;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 28px 20px 56px;
+    background: var(--surface); color: var(--ink);
+    font: 14px/1.5 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: -.01em; }
+  .sub { color: var(--ink-3); margin: 0 0 24px; font-size: 13px; }
+  .filtros {
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end;
+    padding: 16px; background: var(--card); border: 1px solid var(--linha);
+    border-radius: 10px; margin-bottom: 20px;
+  }
+  .campo { display: flex; flex-direction: column; gap: 5px; }
+  .campo label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); }
+  select {
+    min-width: 210px; padding: 8px 10px; font: inherit; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--linha); border-radius: 7px;
+  }
+  button {
+    padding: 8px 14px; font: inherit; color: var(--ink-2); cursor: pointer;
+    background: var(--surface); border: 1px solid var(--linha); border-radius: 7px;
+  }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 12px; margin-bottom: 22px; }
+  .kpi { padding: 14px 16px; background: var(--card); border: 1px solid var(--linha); border-radius: 10px; }
+  .kpi .rotulo { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); }
+  .kpi .valor { font-size: 27px; font-variant-numeric: tabular-nums; margin-top: 5px; letter-spacing: -.02em; }
+  .kpi .nota { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+  .painel { padding: 18px; background: var(--card); border: 1px solid var(--linha); border-radius: 10px; margin-bottom: 20px; }
+  .painel h2 { font-size: 14px; margin: 0 0 3px; }
+  .painel .ajuda { font-size: 12px; color: var(--ink-3); margin: 0 0 16px; }
+  .barras { display: flex; flex-direction: column; gap: 9px; }
+  .barra { display: grid; grid-template-columns: 185px 1fr 74px; gap: 11px; align-items: center; }
+  .barra .nome { font-size: 12px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .trilha { height: 13px; background: var(--marca-fraca); border-radius: 3px; position: relative; }
+  .preenche { height: 100%; background: var(--marca); border-radius: 0 4px 4px 0; min-width: 2px; }
+  .barra .num { font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+  .barra:hover .nome, .barra:hover .num { color: var(--ink); }
+  .ref100 { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--ink-3); opacity: .55; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th, td { padding: 7px 9px; text-align: left; border-bottom: 1px solid var(--linha); }
+  th { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); font-weight: 600; }
+  td.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .tabela-rolagem { overflow-x: auto; max-height: 430px; overflow-y: auto; }
+  .vazio { color: var(--ink-3); font-size: 13px; padding: 14px 0; }
+  .aviso { font-size: 12px; color: var(--alerta); }
+  footer { color: var(--ink-3); font-size: 11.5px; margin-top: 26px; line-height: 1.7; }
+  @media (max-width: 560px) { .barra { grid-template-columns: 110px 1fr 62px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Aproveitamento construtivo dos imóveis do TJMS</h1>
+  <p class="sub">Camada de consumo (Gold) · data de referência 17/08/2026 · as medidas vêm calculadas e testadas do dbt; este painel apenas filtra e agrega.</p>
+
+  <div class="filtros">
+    <div class="campo">
+      <label for="f-comarca">Comarca</label>
+      <select id="f-comarca"></select>
+    </div>
+    <div class="campo">
+      <label for="f-situacao">Situação patrimonial</label>
+      <select id="f-situacao"></select>
+    </div>
+    <button id="limpar" type="button">Limpar filtros</button>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="painel">
+    <h2>Índice de aproveitamento por comarca</h2>
+    <p class="ajuda">Razão global da comarca: soma das áreas construídas ÷ soma das áreas de terreno. A linha vertical marca 100%; acima disso a área construída soma mais de um pavimento.</p>
+    <div class="barras" id="barras"></div>
+  </div>
+
+  <div class="painel">
+    <h2>Imóveis no recorte</h2>
+    <p class="ajuda">Medida ausente aparece como “—”, nunca como zero.</p>
+    <div class="tabela-rolagem">
+      <table>
+        <thead><tr>
+          <th>ID</th><th>Nome oficial</th><th>Comarca</th><th>Situação</th>
+          <th class="n">Constr. (m²)</th><th class="n">Terreno (m²)</th><th class="n">Índice</th>
+        </tr></thead>
+        <tbody id="corpo"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="painel">
+    <h2>Quarentena</h2>
+    <p class="ajuda">Registro de negócio sem ID oficial. Não entra na estrela e não é descartado: fica isolado com origem, linha e motivo.</p>
+    <div class="tabela-rolagem">
+      <table>
+        <thead><tr><th>Arquivo</th><th class="n">Linha</th><th>Nome original</th><th>Comarca</th><th>Motivo</th></tr></thead>
+        <tbody id="corpo-quarentena"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    Fonte: <code>data/gold/mart_indicadores_imoveis.parquet</code> e <code>data/silver/quarentena_imoveis.parquet</code>.<br>
+    Gerado por <code>scripts/gerar_dashboard.py</code> ao final do ciclo, depois de <code>dbt build</code>.
+  </footer>
+
+</div>
+
+<script>
+const IMOVEIS = [{"id": 1, "nome": "Fórum de Campo Grande", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 23364.5, "area_terreno": 7045.36, "indice": 331.6296, "elegivel": true, "tem_medicao": true}, {"id": 2, "nome": "Fórum de Dourados", "comarca": "DOURADOS", "situacao_patrimonial": "PROPRIO", "area_construida": 3470.08, "area_terreno": 1243.74, "indice": 279.0037, "elegivel": true, "tem_medicao": true}, {"id": 3, "nome": "Fórum de Amambai", "comarca": "AMAMBAI", "situacao_patrimonial": "PROPRIO", "area_construida": 815.62, "area_terreno": 6480.0, "indice": 12.5867, "elegivel": true, "tem_medicao": true}, {"id": 4, "nome": "Fórum de Nova Andradina", "comarca": "NOVA ANDRADINA", "situacao_patrimonial": "PROPRIO", "area_construida": 1322.72, "area_terreno": 4800.0, "indice": 27.5567, "elegivel": true, "tem_medicao": true}, {"id": 5, "nome": "Fórum de Fátima do Sul", "comarca": "FÁTIMA DO SUL", "situacao_patrimonial": "PROPRIO", "area_construida": 955.61, "area_terreno": 4780.0, "indice": 19.9918, "elegivel": true, "tem_medicao": true}, {"id": 6, "nome": "Fórum de Angélica", "comarca": "ANGÉLICA", "situacao_patrimonial": "CEDIDO", "area_construida": 396.37, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 7, "nome": "Fórum de Sete Quedas", "comarca": "SETE QUEDAS", "situacao_patrimonial": "PROPRIO", "area_construida": 868.95, "area_terreno": 3360.0, "indice": 25.8616, "elegivel": true, "tem_medicao": true}, {"id": 8, "nome": "Fórum de Anaurilândia", "comarca": "ANAURILÂNDIA", "situacao_patrimonial": "PROPRIO", "area_construida": 533.45, "area_terreno": 1456.95, "indice": 36.6142, "elegivel": true, "tem_medicao": true}, {"id": 9, "nome": "Fórum de Rio Negro", "comarca": "RIO NEGRO", "situacao_patrimonial": "PROPRIO", "area_construida": 810.96, "area_terreno": 5760.0, "indice": 14.0792, "elegivel": true, "tem_medicao": true}, {"id": 10, "nome": "Fórum de Chapadão do Sul", "comarca": "CHAPADÃO DO SUL", "situacao_patrimonial": "PROPRIO", "area_construida": 944.15, "area_terreno": 4800.0, "indice": 19.6698, "elegivel": true, "tem_medicao": true}, {"id": 11, "nome": "Fórum de Batayporã", "comarca": "BATAYPORÃ", "situacao_patrimonial": "PROPRIO", "area_construida": 530.34, "area_terreno": 2616.52, "indice": 20.2689, "elegivel": true, "tem_medicao": true}, {"id": 12, "nome": "Fórum de Água Clara", "comarca": "ÁGUA CLARA", "situacao_patrimonial": "PROPRIO", "area_construida": 863.86, "area_terreno": 5875.26, "indice": 14.7033, "elegivel": true, "tem_medicao": true}, {"id": 13, "nome": "Fórum de Terenos", "comarca": "TERENOS", "situacao_patrimonial": "PROPRIO", "area_construida": 868.95, "area_terreno": 4800.0, "indice": 18.1031, "elegivel": true, "tem_medicao": true}, {"id": 14, "nome": "Fórum de Cassilândia", "comarca": "CASSILÂNDIA", "situacao_patrimonial": "PROPRIO", "area_construida": 893.84, "area_terreno": 5000.0, "indice": 17.8768, "elegivel": true, "tem_medicao": true}, {"id": 15, "nome": "Fórum de Camapuã", "comarca": "CAMAPUÃ", "situacao_patrimonial": "PROPRIO", "area_construida": 955.61, "area_terreno": 4000.0, "indice": 23.8903, "elegivel": true, "tem_medicao": true}, {"id": 16, "nome": "Fórum de Rio Verde de Mato Grosso", "comarca": "RIO VERDE DE MATO GROSSO", "situacao_patrimonial": "PROPRIO", "area_construida": 577.66, "area_terreno": 3550.0, "indice": 16.2721, "elegivel": true, "tem_medicao": true}, {"id": 17, "nome": "Fórum de Glória de Dourados", "comarca": "GLÓRIA DE DOURADOS", "situacao_patrimonial": "PROPRIO", "area_construida": 428.84, "area_terreno": 4500.0, "indice": 9.5298, "elegivel": true, "tem_medicao": true}, {"id": 18, "nome": "Fórum de Jardim", "comarca": "JARDIM", "situacao_patrimonial": "PROPRIO", "area_construida": 835.69, "area_terreno": 4445.0, "indice": 18.8007, "elegivel": true, "tem_medicao": true}, {"id": 19, "nome": "Fórum de Caarapó", "comarca": "CAARAPÓ", "situacao_patrimonial": "PROPRIO", "area_construida": 795.3, "area_terreno": 4125.46, "indice": 19.2779, "elegivel": true, "tem_medicao": true}, {"id": 20, "nome": "Fórum de Eldorado", "comarca": "ELDORADO", "situacao_patrimonial": "PROPRIO", "area_construida": 810.96, "area_terreno": 4800.0, "indice": 16.895, "elegivel": true, "tem_medicao": true}, {"id": 21, "nome": "Fórum de Iguatemi", "comarca": "IGUATEMI", "situacao_patrimonial": "PROPRIO", "area_construida": 642.5, "area_terreno": 5000.0, "indice": 12.85, "elegivel": true, "tem_medicao": true}, {"id": 22, "nome": "Fórum de Ivinhema", "comarca": "IVINHEMA", "situacao_patrimonial": "PROPRIO", "area_construida": 817.64, "area_terreno": 3263.05, "indice": 25.0575, "elegivel": true, "tem_medicao": true}, {"id": 23, "nome": "Fórum de Mundo Novo", "comarca": "MUNDO NOVO", "situacao_patrimonial": "PROPRIO", "area_construida": 1011.5, "area_terreno": 4270.0, "indice": 23.6885, "elegivel": true, "tem_medicao": true}, {"id": 24, "nome": "Fórum de Pedro Gomes", "comarca": "PEDRO GOMES", "situacao_patrimonial": "PROPRIO", "area_construida": 582.71, "area_terreno": 3200.0, "indice": 18.2097, "elegivel": true, "tem_medicao": true}, {"id": 25, "nome": "Fórum de Aparecida do Taboado", "comarca": "APARECIDA DO TABOADO", "situacao_patrimonial": "PROPRIO", "area_construida": 989.0, "area_terreno": 7138.23, "indice": 13.855, "elegivel": true, "tem_medicao": true}, {"id": 26, "nome": "Fórum de Bonito", "comarca": "BONITO", "situacao_patrimonial": "PROPRIO", "area_construida": 1011.5, "area_terreno": 4200.0, "indice": 24.0833, "elegivel": true, "tem_medicao": true}, {"id": 27, "nome": "Fórum de Aquidauana", "comarca": "AQUIDAUANA", "situacao_patrimonial": "PROPRIO", "area_construida": 1123.21, "area_terreno": 5312.5, "indice": 21.1428, "elegivel": true, "tem_medicao": true}, {"id": 28, "nome": "Fórum de Bela Vista", "comarca": "BELA VISTA", "situacao_patrimonial": "PROPRIO", "area_construida": 576.2, "area_terreno": 3600.0, "indice": 16.0056, "elegivel": true, "tem_medicao": true}, {"id": 29, "nome": "Fórum de Três Lagoas", "comarca": "TRÊS LAGOAS", "situacao_patrimonial": "PROPRIO", "area_construida": 4312.48, "area_terreno": 6765.82, "indice": 63.7392, "elegivel": true, "tem_medicao": true}, {"id": 30, "nome": "Fórum de Paranaíba", "comarca": "PARANAÍBA", "situacao_patrimonial": "PROPRIO", "area_construida": 1222.86, "area_terreno": 6680.0, "indice": 18.3063, "elegivel": true, "tem_medicao": true}, {"id": 31, "nome": "Fórum de Corumbá", "comarca": "CORUMBÁ", "situacao_patrimonial": "PROPRIO", "area_construida": 4312.48, "area_terreno": 4631.88, "indice": 93.1043, "elegivel": true, "tem_medicao": true}, {"id": 32, "nome": "Fórum de Naviraí", "comarca": "NAVIRAÍ", "situacao_patrimonial": "PROPRIO", "area_construida": 1444.36, "area_terreno": 5400.0, "indice": 26.7474, "elegivel": true, "tem_medicao": true}, {"id": 33, "nome": "Fórum de Ponta Porã", "comarca": "PONTA PORÃ", "situacao_patrimonial": "PROPRIO", "area_construida": 2121.49, "area_terreno": 8024.0, "indice": 26.4393, "elegivel": true, "tem_medicao": true}, {"id": 34, "nome": "Fórum de Coxim", "comarca": "COXIM", "situacao_patrimonial": "PROPRIO", "area_construida": 1544.14, "area_terreno": 5000.0, "indice": 30.8828, "elegivel": true, "tem_medicao": true}, {"id": 35, "nome": "Fórum de Maracaju", "comarca": "MARACAJU", "situacao_patrimonial": "PROPRIO", "area_construida": 1545.4, "area_terreno": 4200.0, "indice": 36.7952, "elegivel": true, "tem_medicao": true}, {"id": 36, "nome": "Fórum de Miranda", "comarca": "MIRANDA", "situacao_patrimonial": "PROPRIO", "area_construida": 1286.8, "area_terreno": 4800.0, "indice": 26.8083, "elegivel": true, "tem_medicao": true}, {"id": 37, "nome": "Fórum de Porto Murtinho", "comarca": "PORTO MURTINHO", "situacao_patrimonial": "PROPRIO", "area_construida": 651.82, "area_terreno": 4019.99, "indice": 16.2145, "elegivel": true, "tem_medicao": true}, {"id": 38, "nome": "Fórum de Rio Brilhante", "comarca": "RIO BRILHANTE", "situacao_patrimonial": "PROPRIO", "area_construida": 1444.36, "area_terreno": 5006.29, "indice": 28.8509, "elegivel": true, "tem_medicao": true}, {"id": 39, "nome": "Fórum de Sidrolândia", "comarca": "SIDROLÂNDIA", "situacao_patrimonial": "PROPRIO", "area_construida": 867.31, "area_terreno": 3200.0, "indice": 27.1034, "elegivel": true, "tem_medicao": true}, {"id": 40, "nome": "Fórum de Brasilândia", "comarca": "BRASILÂNDIA", "situacao_patrimonial": "PROPRIO", "area_construida": 556.38, "area_terreno": 4160.74, "indice": 13.3721, "elegivel": true, "tem_medicao": true}, {"id": 41, "nome": "Fórum de Inocência", "comarca": "INOCÊNCIA", "situacao_patrimonial": "PROPRIO", "area_construida": 868.95, "area_terreno": 5429.22, "indice": 16.0051, "elegivel": true, "tem_medicao": true}, {"id": 42, "nome": "Fórum de São Gabriel do Oeste", "comarca": "SÃO GABRIEL DO OESTE", "situacao_patrimonial": "PROPRIO", "area_construida": 1348.03, "area_terreno": 3000.0, "indice": 44.9343, "elegivel": true, "tem_medicao": true}, {"id": 43, "nome": "Fórum de Nioaque", "comarca": "NIOAQUE", "situacao_patrimonial": "PROPRIO", "area_construida": 530.34, "area_terreno": 2352.24, "indice": 22.5462, "elegivel": true, "tem_medicao": true}, {"id": 44, "nome": "Fórum de Bandeirantes", "comarca": "BANDEIRANTES", "situacao_patrimonial": "PROPRIO", "area_construida": 810.96, "area_terreno": 4028.8, "indice": 20.1291, "elegivel": true, "tem_medicao": true}, {"id": 45, "nome": "Fórum de Ribas do Rio Pardo", "comarca": "RIBAS DO RIO PARDO", "situacao_patrimonial": "PROPRIO", "area_construida": 878.94, "area_terreno": 4800.0, "indice": 18.3113, "elegivel": true, "tem_medicao": true}, {"id": 46, "nome": "Fórum de Itaporã", "comarca": "ITAPORÃ", "situacao_patrimonial": "PROPRIO", "area_construida": 642.5, "area_terreno": 5943.08, "indice": 10.8109, "elegivel": true, "tem_medicao": true}, {"id": 47, "nome": "Fórum de Deodápolis", "comarca": "DEODÁPOLIS", "situacao_patrimonial": "PROPRIO", "area_construida": 563.69, "area_terreno": 2515.29, "indice": 22.4105, "elegivel": true, "tem_medicao": true}, {"id": 48, "nome": "Fórum de Costa Rica", "comarca": "COSTA RICA", "situacao_patrimonial": "PROPRIO", "area_construida": 955.61, "area_terreno": 4800.0, "indice": 19.9085, "elegivel": true, "tem_medicao": true}, {"id": 49, "nome": "Fórum de Itaquiraí", "comarca": "ITAQUIRAÍ", "situacao_patrimonial": "PROPRIO", "area_construida": 642.5, "area_terreno": 4800.0, "indice": 13.3854, "elegivel": true, "tem_medicao": true}, {"id": 50, "nome": "Fórum de Sonora", "comarca": "SONORA", "situacao_patrimonial": "PROPRIO", "area_construida": 810.96, "area_terreno": 4624.0, "indice": 17.5381, "elegivel": true, "tem_medicao": true}, {"id": 51, "nome": "Fórum de Nova Alvorada do Sul", "comarca": "NOVA ALVORADA DO SUL", "situacao_patrimonial": "PROPRIO", "area_construida": 863.86, "area_terreno": 3188.36, "indice": 27.0942, "elegivel": true, "tem_medicao": true}, {"id": 52, "nome": "Fórum de Dois Irmãos do Buriti", "comarca": "DOIS IRMÃOS DO BURITI", "situacao_patrimonial": "CEDIDO", "area_construida": 530.19, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 53, "nome": "Fórum de Anastacio", "comarca": "ANASTACIO", "situacao_patrimonial": "PROPRIO", "area_construida": 1011.5, "area_terreno": 5528.6, "indice": 18.2958, "elegivel": true, "tem_medicao": true}, {"id": 54, "nome": "Tribunal de Justiça", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 7675.91, "area_terreno": 21097.33, "indice": 36.3833, "elegivel": true, "tem_medicao": true}, {"id": 55, "nome": "Fórum de Bataguassu", "comarca": "BATAGUASSU", "situacao_patrimonial": "PROPRIO", "area_construida": 703.38, "area_terreno": 4230.0, "indice": 16.6284, "elegivel": true, "tem_medicao": true}, {"id": 56, "nome": "Fórum de Coronel Sapucaia", "comarca": "CORONEL SAPUCAIA", "situacao_patrimonial": "CEDIDO", "area_construida": 360.04, "area_terreno": 1411.86, "indice": 25.5011, "elegivel": true, "tem_medicao": true}, {"id": 59, "nome": "Secretaria de Bens, Serviços e Patrimônios", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 2780.44, "area_terreno": 3127.27, "indice": 88.9095, "elegivel": true, "tem_medicao": true}, {"id": 60, "nome": "Depósitos e Arquivo Geral", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 4000.0, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 61, "nome": "Juizado Especial - 8ª Vara Justiça Itinerante e Comunitária e 9ª Vara Juizado de Trânsito", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "ALUGADO", "area_construida": 563.22, "area_terreno": 1409.22, "indice": 39.9668, "elegivel": true, "tem_medicao": true}, {"id": 62, "nome": "CIJUS - Centro Integrado de Justiça", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 13478.22, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 63, "nome": "EJUD", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "CEDIDO", "area_construida": 1149.61, "area_terreno": 4373.25, "indice": 26.2873, "elegivel": true, "tem_medicao": true}, {"id": 64, "nome": "NUPEMEC", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "ALUGADO", "area_construida": 1150.4, "area_terreno": 895.44, "indice": 128.4732, "elegivel": true, "tem_medicao": true}, {"id": 65, "nome": "Anexo Tribunal de Justiça", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 4648.65, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 66, "nome": "Gab. dos Desembargadores", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 6873.4, "area_terreno": 11128.88, "indice": 61.7618, "elegivel": true, "tem_medicao": true}, {"id": 67, "nome": "Biblioteca", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "PROPRIO", "area_construida": 1022.97, "area_terreno": 1495.2, "indice": 68.4169, "elegivel": true, "tem_medicao": true}, {"id": 68, "nome": "Bataguassu (previsão outubro/2024)", "comarca": "BATAGUASSU", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 69, "nome": "Guarita TJ", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 6.6, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 70, "nome": "Anexo-refeitório", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 65.0, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 71, "nome": "Garagens TJ", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 0.0, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 72, "nome": "Anexo dos Gabinetes dos Desembargadores", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 775.81, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 73, "nome": "Guarita Gabinetes", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 6.6, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 74, "nome": "Guarita Gabinetes 2 (Restaurante)", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 6.6, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 75, "nome": "Guarita Arquivos Novos", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 17.23, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 76, "nome": "Depósito Geral Galpão Novo 02", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 3600.0, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 77, "nome": "Arquivo (Fórum de Dourados)", "comarca": "DOURADOS", "situacao_patrimonial": "PROPRIO", "area_construida": 450.0, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 78, "nome": "Anexo Novo (Fórum de Dourados)", "comarca": "DOURADOS", "situacao_patrimonial": "PROPRIO", "area_construida": 2826.0, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 79, "nome": "Arquivo (Fórum de Corumbá)", "comarca": "CORUMBÁ", "situacao_patrimonial": "PROPRIO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 80, "nome": "Arquivo (Fórum de Três Lagoas)", "comarca": "TRÊS LAGOAS", "situacao_patrimonial": "PROPRIO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}, {"id": 200, "nome": "PID DE ALCINÓPOLIS", "comarca": "COXIM", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 201, "nome": "PID DE ANTÔNIO JOÃO", "comarca": "PONTA PORÃ", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 202, "nome": "PID DE ARAL MOREIRA", "comarca": "PONTA PORÃ", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 203, "nome": "PID DE BODOQUENA", "comarca": "MIRANDA", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 204, "nome": "PID DE CARACOL", "comarca": "BELA VISTA", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 205, "nome": "PID DE CORGUINHO", "comarca": "RIO NEGRO", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 206, "nome": "PID DE DOURADINA", "comarca": "ITAPORÃ", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 207, "nome": "PID DE FIGUEIRÃO", "comarca": "CAMAPUÃ", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 208, "nome": "PID DE GUIA LOPES DA LAGUNA", "comarca": "JARDIM", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 209, "nome": "PID DE JAPORÃ", "comarca": "MUNDO NOVO", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 210, "nome": "PID DE JARAGUARI", "comarca": "BANDEIRANTES", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 211, "nome": "PID DE JATEÍ", "comarca": "FÁTIMA DO SUL", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 212, "nome": "PID DE JUTI", "comarca": "CAARAPÓ", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 213, "nome": "PID DE LAGUNA CARAPÃ", "comarca": "DOURADOS", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 214, "nome": "PID DE NOVO HORIZONTE DO SUL", "comarca": "IVINHEMA", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 215, "nome": "PID DE PARAÍSO DAS ÁGUAS", "comarca": "CHAPADÃO DO SUL", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 216, "nome": "PID DE PARANHOS", "comarca": "SETE QUEDAS", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 217, "nome": "PID DE ROCHEDO", "comarca": "RIO NEGRO", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 218, "nome": "PID DE SANTA RITA DO PARDO", "comarca": "BATAGUASSU", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 219, "nome": "PID DE SELVÍRIA", "comarca": "TRÊS LAGOAS", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 220, "nome": "PID DE TACURU", "comarca": "IGUATEMI", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 221, "nome": "PID DE TAQUARUSSU", "comarca": "BATAYPORÃ", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 222, "nome": "PID DE VICENTINA", "comarca": "FÁTIMA DO SUL", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": null, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": false}, {"id": 223, "nome": "Casa da Mulher (salas cedidas — prédio da Prefeitura)", "comarca": "CAMPO GRANDE", "situacao_patrimonial": "NAO_INFORMADO", "area_construida": 348.91, "area_terreno": null, "indice": null, "elegivel": false, "tem_medicao": true}];
+const QUARENTENA = [{"arquivo": "imoveis/2026-08-17.csv", "linha": 107, "nome": "Fórum da Mulher, Criança, Adolescente e Idoso", "comarca": "Campo Grande", "motivo": "ID_PREDIO_AUSENTE_OU_INVALIDO"}];
+
+const fmt = (v, d = 2) => v === null || v === undefined
+  ? "—"
+  : v.toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d });
+const inteiro = (v) => v.toLocaleString("pt-BR");
+
+const selComarca = document.getElementById("f-comarca");
+const selSituacao = document.getElementById("f-situacao");
+
+function popular(sel, valores, rotuloTodos) {
+  sel.innerHTML = "";
+  const todos = document.createElement("option");
+  todos.value = "__TODOS__";
+  todos.textContent = rotuloTodos;
+  sel.appendChild(todos);
+  valores.forEach((v) => {
+    const o = document.createElement("option");
+    o.value = v;
+    o.textContent = v;
+    sel.appendChild(o);
+  });
+}
+
+const unicos = (campo) => [...new Set(IMOVEIS.map((i) => i[campo]))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+
+popular(selComarca, unicos("comarca"), "Todas as comarcas (" + unicos("comarca").length + ")");
+popular(selSituacao, unicos("situacao_patrimonial"), "Todas as situações");
+
+function filtrar() {
+  const c = selComarca.value;
+  const s = selSituacao.value;
+  return IMOVEIS.filter((i) =>
+    (c === "__TODOS__" || i.comarca === c) &&
+    (s === "__TODOS__" || i.situacao_patrimonial === s));
+}
+
+function kpis(linhas) {
+  const elegiveis = linhas.filter((i) => i.elegivel);
+  const comMedicao = linhas.filter((i) => i.tem_medicao);
+  const somaC = elegiveis.reduce((a, i) => a + i.area_construida, 0);
+  const somaT = elegiveis.reduce((a, i) => a + i.area_terreno, 0);
+  const media = elegiveis.length
+    ? elegiveis.reduce((a, i) => a + i.indice, 0) / elegiveis.length
+    : null;
+  const global = somaT > 0 ? (100 * somaC) / somaT : null;
+  const cobertura = linhas.length ? (100 * elegiveis.length) / linhas.length : null;
+
+  const cartoes = [
+    ["Imóveis no recorte", inteiro(linhas.length), "identificados no cadastro"],
+    ["Com medição patrimonial", inteiro(comMedicao.length), "possuem registro no patrimônio"],
+    ["Elegíveis ao índice", inteiro(elegiveis.length), "têm as duas áreas necessárias"],
+    ["Média dos índices", media === null ? "—" : fmt(media) + "%", "cada imóvel pesa igual"],
+    ["Índice global", global === null ? "—" : fmt(global) + "%", "ponderado pelo tamanho do terreno"],
+    ["Cobertura elegível", cobertura === null ? "—" : fmt(cobertura, 1) + "%", "elegíveis ÷ imóveis do recorte"],
+  ];
+
+  document.getElementById("kpis").innerHTML = cartoes.map(([r, v, n]) => `
+    <div class="kpi">
+      <div class="rotulo">${r}</div>
+      <div class="valor">${v}</div>
+      <div class="nota">${n}</div>
+    </div>`).join("");
+}
+
+function barras(linhas) {
+  const porComarca = new Map();
+  linhas.filter((i) => i.elegivel).forEach((i) => {
+    const atual = porComarca.get(i.comarca) || { c: 0, t: 0, n: 0 };
+    atual.c += i.area_construida;
+    atual.t += i.area_terreno;
+    atual.n += 1;
+    porComarca.set(i.comarca, atual);
+  });
+
+  const dados = [...porComarca.entries()]
+    .map(([comarca, v]) => ({ comarca, pct: (100 * v.c) / v.t, n: v.n }))
+    .sort((a, b) => b.pct - a.pct);
+
+  const alvo = document.getElementById("barras");
+  if (!dados.length) {
+    alvo.innerHTML = '<p class="vazio">Nenhum imóvel elegível neste recorte: faltam área construída ou área de terreno. Por isso não exibimos valor zero.</p>';
+    return;
+  }
+
+  const maximo = Math.max(...dados.map((d) => d.pct), 100);
+  alvo.innerHTML = dados.map((d) => `
+    <div class="barra" title="${d.comarca}: ${fmt(d.pct)}% — ${d.n} imóvel(is) elegível(is)">
+      <div class="nome">${d.comarca}</div>
+      <div class="trilha">
+        <div class="preenche" style="width:${(100 * d.pct) / maximo}%"></div>
+        <div class="ref100" style="left:${(100 * 100) / maximo}%"></div>
+      </div>
+      <div class="num">${fmt(d.pct, 1)}%</div>
+    </div>`).join("");
+}
+
+function tabela(linhas) {
+  const ordenadas = [...linhas].sort((a, b) =>
+    (b.indice ?? -1) - (a.indice ?? -1) || a.id - b.id);
+  document.getElementById("corpo").innerHTML = ordenadas.map((i) => `
+    <tr>
+      <td class="n">${i.id}</td>
+      <td>${i.nome}</td>
+      <td>${i.comarca}</td>
+      <td>${i.situacao_patrimonial}</td>
+      <td class="n">${fmt(i.area_construida)}</td>
+      <td class="n">${fmt(i.area_terreno)}</td>
+      <td class="n">${i.indice === null ? "—" : fmt(i.indice) + "%"}</td>
+    </tr>`).join("");
+}
+
+document.getElementById("corpo-quarentena").innerHTML = QUARENTENA.length
+  ? QUARENTENA.map((q) => `
+      <tr>
+        <td>${q.arquivo}</td>
+        <td class="n">${q.linha}</td>
+        <td>${q.nome}</td>
+        <td>${q.comarca}</td>
+        <td class="aviso">${q.motivo}</td>
+      </tr>`).join("")
+  : '<tr><td colspan="5" class="vazio">Nenhum registro em quarentena.</td></tr>';
+
+function render() {
+  const linhas = filtrar();
+  kpis(linhas);
+  barras(linhas);
+  tabela(linhas);
+}
+
+selComarca.addEventListener("change", render);
+selSituacao.addEventListener("change", render);
+document.getElementById("limpar").addEventListener("click", () => {
+  selComarca.value = "__TODOS__";
+  selSituacao.value = "__TODOS__";
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
